@@ -53,7 +53,7 @@ def logon_robot_controller_with_username(controller, username, password):
     return logon_success, msg
 
 """
-Log off the robot controller
+Log off the robot controller and dispose of the controller.
 
 Argument arg1: controller (ABB.Robotics.Controllers.Controller)
 Return arg1: logoff_success (Boolean)
@@ -65,6 +65,7 @@ def logoff_robot_controller(controller):
     logoff_success = False
     try:
         controller.Logoff()
+        controller.Dispose()
         logoff_success = True
     except Exception:
         msg = 'Unable to log off: User may not be logged in or connection to controller can be lost.'
