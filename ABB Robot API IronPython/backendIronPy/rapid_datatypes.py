@@ -225,11 +225,12 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
             robtarget_robconf = rapid_data.Value.Robconf.ToString()
             robtarget_extax = rapid_data.Value.Extax.ToString()
             if property.lower() == 'trans':
-                pos_list = new_value.split(',')
-                if len(pos_list) == 3:
-                    str = "[[%d,%d,%d],%s,%s,%s]" % \
-                          (float(pos_list[0]),float(pos_list[1]),float(pos_list[2]),robtarget_rot,robtarget_robconf,robtarget_extax)
-                    robtarget.FillFromString2(str)
+                trans_list = new_value.split(',')
+                if len(trans_list) == 3:
+                    trans = "[[%d,%d,%d],%s,%s,%s]" % \
+                          (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
+                           robtarget_rot, robtarget_robconf, robtarget_extax)
+                    robtarget.FillFromString2(trans)
                     try:
                         rapid_data.Value = robtarget
                         msg = 'Trans updated.'
@@ -240,16 +241,14 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
                     msg = 'Incorrect format of x,y,z: ex. \'10,50,0\'.'
                     return rapid_data, msg
             elif property.lower() == 'rot':
-                orient = ctrlrs.RapidDomain.Orient()
-                orient_list = new_value.split(',')
-                if len(orient_list) == 4:
-                    orient.Q1 = float(orient_list[0])
-                    orient.Q2 = float(orient_list[1])
-                    orient.Q3 = float(orient_list[2])
-                    orient.Q4 = float(orient_list[3])
+                rot_list = new_value.split(',')
+                if len(rot_list) == 4:
+                    rot = "[%s,[%d,%d,%d,%d],%s,%s]" % \
+                          (robtarget_trans, float(rot_list[0]),float(rot_list[1]),float(rot_list[2]),float(rot_list[3]),
+                           robtarget_robconf, robtarget_extax)
+                    robtarget.FillFromString2(rot)
                     try:
-                        # rapid_data.Value.Rot = orient
-                        rapid_data.Value.Rot.Q1 = orient.Q1
+                        rapid_data.Value = robtarget
                         msg = 'Rot updated.'
                         return rapid_data, msg
                     except Exception, err:
@@ -258,15 +257,15 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
                     msg = 'Incorrect format of q1,q2,q3,q4: ex. \'0,0,1,0\'.'
                     return rapid_data, msg
             elif property.lower() == 'robconf':
-                conf_data = ctrlrs.RapidDomain.ConfData()
                 conf_data_list = new_value.split(',')
                 if len(conf_data_list) == 4:
-                    conf_data.Cf1 = conf_data_list[0]
-                    conf_data.Cf4 = conf_data_list[1]
-                    conf_data.Cf6 = conf_data_list[2]
-                    conf_data.Cfx = conf_data_list[3]
+                    robconf = "[%s,%s,[%d,%d,%d,%d],%s]" % \
+                              (robtarget_trans, robtarget_rot,
+                               float(conf_data_list[0]),float(conf_data_list[1]),float(conf_data_list[2]),
+                               float(conf_data_list[3]),robtarget_extax)
+                    robtarget.FillFromString2(robconf)
                     try:
-                        rapid_data.Robconf = conf_data
+                        rapid_data.Value = robtarget
                         msg = 'Robconf updated.'
                         return  rapid_data, msg
                     except Exception, err:
@@ -275,17 +274,16 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
                     msg = 'Incorrect format of Cf1,Cf4,Cf6,Cfx: ex. \'1,0,1,0\'.'
                     return rapid_data, msg
             elif property.lower() == 'extax':
-                ext_joint = ctrlrs.RapidDomain.ExtJoint()
                 ext_joint_list = new_value.split(',')
                 if len(ext_joint_list) == 6:
-                    ext_joint.Eax_a = ext_joint_list[0]
-                    ext_joint.Eax_b = ext_joint_list[1]
-                    ext_joint.Eax_c = ext_joint_list[2]
-                    ext_joint.Eax_d = ext_joint_list[3]
-                    ext_joint.Eax_e = ext_joint_list[4]
-                    ext_joint.Eax_f = ext_joint_list[5]
+                    extax = "[%s,%s,%s,[%d,%d,%d,%d,%d,%d]]" % \
+                            (robtarget_trans, robtarget_rot, robtarget_robconf,
+                             float(ext_joint_list[0]),float(ext_joint_list[1]),
+                             float(ext_joint_list[2]),float(ext_joint_list[3]),
+                             float(ext_joint_list[4]),float(ext_joint_list[5]))
+                    robtarget.FillFromString2(extax)
                     try:
-                        rapid_data.Extax = ext_joint
+                        rapid_data.Value = robtarget
                         msg = 'Extax updated.'
                         return rapid_data, msg
                     except Exception, err:
