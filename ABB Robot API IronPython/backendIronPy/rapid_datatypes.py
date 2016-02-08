@@ -274,13 +274,13 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
                     msg = 'Incorrect format of Cf1,Cf4,Cf6,Cfx: ex. \'1,0,1,0\'.'
                     return rapid_data, msg
             elif property.lower() == 'extax':
-                ext_joint_list = new_value.split(',')
-                if len(ext_joint_list) == 6:
+                extax_list = new_value.split(',')
+                if len(extax_list) == 6:
                     extax = "[%s,%s,%s,[%d,%d,%d,%d,%d,%d]]" % \
                             (robtarget_trans, robtarget_rot, robtarget_robconf,
-                             float(ext_joint_list[0]),float(ext_joint_list[1]),
-                             float(ext_joint_list[2]),float(ext_joint_list[3]),
-                             float(ext_joint_list[4]),float(ext_joint_list[5]))
+                             float(extax_list[0]),float(extax_list[1]),
+                             float(extax_list[2]),float(extax_list[3]),
+                             float(extax_list[4]),float(extax_list[5]))
                     robtarget.FillFromString2(extax)
                     try:
                         rapid_data.Value = robtarget
@@ -293,6 +293,53 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
                     return rapid_data, msg
             else:
                 msg = 'Property not of type trans, rot, robconf or extax.'
+                return rapid_data, msg
+        except Exception, err:
+            return rapid_data, err
+    else:
+        msg = 'DataType is '+rapid_data.RapidType+' and not robtarget'
+        return rapid_data, msg
+
+
+"""
+Edits the robtarget and writes it to the controller.
+Remember to get mastership before calling this function, and release the mastership right after.
+
+Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
+Argument arg2: trans (String), ex. '100,0,100'
+Argument arg3: rot (String), ex. '1,0,0,1'
+Argument arg4: robconf (String), ex. '0,0,0,1'
+Argument arg5: extax (String), ex. '9E9,9E9,9E9,9E9,9E9,9E9'
+Return arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
+Return arg2: message or error (String)
+"""
+
+
+def edit_and_write_rapid_data_robtarget(rapid_data, trans, rot, robconf, extax):
+    if rapid_data.RapidType == 'robtarget':
+        try:
+            robtarget = rapid_data.Value
+
+            trans_list = trans.split(',')
+            rot_list = rot.split(',')
+            robconf_list = robconf.split(',')
+            extax_list = extax.split(',')
+            if (len(trans_list) == 3) and (len(rot_list) == 4) and (len(robconf_list) == 4) and (len(extax_list) == 6):
+                new_robtarget = "[[%d,%d,%d],[%d,%d,%d,%d],[%d,%d,%d,%d],[%d,%d,%d,%d,%d,%d]]" % \
+                                (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
+                                 float(rot_list[0]), float(rot_list[1]), float(rot_list[2]), float(rot_list[3]),
+                                 float(robconf_list[0]), float(robconf_list[1]), float(robconf_list[2]),
+                                 float(robconf_list[3]), float(extax_list[0]), float(extax_list[1]),
+                                 float(extax_list[2]), float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                robtarget.FillFromString2(new_robtarget)
+                try:
+                    rapid_data.Value = robtarget
+                    msg = 'Robtarget updated.'
+                    return rapid_data, msg
+                except Exception, err:
+                    return rapid_data, err
+            else:
+                msg = 'Incorrect format of input data.'
                 return rapid_data, msg
         except Exception, err:
             return rapid_data, err
