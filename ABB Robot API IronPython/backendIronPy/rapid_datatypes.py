@@ -4,7 +4,6 @@
 
 
 import clr
-
 clr.AddReferenceToFileAndPath(
         'C:\\Program Files (x86)\\ABB Industrial IT\\Robotics IT\\SDK\PCSDK 6.02\\ABB.Robotics.Controllers.PC.dll')
 import ABB.Robotics.Controllers as ctrlrs
@@ -15,14 +14,17 @@ import ABB.Robotics.Controllers as ctrlrs
 """
 Gets a Rapid object that reference a Rapid data instance on the robot controller.
 
-Argument arg1: controller (ABB.Robotics.Controllers.Controller)
-Argument arg2: program (String), typically "T_ROB1"
-Argument arg3: module (String), name of the module, ex "MainModule"
-Argument arg4: variable_name (String), name of the variable to get, ex "target_10"
-Return arg1: Boolean, if able to get the data or not.
-Return arg2: If success, the object || If fail, error string
+Args:
+    ABB.Robotics.Controllers.Controller: Controller
+    String: Program (name of the program, typically "T_ROB1")
+    String: Module (name of the module, ex "MainModule")
+    String: Name of the variable to get (ex "target_10")
+Returns:
+    Boolean: Indicates if able to get the data or not
+    ABB.Robotics.Controllers.RapidDomain.RapidData OR String: Rapid data object if successful and error string if not
+Examples:
+    bool, rapid_data = rapid_datatypes.get_rapid_data(controller,'T_ROB1','MainModule','p20')
 """
-
 
 def get_rapid_data(controller, program, module, variable_name):
     try:
@@ -35,11 +37,14 @@ def get_rapid_data(controller, program, module, variable_name):
 """
 Gets the value of num and returns it as a string
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Result arg1: Boolean indicating if value exists
-Result arg2: value or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if value exists
+    String: The result or error
+Examples:
+    None
 """
-
 
 def get_value_num_tostring(rapid_data):
     try:
@@ -52,11 +57,14 @@ def get_value_num_tostring(rapid_data):
 """
 Gets the state of bool and returns it as a string
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Result arg1: Boolean indicating if state exists
-Result arg2: state or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if state exists
+    String: The state or error
+Examples:
+    None
 """
-
 
 def get_state_bool_tostring(rapid_data):
     try:
@@ -69,15 +77,18 @@ def get_state_bool_tostring(rapid_data):
 """
 Gets the trans data from robtarget and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if trans exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if trans exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_trans_robtarget_tostring(rapid_data):
     try:
-        res = 'Trans: (x,y,z) = (%d,%d,%d)' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
+        res = 'Trans: (X,Y,Z) = (%d,%d,%d)' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
         return True, res
     except Exception, err:
         return False, err
@@ -86,11 +97,14 @@ def get_trans_robtarget_tostring(rapid_data):
 """
 Gets the rot data from robtarget and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if trans exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if trans exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_rot_robtarget_tostring(rapid_data):
     try:
@@ -104,11 +118,14 @@ def get_rot_robtarget_tostring(rapid_data):
 """
 Gets the robconf data from robtarget and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if trans exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if trans exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_robconf_robtarget_tostring(rapid_data):
     try:
@@ -123,11 +140,14 @@ def get_robconf_robtarget_tostring(rapid_data):
 """
 Gets the extax data from robtarget and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if trans exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if trans exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_extax_robtarget_tostring(rapid_data):
     try:
@@ -159,11 +179,14 @@ def get_extax_robtarget_tostring(rapid_data):
 """
 Gets Robhold from tooldata and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if Robhold exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if Robhold exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_robhold_tooldata_tostring(rapid_data):
     try:
@@ -176,11 +199,14 @@ def get_robhold_tooldata_tostring(rapid_data):
 """
 Gets Tframe from tooldata and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if Tfarme exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if Tframe exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_tframe_tooldata_tostring(rapid_data):
     try:
@@ -194,15 +220,18 @@ def get_tframe_tooldata_tostring(rapid_data):
 """
 Gets Tload from tooldata and returns it as a string.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg1: Boolean indicating if Tload exists or not
-Return arg2: result of trans or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if Tload exists or not
+    String: The result of trans or error
+Examples:
+    None
 """
-
 
 def get_tload_tooldata_tostring(rapid_data):
     try:
-        res = 'Tload: (mass,cog,aom,ix,iy,iz) = %d,%s,%s,%d,%d,%d' % \
+        res = 'Tload: (Mass,Cog,Aom,Ix,Iy,Iz) = %d,%s,%s,%d,%d,%d' % \
               (rapid_data.Value.Tload.Mass, rapid_data.Value.Tload.Cog.ToString(),
                rapid_data.Value.Tload.Aom.ToString(),rapid_data.Value.Tload.Ix,
                rapid_data.Value.Tload.Iy, rapid_data.Value.Tload.Iz)
@@ -215,12 +244,16 @@ def get_tload_tooldata_tostring(rapid_data):
 Edits the boolean variable to the specified state and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Argument arg2: new_value (Boolean)
-Return arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg2: message or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Boolean: new_value
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Example:
+    rapid_data, message = edit_and_write_rapid_data_bool(rapid_data, True)
+    rapid_data, message = edit_and_write_rapid_data_bool(rapid_data, False)
 """
-
 
 def edit_and_write_rapid_data_bool(rapid_data, new_value):
     if rapid_data.RapidType == 'bool':
@@ -239,12 +272,16 @@ def edit_and_write_rapid_data_bool(rapid_data, new_value):
 Edits the num variable to the specified value and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Argument arg2: new_value (number)
-Return arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg2: message or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Number: new_value
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Examples:
+    rapid_data, message = edit_and_write_rapid_data_num(rapid_data, 1)
+    rapid_data, message = edit_and_write_rapid_data_num(rapid_data, 20)
 """
-
 
 def edit_and_write_rapid_data_num(rapid_data, new_value):
     if rapid_data.RapidType == 'num':
@@ -264,13 +301,19 @@ def edit_and_write_rapid_data_num(rapid_data, new_value):
 Edits the specified robtarget property and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Argument arg2: property (String), accepted types: trans, rot, robconf, extax
-Argument arg3: new_value (String), the new values of the type, ex for trans '100,100,100'
-Return arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg2: message or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: property (accepted types: trans, rot, robconf, extax)
+    String: new_value
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Examples:
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'trans','100,100,0')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'rot','1,0,0,1')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'robconf','1,0,1,0')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'extax','9E9,9E9,9E9,9E9,9E9,9E9')
 """
-
 
 def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value):
     if rapid_data.RapidType == 'robtarget':
@@ -361,15 +404,18 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
 Edits the robtarget and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
-Argument arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Argument arg2: trans (String), ex. '100,0,100'
-Argument arg3: rot (String), ex. '1,0,0,1'
-Argument arg4: robconf (String), ex. '0,0,0,1'
-Argument arg5: extax (String), ex. '9E9,9E9,9E9,9E9,9E9,9E9'
-Return arg1: rapid_data (ABB.Robotics.Controllers.RapidDomain.RapidData)
-Return arg2: message or error (String)
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: trans
+    String: rot
+    String: robconf
+    String: extax
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Examples:
+   rapid_data, message = edit_and_write_rapid_data_robtarget(rapid_data,'100,100,0','1,0,0,1','0,1,0,1','9E9,9E9,9E9,9E9,9E9,9E9')
 """
-
 
 def edit_and_write_rapid_data_robtarget(rapid_data, trans, rot, robconf, extax):
     if rapid_data.RapidType == 'robtarget':
@@ -405,7 +451,14 @@ def edit_and_write_rapid_data_robtarget(rapid_data, trans, rot, robconf, extax):
 
 
 """
+Edits the specified property of the tooldata and writes it to the controller.
+Remember to get mastership before calling this function, and release the mastership right after.
+
+Args:
+Returns:
+Examples:
 """
+
 def edit_and_write_rapid_data_tooldata(rapid_data, property, new_value):
     if rapid_data.RapidType == 'tooldata':
         try:
@@ -426,7 +479,7 @@ def edit_and_write_rapid_data_tooldata(rapid_data, property, new_value):
                 else:
                     msg = 'Input is not boolean.'
                     return rapid_data, msg
-            # elif property.lower() == 'tframe':
+            elif property.lower() == 'tframe':
 
             # elif property.lower() == 'tload':
             # else:

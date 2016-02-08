@@ -2,21 +2,25 @@
 The communication module has basic functions for initial communication with robot through ABB PC SDK.
 """
 
-import clr
 
+import clr
 clr.AddReferenceToFileAndPath(
         'C:\\Program Files (x86)\\ABB Industrial IT\\Robotics IT\\SDK\PCSDK 6.02\\ABB.Robotics.Controllers.PC.dll')
 import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
+
 """
 Scans the network for controllers.
 
-Argument: None
-Return: ABB.Robotics.Controllers
+Args:
+    None
+Returns:
+    ABB.Robotics.Controllers: Controllers found on the network
+Examples:
+    None
 """
-
 
 def discover_controllers_on_network():
     net_scan = ctrlrs.Discovery.NetworkScanner()
@@ -34,12 +38,15 @@ def discover_controllers_on_network():
 """
 Creates a controller instance based on the robot name.
 
-Argument arg1: controllers( ABB.Robotics.Controllers)
-Argument arg2: robot name (String)
-Return arg1: ABB.Robotics.Controllers.Controller or 0 if no controller is found
-Return arg2: Message with the outcome (String)
+Args:
+    ABB.Robotics.Controllers: Controllers
+    String: Name of the robot
+Returns:
+    ABB.Robotics.Controllers.Controller OR 0: Output depends on if the connection is successful or not.
+    String: Message with the outcome
+Examples:
+    None
 """
-
 
 def connect_robot_with_name(controllers, robot_name):
     controller_found = False
@@ -66,12 +73,15 @@ def connect_robot_with_name(controllers, robot_name):
 Creates a controller instance based on the specified IP address. If no controller can be found
 with the specified IP address the controller instance will not be created.
 
-Argument arg1: controllers (ABB.Robotics.Controllers)
-Argument arg2: IP address (String)
-Return arg1: ABB.Robotics.Controllers.Controller or 0 if no controller is found
-Return arg2: Message with the outcome (String)
+Args:
+    ABB.Robotics.Controllers: Controllers
+    String: IP address
+Returns:
+    ABB.Robotics.Controllers.Controller OR 0: Output depends on if the connection is successful or not.
+    String: Message with the outcome
+Examples:
+    None
 """
-
 
 def connect_robot_with_ipaddr(controllers, IPAddress):
     controller_found = False
@@ -97,9 +107,13 @@ def connect_robot_with_ipaddr(controllers, IPAddress):
 """
 Checks if there is a connection to the controller
 
-Argument: controllers (ABB.Robotics.Controllers)
-Return arg1: Boolean
-Return arg2: Message with result (String)
+Args:
+    ABB.Robotics.Controllers: Controllers
+Returns:
+    Boolean: Indicates if connected or not
+    String: Message with the result
+Examples:
+    None
 """
 
 def is_connected_to_controller(controller):
