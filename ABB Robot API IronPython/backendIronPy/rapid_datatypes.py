@@ -77,7 +77,7 @@ Return arg2: result of trans or error (String)
 
 def get_trans_robtarget_tostring(rapid_data):
     try:
-        res = '(x,y,z) = (%d,%d,%d)' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
+        res = 'Trans: (x,y,z) = (%d,%d,%d)' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
         return True, res
     except Exception, err:
         return False, err
@@ -94,7 +94,7 @@ Return arg2: result of trans or error (String)
 
 def get_rot_robtarget_tostring(rapid_data):
     try:
-        res = '(Q1,Q2,Q3,Q4) = (%d,%d,%d,%d)' % (rapid_data.Value.Rot.Q1,rapid_data.Value.Rot.Q2,
+        res = 'Rot: (Q1,Q2,Q3,Q4) = (%d,%d,%d,%d)' % (rapid_data.Value.Rot.Q1,rapid_data.Value.Rot.Q2,
                                                  rapid_data.Value.Rot.Q3,rapid_data.Value.Rot.Q4)
         return True, res
     except Exception, err:
@@ -112,8 +112,9 @@ Return arg2: result of trans or error (String)
 
 def get_robconf_robtarget_tostring(rapid_data):
     try:
-        res = '(Cf1,Cf4,Cf6,Cfx) = (%d,%d,%d,%d)' % (rapid_data.Value.Robconf.Cf1,rapid_data.Value.Robconf.Cf4,
-                                                     rapid_data.Value.Robconf.Cf6,rapid_data.Value.Robconf.Cfx)
+        res = 'Robconf: (Cf1,Cf4,Cf6,Cfx) = (%d,%d,%d,%d)' % \
+              (rapid_data.Value.Robconf.Cf1,rapid_data.Value.Robconf.Cf4,
+                rapid_data.Value.Robconf.Cf6,rapid_data.Value.Robconf.Cfx)
         return True, res
     except Exception, err:
         return False, err
@@ -148,7 +149,7 @@ def get_extax_robtarget_tostring(rapid_data):
             eax_e = '9E9'
         if eax_f >= 8.9e+09:
             eax_f = '9E9'
-        res = '(Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f) = (%s,%s,%s,%s,%s,%s)' \
+        res = 'Extax: (Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f) = (%s,%s,%s,%s,%s,%s)' \
               % (eax_a,eax_b,eax_c,eax_d,eax_e,eax_f)
         return True, res
     except Exception, err:
@@ -183,7 +184,8 @@ Return arg2: result of trans or error (String)
 
 def get_tframe_tooldata_tostring(rapid_data):
     try:
-        res = 'Tframe = %s' % rapid_data.Value.Tframe.ToString()
+        res = 'Tframe: (Trans,Rot) = (%s,%s)' % (rapid_data.Value.Tframe.Trans.ToString(),
+                                                 rapid_data.Value.Tframe.Rot.ToString())
         return True, res
     except Exception, err:
         return False, err
@@ -200,7 +202,10 @@ Return arg2: result of trans or error (String)
 
 def get_tload_tooldata_tostring(rapid_data):
     try:
-        res = 'Tload = %s' % rapid_data.Value.Tload.ToString()
+        res = 'Tload: (mass,cog,aom,ix,iy,iz) = %d,%s,%s,%d,%d,%d' % \
+              (rapid_data.Value.Tload.Mass, rapid_data.Value.Tload.Cog.ToString(),
+               rapid_data.Value.Tload.Aom.ToString(),rapid_data.Value.Tload.Ix,
+               rapid_data.Value.Tload.Iy, rapid_data.Value.Tload.Iz)
         return True, res
     except Exception, err:
         return False, err
@@ -422,7 +427,7 @@ def edit_and_write_rapid_data_tooldata(rapid_data, property, new_value):
                     msg = 'Input is not boolean.'
                     return rapid_data, msg
             # elif property.lower() == 'tframe':
-            #
+
             # elif property.lower() == 'tload':
             # else:
             #     msg = 'Property not of type robhold, tframe, tload.'
