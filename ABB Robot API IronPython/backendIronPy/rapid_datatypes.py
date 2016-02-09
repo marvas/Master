@@ -309,10 +309,10 @@ Returns:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'trans','100,100,0')
-    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'rot','1,0,0,1')
-    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'robconf','1,0,1,0')
-    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'extax','9E9,9E9,9E9,9E9,9E9,9E9')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'trans','[100,100,0]')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'rot','[1,0,0,1]')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'robconf','[1,0,1,0]')
+    rapid_data, message = edit_and_write_rapid_data_robtarget_property(rapid_data,'extax','[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
 def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value):
@@ -323,12 +323,14 @@ def edit_and_write_rapid_data_robtarget_property(rapid_data, property, new_value
             robtarget_rot = rapid_data.Value.Rot.ToString()
             robtarget_robconf = rapid_data.Value.Robconf.ToString()
             robtarget_extax = rapid_data.Value.Extax.ToString()
+
+            new_value = new_value.translate(None, "[]")
             if property.lower() == 'trans':
                 trans_list = new_value.split(',')
                 if len(trans_list) == 3:
                     trans = "[[%d,%d,%d],%s,%s,%s]" % \
-                          (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
-                           robtarget_rot, robtarget_robconf, robtarget_extax)
+                            (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
+                             robtarget_rot, robtarget_robconf, robtarget_extax)
                     robtarget.FillFromString2(trans)
                     try:
                         rapid_data.Value = robtarget
@@ -414,13 +416,18 @@ Returns:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
-   rapid_data, message = edit_and_write_rapid_data_robtarget(rapid_data,'100,100,0','1,0,0,1','0,1,0,1','9E9,9E9,9E9,9E9,9E9,9E9')
+   rapid_data, message = edit_and_write_rapid_data_robtarget(rapid_data,'[100,100,0]','[1,0,0,1]','[0,1,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
 def edit_and_write_rapid_data_robtarget(rapid_data, trans, rot, robconf, extax):
     if rapid_data.RapidType == 'robtarget':
         try:
             robtarget = rapid_data.Value
+
+            trans = trans.translate(None, "[]")
+            rot = rot.translate(None, "[]")
+            robconf = robconf.translate(None, "[]")
+            extax = extax.translate(None, "[]")
 
             trans_list = trans.split(',')
             rot_list = rot.split(',')
@@ -455,11 +462,20 @@ Edits the specified property of the tooldata and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
 Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: property (accepted types: robhold, tframe, tload)
+    String: new_value
 Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
 Examples:
+    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data, 'robhold', True)
+    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data, 'robhold', False)
+    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data,'tframe','[0,0,100],[1,0,0,0]')
+    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data,'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
-def edit_and_write_rapid_data_tooldata(rapid_data, property, new_value):
+def edit_and_write_rapid_data_tooldata_property(rapid_data, property, new_value):
     if rapid_data.RapidType == 'tooldata':
         try:
             tooldata = rapid_data.Value
@@ -468,7 +484,9 @@ def edit_and_write_rapid_data_tooldata(rapid_data, property, new_value):
             tooldata_tload =  rapid_data.Value.Tload.ToString()
             if property.lower() == 'robhold':
                 if new_value == True or new_value == False:
-                    robhold = "[%i,[%s],[%s]]" % (new_value, tooldata_tframe, tooldata_tload)
+                    if new_value == 1: new_value = True
+                    if new_value == 0: new_value = False
+                    robhold = "[%s,%s,%s]" % (new_value, tooldata_tframe, tooldata_tload)
                     tooldata.FillFromString2(robhold)
                     try:
                         rapid_data.Value = tooldata
@@ -480,11 +498,97 @@ def edit_and_write_rapid_data_tooldata(rapid_data, property, new_value):
                     msg = 'Input is not boolean.'
                     return rapid_data, msg
             elif property.lower() == 'tframe':
+                new_value = new_value.translate(None, "[]")
+                tframe_list = new_value.split(',')
+                if len(tframe_list) == 7:
+                    tframe = "[%s,[[%d,%d,%d],[%d,%d,%d,%d]],%s]" % \
+                             (tooldata_robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
+                              float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),float(tframe_list[6]),
+                              tooldata_tload)
+                    tooldata.FillFromString2(tframe)
+                    try:
+                        rapid_data.Value = tooldata
+                        msg = 'Tframe updated.'
+                        return rapid_data, msg
+                    except Exception, err:
+                        return rapid_data, err
+                else:
+                    msg = 'Input is not a valid Tframe.'
+                    return rapid_data, msg
+            elif property.lower() == 'tload':
+                new_value = new_value.translate(None, "[]")
+                tload_list = new_value.split(',')
+                if len(tload_list) == 11:
+                    tload = "[%s,%s,[%d,[%d,%d,%d],[%d,%d,%d,%d],%d,%d,%d]]" % \
+                            (tooldata_robhold, tooldata_tframe, float(tload_list[0]), float(tload_list[1]),
+                             float(tload_list[2]), float(tload_list[3]), float(tload_list[4]), float(tload_list[5]),
+                             float(tload_list[6]), float(tload_list[7]), float(tload_list[8]), float(tload_list[9]),
+                             float(tload_list[10]))
+                    tooldata.FillFromString2(tload)
+                    try:
+                        rapid_data.Value = tooldata
+                        msg = 'Tload updated.'
+                        return rapid_data, msg
+                    except Exception, err:
+                        return rapid_data, err
+                else:
+                    msg = 'Input is not a valid Tload.'
+                    return rapid_data, msg
+            else:
+                msg = 'Property not of type robhold, tframe, tload.'
+                return rapid_data, msg
+        except Exception, err:
+            return rapid_data, err
+    else:
+        msg = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
+        return rapid_data, msg
 
-            # elif property.lower() == 'tload':
-            # else:
-            #     msg = 'Property not of type robhold, tframe, tload.'
-            #     return rapid_data, msg
+
+"""
+Edits tooldata and writes it to the controller.
+Remember to get mastership before calling this function, and release the mastership right after.
+
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Boolean: robhold (ex. True or False)
+    String: tframe (ex. '[0,0,100],[0,0,0,1]')
+    String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Examples:
+    rapid_data, message = edit_and_write_rapid_data_tooldata(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+"""
+
+def edit_and_write_rapid_data_tooldata(rapid_data, robhold, tframe, tload):
+    if rapid_data.RapidType == 'tooldata':
+        try:
+            tooldata = rapid_data.Value
+
+            tframe = tframe.translate(None, "[]")
+            tload = tload.translate(None, "[]")
+
+            tframe_list = tframe.split(',')
+            tload_list = tload.split(',')
+            if (robhold == True or robhold == False) and (len(tframe_list) == 7) and (len(tload_list) == 11):
+                if robhold == 1: robhold = True
+                if robhold == 0: robhold = False
+                new_tooldata = "[%s,[[%d,%d,%d],[%d,%d,%d,%d]],[%d,[%d,%d,%d],[%d,%d,%d,%d],%d,%d,%d]]" % \
+                               (robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
+                                float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
+                                float(tframe_list[6]), float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),
+                                float(tload_list[3]), float(tload_list[4]), float(tload_list[5]), float(tload_list[6]),
+                                float(tload_list[7]), float(tload_list[8]), float(tload_list[9]), float(tload_list[10]))
+                tooldata.FillFromString2(new_tooldata)
+                try:
+                    rapid_data.Value = tooldata
+                    msg = 'Tooldata updated.'
+                    return rapid_data, msg
+                except Exception, err:
+                    return rapid_data, err
+            else:
+                msg = 'Incorrect format of input data.'
+                return rapid_data, msg
         except Exception, err:
             return rapid_data, err
     else:
