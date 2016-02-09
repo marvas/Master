@@ -343,6 +343,46 @@ def get_oframe_wobjdata_tostring(rapid_data):
 
 
 """
+Gets RobAx from jointtarget and returns it as a string
+
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if RobAx exists or not
+    String: The result of trans or error
+Examples:
+    None
+"""
+
+def get_robax_jointtarget_tostring(rapid_data):
+    try:
+        res = 'RobAx: (Rax_1,Rax_2,Rax_3,Rax_4,Rax_5,Rax_6) = (%s)' % rapid_data.Value.RobAx.ToString()
+        return True, res
+    except Exception, err:
+        return False, err
+
+
+"""
+Gets ExtAx from jointtarget and returns it as a string
+
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if ExtAx exists or not
+    String: The result of trans or error
+Examples:
+    None
+"""
+
+def get_extax_jointtarget_tostring(rapid_data):
+    try:
+        res = 'ExtAx: (Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f) = (%s)' % rapid_data.Value.ExtAx.ToString()
+        return True, res
+    except Exception, err:
+        return False, err
+
+
+"""
 Edits the boolean variable to the specified state and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
@@ -710,11 +750,11 @@ Returns:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data, 'robhold', True)
-    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data, 'ufprog', False)
-    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data, 'ufmec', '')
-    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data,'uframe','[0,0,100],[1,0,0,0]')
-    rapid_data, message = edit_and_write_rapid_data_tooldata_property(rapid_data,'oframe','[0,0,100],[1,0,0,0]')
+    rapid_data, message = edit_and_write_rapid_data_wobjdata_property(rapid_data, 'robhold', True)
+    rapid_data, message = edit_and_write_rapid_data_wobjdata_property(rapid_data, 'ufprog', False)
+    rapid_data, message = edit_and_write_rapid_data_wobjdata_property(rapid_data, 'ufmec', '')
+    rapid_data, message = edit_and_write_rapid_data_wobjdata_property(rapid_data,'uframe','[0,0,100],[1,0,0,0]')
+    rapid_data, message = edit_and_write_rapid_data_wobjdata_property(rapid_data,'oframe','[0,0,100],[1,0,0,0]')
 """
 
 def edit_and_write_rapid_data_wobjdata_property(rapid_data, property, new_value):
@@ -724,15 +764,16 @@ def edit_and_write_rapid_data_wobjdata_property(rapid_data, property, new_value)
 
             wobjdata_robhold = rapid_data.Value.Robhold.ToString()
             wobjdata_ufprog = rapid_data.Value.Ufprog.ToString()
-            wobjdata_ufmec = rapid_data.Value.Ufmec.ToString()
+            wobjdata_ufmec = rapid_data.Value.Ufmec
             wobjdata_uframe = rapid_data.Value.Uframe.ToString()
-            wobjdata_oframe = rapid_data.Value.Oframe.ToSTring()
+            wobjdata_oframe = rapid_data.Value.Oframe.ToString()
             if property.lower() == 'robhold':
                 if new_value == True or new_value == False:
                     if new_value == 1: new_value = True
                     if new_value == 0: new_value = False
                     robhold = "[%s,%s,%s,%s,%s]" % \
                               (new_value, wobjdata_ufprog, wobjdata_ufmec, wobjdata_uframe, wobjdata_oframe)
+                    print ("TEST: "+robhold)
                     wobjdata.FillFromString2(robhold)
                     try:
                         rapid_data.Value = wobjdata
@@ -874,7 +915,117 @@ def edit_and_write_rapid_data_wobjdata(rapid_data, robhold, ufprog, ufmec, ufram
         return rapid_data, msg
 
 
-# """
-# """
-#
-# def
+"""
+Edits the specified property of the jointtarget and writes it to the controller.
+Remember to get mastership before calling this function, and release the mastership right after.
+
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: property (accepted types: robax, extax)
+    String: new_value
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Examples:
+    rapid_data, message = edit_and_write_rapid_data_jointtarget_property(rapid_data, 'robax', '[0,0,0,0,0,0]')
+    rapid_data, message = edit_and_write_rapid_data_jointtarget_property(rapid_data, 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+"""
+
+def edit_and_write_rapid_data_jointtarget_property(rapid_data, property, new_value):
+    if rapid_data.RapidType == 'jointtarget':
+        try:
+            jointtarget = rapid_data.Value
+
+            jointtarget_robax = rapid_data.Value.RobAx.ToString()
+            jointtarget_extax = rapid_data.Value.ExtAx.ToString()
+
+            new_value = new_value.translate(None,"[]")
+            if property.lower() == 'robax':
+                robax_list = new_value.split(',')
+                if len(robax_list) == 6:
+                    robax = "[[%d,%d,%d,%d,%d,%d],%s]" % \
+                            (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
+                             float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
+                             jointtarget_extax)
+                    jointtarget.FillFromString2(robax)
+                    try:
+                        rapid_data.Value = jointtarget
+                        msg = 'Robax updated.'
+                        return rapid_data, msg
+                    except Exception, err:
+                        return rapid_data, err
+                else:
+                    msg = 'Incorrect format of input data.'
+                    return rapid_data, msg
+            elif property.lower() == 'extax':
+                extax_list = new_value.split(',')
+                if len(extax_list) == 6:
+                    extax = "[%s,[%d,%d,%d,%d,%d,%d]]" % \
+                            (jointtarget_robax, float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
+                             float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                    jointtarget.FillFromString2(extax)
+                    try:
+                        rapid_data.Value = jointtarget
+                        msg = 'Extax updated.'
+                        return rapid_data, msg
+                    except Exception, err:
+                        return rapid_data, err
+                else:
+                    msg = 'Incorrect format of Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f: ex \'9E9,9E9,9E9,9E9,9E9,9E9\'.'
+                    return rapid_data, msg
+            else:
+                msg = 'Incorrect format of input data.'
+                return rapid_data, msg
+        except Exception, err:
+            return rapid_data, err
+    else:
+        msg = 'DataType is '+rapid_data.RapidType+' and not jointtarget'
+        return rapid_data, msg
+
+
+"""
+Edits the jointtarget and writes it to the controller.
+Remember to get mastership before calling this function, and release the mastership right after.
+
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: robax (ex. '[0,0,0,0,0,0]')
+    String: extax (ex. '[9E9,9E9,9E9,9E9,9E9,9E9]')
+Returns:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    String: result message or error
+Examples:
+    rapid_data, message = edit_and_write_rapid_data_jointtarget(rapid_data, '[0,0,0,0,0,0]', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+"""
+
+def edit_and_write_rapid_data_jointtarget(rapid_data, robax, extax):
+    if rapid_data.RapidType == 'jointtarget':
+        try:
+            jointtarget = rapid_data.Value
+
+            robax = robax.translate(None, "[]")
+            extax = extax.translate(None, "[]")
+
+            robax_list = robax.split(',')
+            extax_list = extax.split(',')
+            if (len(robax_list) == 6) and (len(extax_list) == 6):
+                new_jointtarget = "[[%d,%d,%d,%d,%d,%d],[%d,%d,%d,%d,%d,%d]]" % \
+                               (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
+                                float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
+                                float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
+                                float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                jointtarget.FillFromString2(new_jointtarget)
+                try:
+                    rapid_data.Value = jointtarget
+                    msg = 'Jointtarget updated.'
+                    return rapid_data, msg
+                except Exception, err:
+                    return rapid_data, err
+            else:
+                msg = 'Incorrect format of input data.'
+                return rapid_data, msg
+        except Exception, err:
+            return rapid_data, err
+    else:
+        msg = 'DataType is '+rapid_data.RapidType+' and not jointtarget'
+        return rapid_data, msg
