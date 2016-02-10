@@ -117,41 +117,51 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     msg = 'Input is not boolean.'
                     return rapid_data, msg
             elif property.lower() == 'tframe':
-                new_value = new_value.translate(None, "[]")
-                tframe_list = new_value.split(',')
-                if len(tframe_list) == 7:
-                    tframe = "[%s,[[%d,%d,%d],[%d,%d,%d,%d]],%s]" % \
-                             (tooldata_robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
-                              float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),float(tframe_list[6]),
-                              tooldata_tload)
-                    tooldata.FillFromString2(tframe)
-                    try:
-                        rapid_data.Value = tooldata
-                        msg = 'Tframe updated.'
+                #Checks to see if input is string
+                if isinstance(new_value, basestring):
+                    new_value = new_value.translate(None, "[]")
+                    tframe_list = new_value.split(',')
+                    if len(tframe_list) == 7:
+                        tframe = "[%s,[[%d,%d,%d],[%d,%d,%d,%d]],%s]" % \
+                                 (tooldata_robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
+                                  float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),float(tframe_list[6]),
+                                  tooldata_tload)
+                        tooldata.FillFromString2(tframe)
+                        try:
+                            rapid_data.Value = tooldata
+                            msg = 'Tframe updated.'
+                            return rapid_data, msg
+                        except Exception, err:
+                            return rapid_data, err
+                    else:
+                        msg = 'Input is not a valid Tframe.'
                         return rapid_data, msg
-                    except Exception, err:
-                        return rapid_data, err
                 else:
-                    msg = 'Input is not a valid Tframe.'
+                    msg = 'Input is not string.'
                     return rapid_data, msg
             elif property.lower() == 'tload':
-                new_value = new_value.translate(None, "[]")
-                tload_list = new_value.split(',')
-                if len(tload_list) == 11:
-                    tload = "[%s,%s,[%d,[%d,%d,%d],[%d,%d,%d,%d],%d,%d,%d]]" % \
-                            (tooldata_robhold, tooldata_tframe, float(tload_list[0]), float(tload_list[1]),
-                             float(tload_list[2]), float(tload_list[3]), float(tload_list[4]), float(tload_list[5]),
-                             float(tload_list[6]), float(tload_list[7]), float(tload_list[8]), float(tload_list[9]),
-                             float(tload_list[10]))
-                    tooldata.FillFromString2(tload)
-                    try:
-                        rapid_data.Value = tooldata
-                        msg = 'Tload updated.'
+                #Checks to see if input is string
+                if isinstance(new_value, basestring):
+                    new_value = new_value.translate(None, "[]")
+                    tload_list = new_value.split(',')
+                    if len(tload_list) == 11:
+                        tload = "[%s,%s,[%d,[%d,%d,%d],[%d,%d,%d,%d],%d,%d,%d]]" % \
+                                (tooldata_robhold, tooldata_tframe, float(tload_list[0]), float(tload_list[1]),
+                                 float(tload_list[2]), float(tload_list[3]), float(tload_list[4]), float(tload_list[5]),
+                                 float(tload_list[6]), float(tload_list[7]), float(tload_list[8]), float(tload_list[9]),
+                                 float(tload_list[10]))
+                        tooldata.FillFromString2(tload)
+                        try:
+                            rapid_data.Value = tooldata
+                            msg = 'Tload updated.'
+                            return rapid_data, msg
+                        except Exception, err:
+                            return rapid_data, err
+                    else:
+                        msg = 'Input is not a valid Tload.'
                         return rapid_data, msg
-                    except Exception, err:
-                        return rapid_data, err
                 else:
-                    msg = 'Input is not a valid Tload.'
+                    msg = 'Input is not string.'
                     return rapid_data, msg
             else:
                 msg = 'Property not of type robhold, tframe, tload.'
@@ -184,29 +194,34 @@ def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
         try:
             tooldata = rapid_data.Value
 
-            tframe = tframe.translate(None, "[]")
-            tload = tload.translate(None, "[]")
+            #Checks if input is string
+            if isinstance(tframe, basestring) and isinstance(tload, basestring):
+                tframe = tframe.translate(None, "[]")
+                tload = tload.translate(None, "[]")
 
-            tframe_list = tframe.split(',')
-            tload_list = tload.split(',')
-            if (robhold == True or robhold == False) and (len(tframe_list) == 7) and (len(tload_list) == 11):
-                if robhold == 1: robhold = True
-                if robhold == 0: robhold = False
-                new_tooldata = "[%s,[[%d,%d,%d],[%d,%d,%d,%d]],[%d,[%d,%d,%d],[%d,%d,%d,%d],%d,%d,%d]]" % \
-                               (robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
-                                float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
-                                float(tframe_list[6]), float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),
-                                float(tload_list[3]), float(tload_list[4]), float(tload_list[5]), float(tload_list[6]),
-                                float(tload_list[7]), float(tload_list[8]), float(tload_list[9]), float(tload_list[10]))
-                tooldata.FillFromString2(new_tooldata)
-                try:
-                    rapid_data.Value = tooldata
-                    msg = 'Tooldata updated.'
+                tframe_list = tframe.split(',')
+                tload_list = tload.split(',')
+                if (robhold == True or robhold == False) and (len(tframe_list) == 7) and (len(tload_list) == 11):
+                    if robhold == 1: robhold = True
+                    if robhold == 0: robhold = False
+                    new_tooldata = "[%s,[[%d,%d,%d],[%d,%d,%d,%d]],[%d,[%d,%d,%d],[%d,%d,%d,%d],%d,%d,%d]]" % \
+                                   (robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
+                                    float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
+                                    float(tframe_list[6]), float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),
+                                    float(tload_list[3]), float(tload_list[4]), float(tload_list[5]), float(tload_list[6]),
+                                    float(tload_list[7]), float(tload_list[8]), float(tload_list[9]), float(tload_list[10]))
+                    tooldata.FillFromString2(new_tooldata)
+                    try:
+                        rapid_data.Value = tooldata
+                        msg = 'Tooldata updated.'
+                        return rapid_data, msg
+                    except Exception, err:
+                        return rapid_data, err
+                else:
+                    msg = 'Incorrect format of input data.'
                     return rapid_data, msg
-                except Exception, err:
-                    return rapid_data, err
             else:
-                msg = 'Incorrect format of input data.'
+                msg = 'Input is not string.'
                 return rapid_data, msg
         except Exception, err:
             return rapid_data, err
