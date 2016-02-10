@@ -88,42 +88,47 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             jointtarget_robax = rapid_data.Value.RobAx.ToString()
             jointtarget_extax = rapid_data.Value.ExtAx.ToString()
 
-            new_value = new_value.translate(None,"[]")
-            if property.lower() == 'robax':
-                robax_list = new_value.split(',')
-                if len(robax_list) == 6:
-                    robax = "[[%d,%d,%d,%d,%d,%d],%s]" % \
-                            (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
-                             float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
-                             jointtarget_extax)
-                    jointtarget.FillFromString2(robax)
-                    try:
-                        rapid_data.Value = jointtarget
-                        msg = 'Robax updated.'
+            #Checks if input is string
+            if isinstance(new_value, basestring):
+                new_value = new_value.translate(None,"[]")
+                if property.lower() == 'robax':
+                    robax_list = new_value.split(',')
+                    if len(robax_list) == 6:
+                        robax = "[[%d,%d,%d,%d,%d,%d],%s]" % \
+                                (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
+                                 float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
+                                 jointtarget_extax)
+                        jointtarget.FillFromString2(robax)
+                        try:
+                            rapid_data.Value = jointtarget
+                            msg = 'Robax updated.'
+                            return rapid_data, msg
+                        except Exception, err:
+                            return rapid_data, err
+                    else:
+                        msg = 'Incorrect format of input data.'
                         return rapid_data, msg
-                    except Exception, err:
-                        return rapid_data, err
+                elif property.lower() == 'extax':
+                    extax_list = new_value.split(',')
+                    if len(extax_list) == 6:
+                        extax = "[%s,[%d,%d,%d,%d,%d,%d]]" % \
+                                (jointtarget_robax, float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
+                                 float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                        jointtarget.FillFromString2(extax)
+                        try:
+                            rapid_data.Value = jointtarget
+                            msg = 'Extax updated.'
+                            return rapid_data, msg
+                        except Exception, err:
+                            return rapid_data, err
+                    else:
+                        msg = 'Incorrect format of input.'
+                        return rapid_data, msg
                 else:
                     msg = 'Incorrect format of input data.'
                     return rapid_data, msg
-            elif property.lower() == 'extax':
-                extax_list = new_value.split(',')
-                if len(extax_list) == 6:
-                    extax = "[%s,[%d,%d,%d,%d,%d,%d]]" % \
-                            (jointtarget_robax, float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
-                             float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
-                    jointtarget.FillFromString2(extax)
-                    try:
-                        rapid_data.Value = jointtarget
-                        msg = 'Extax updated.'
-                        return rapid_data, msg
-                    except Exception, err:
-                        return rapid_data, err
-                else:
-                    msg = 'Incorrect format of Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f: ex \'9E9,9E9,9E9,9E9,9E9,9E9\'.'
-                    return rapid_data, msg
             else:
-                msg = 'Incorrect format of input data.'
+                msg = 'Input is not string.'
                 return rapid_data, msg
         except Exception, err:
             return rapid_data, err
@@ -151,27 +156,31 @@ def edit_and_write_rapid_data(rapid_data, robax, extax):
     if rapid_data.RapidType == 'jointtarget':
         try:
             jointtarget = rapid_data.Value
+            #Checks if input is string
+            if isinstance(robax, basestring) and isinstance(extax, basestring):
+                robax = robax.translate(None, "[]")
+                extax = extax.translate(None, "[]")
 
-            robax = robax.translate(None, "[]")
-            extax = extax.translate(None, "[]")
-
-            robax_list = robax.split(',')
-            extax_list = extax.split(',')
-            if (len(robax_list) == 6) and (len(extax_list) == 6):
-                new_jointtarget = "[[%d,%d,%d,%d,%d,%d],[%d,%d,%d,%d,%d,%d]]" % \
-                               (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
-                                float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
-                                float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
-                                float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
-                jointtarget.FillFromString2(new_jointtarget)
-                try:
-                    rapid_data.Value = jointtarget
-                    msg = 'Jointtarget updated.'
+                robax_list = robax.split(',')
+                extax_list = extax.split(',')
+                if (len(robax_list) == 6) and (len(extax_list) == 6):
+                    new_jointtarget = "[[%d,%d,%d,%d,%d,%d],[%d,%d,%d,%d,%d,%d]]" % \
+                                   (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
+                                    float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
+                                    float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
+                                    float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                    jointtarget.FillFromString2(new_jointtarget)
+                    try:
+                        rapid_data.Value = jointtarget
+                        msg = 'Jointtarget updated.'
+                        return rapid_data, msg
+                    except Exception, err:
+                        return rapid_data, err
+                else:
+                    msg = 'Incorrect format of input data.'
                     return rapid_data, msg
-                except Exception, err:
-                    return rapid_data, err
             else:
-                msg = 'Incorrect format of input data.'
+                msg = 'Input is not string.'
                 return rapid_data, msg
         except Exception, err:
             return rapid_data, err
