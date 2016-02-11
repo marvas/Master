@@ -19,16 +19,20 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
     Boolean: Indicating if Robhold exists or not
-    String: The result of trans or error
+    String: Robhold or error
 Examples:
     None
 """
 
 def get_robhold_tostring(rapid_data):
-    try:
-        res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
-        return True, res
-    except Exception, err:
+    if rapid_data.RapidType == 'wobjdata':
+        try:
+            res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
         return False, err
 
 
@@ -39,16 +43,20 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
     Boolean: Indicating if Ufprog exists or not
-    String: The result of trans or error
+    String: Ufprog or error
 Examples:
     None
 """
 
 def get_ufprog_tostring(rapid_data):
-    try:
-        res = 'Ufprog = %s' % rapid_data.Value.Ufprog.ToString()
-        return True, res
-    except Exception, err:
+    if rapid_data.RapidType == 'wobjdata':
+        try:
+            res = 'Ufprog = %s' % rapid_data.Value.Ufprog.ToString()
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
         return False, err
 
 
@@ -59,16 +67,20 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
     Boolean: Indicating if Ufmec exists or not
-    String: The result of trans or error
+    String: Ufmec or error
 Examples:
     None
 """
 
 def get_ufmec_tostring(rapid_data):
-    try:
-        res = 'Ufmec = %s' % rapid_data.Value.Ufmec
-        return True, res
-    except Exception, err:
+    if rapid_data.RapidType == 'wobjdata':
+        try:
+            res = 'Ufmec = %s' % rapid_data.Value.Ufmec
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
         return False, err
 
 
@@ -79,17 +91,21 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
     Boolean: Indicating if Uframe exists or not
-    String: The result of trans or error
+    String: Uframe or error
 Examples:
     None
 """
 
 def get_uframe_tostring(rapid_data):
-    try:
-        res = 'Uframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Uframe.Trans.ToString(),
-                                                 rapid_data.Value.Uframe.Rot.ToString())
-        return True, res
-    except Exception, err:
+    if rapid_data.RapidType == 'wobjdata':
+        try:
+            res = 'Uframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Uframe.Trans.ToString(),
+                                                     rapid_data.Value.Uframe.Rot.ToString())
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
         return False, err
 
 
@@ -100,17 +116,45 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
     Boolean: Indicating if Oframe exists or not
-    String: The result of trans or error
+    String: Oframe or error
 Examples:
     None
 """
 
 def get_oframe_tostring(rapid_data):
-    try:
-        res = 'Oframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Oframe.Trans.ToString(),
-                                                 rapid_data.Value.Oframe.Rot.ToString())
-        return True, res
-    except Exception, err:
+    if rapid_data.RapidType == 'wobjdata':
+        try:
+            res = 'Oframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Oframe.Trans.ToString(),
+                                                     rapid_data.Value.Oframe.Rot.ToString())
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        return False, err
+
+
+"""
+Gets wobjdata and returns it as a string.
+
+Args:
+    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+Returns:
+    Boolean: Indicating if wobjdata exists or not
+    String: Wobjdata or error
+Examples:
+    None
+"""
+
+def get_wobjdata_tostring(rapid_data):
+    if rapid_data.RapidType == 'wobjdata':
+        try:
+            res = 'Wobjdata: %s' % rapid_data.Value.ToString()
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
         return False, err
 
 

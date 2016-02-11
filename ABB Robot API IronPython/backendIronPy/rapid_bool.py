@@ -25,10 +25,14 @@ Examples:
 """
 
 def get_state_tostring(rapid_data):
-    try:
-        res = 'State = %s' % rapid_data.Value
-        return True, res
-    except Exception, err:
+    if rapid_data.RapidType == 'bool':
+        try:
+            res = 'State = %s' % rapid_data.Value
+            return True, res
+        except Exception, err:
+            return False, err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not bool.'
         return False, err
 
 
@@ -44,10 +48,14 @@ Examples:
 """
 
 def get_state(rapid_data):
-    try:
-        return rapid_data.Value
-    except Exception, err:
-        return err
+    if rapid_data.RapidType == 'bool':
+        try:
+            return rapid_data.Value
+        except Exception, err:
+            return err
+    else:
+        err = 'DataType is '+rapid_data.RapidType+' and not bool.'
+        return False, err
 
 
 """
