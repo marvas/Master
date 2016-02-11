@@ -69,12 +69,10 @@ Returns:
 """
 
 def logoff_robot_controller(controller):
-    msg = 'Logoff successful'
-    logoff_success = False
     try:
         controller.Logoff()
         controller.Dispose()
-        logoff_success = True
-    except Exception:
-        msg = 'Unable to log off: User may not be logged in or connection to controller can be lost.'
-    return logoff_success, msg
+        msg = 'Logoff successful'
+        return True, msg
+    except Exception, err:
+        return False, err

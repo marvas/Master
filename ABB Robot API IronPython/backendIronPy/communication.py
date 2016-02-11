@@ -26,7 +26,6 @@ def discover_controllers_on_network():
     net_scan = ctrlrs.Discovery.NetworkScanner()
     net_scan.Scan()
     controllers = net_scan.Controllers
-    print("Controller count: " + str(controllers.Count))
     for controller in controllers:
         print("System name: " + str(controller.SystemName),
               "System ID: " + str(controller.SystemId),
@@ -58,14 +57,11 @@ def connect_robot_with_name(controllers, robot_name):
                 ctrl = ctrlrs.ControllerFactory.CreateFrom(controller)
                 controller_found = True
                 msg = 'Found controller with name: ' + robot_name
-                print('Found controller with name: ' + robot_name)
                 break
         if controller_found is False:
             msg = 'Could not find controller with name: ' + robot_name
-            print('Could not find controller with name: ' + robot_name)
     except SystemError:
         msg = 'Remember to discover the controllers first before trying to connect to one'
-        print('Remember to discover the controllers first before trying to connect to one')
     return ctrl, msg
 
 
@@ -93,14 +89,11 @@ def connect_robot_with_ipaddr(controllers, IPAddress):
                 ctrl = ctrlrs.ControllerFactory.CreateFrom(controller)
                 controller_found = True
                 msg = 'Found controller with specified IP address: ' + IPAddress
-                print('Found controller with specified IP address: ' + IPAddress)
                 break
         if controller_found is False:
             msg = 'Could not find controller with the specified IP address: ' + IPAddress
-            print('Could not find controller with the specified IP address: ' + IPAddress)
     except SystemError:
         msg = 'Remember to discover the controllers first before trying to connect to one'
-        print('Remember to discover the controllers first before trying to connect to one')
     return ctrl, msg
 
 
