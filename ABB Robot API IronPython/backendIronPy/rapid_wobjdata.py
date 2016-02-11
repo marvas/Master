@@ -241,7 +241,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     new_value = new_value.translate(None, "[]")
                     uframe_list = new_value.split(',')
                     if len(uframe_list) == 7:
-                        uframe = "[%s,%s,%s,[[%d,%d,%d],[%d,%d,%d,%d]],%s]" % \
+                        uframe = "[%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]],%s]" % \
                                  (wobjdata_robhold, wobjdata_ufprog, ctrlrs.RapidDomain.String(wobjdata_ufmec),
                                   float(uframe_list[0]), float(uframe_list[1]), float(uframe_list[2]),
                                   float(uframe_list[3]), float(uframe_list[4]), float(uframe_list[5]),
@@ -264,7 +264,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     new_value = new_value.translate(None, "[]")
                     oframe_list = new_value.split(',')
                     if len(oframe_list) == 7:
-                        oframe = "[%s,%s,%s,%s,[[%d,%d,%d],[%d,%d,%d,%d]]]" % \
+                        oframe = "[%s,%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]]]" % \
                                 (wobjdata_robhold, wobjdata_ufprog, ctrlrs.RapidDomain.String(wobjdata_ufmec),
                                  wobjdata_uframe, float(oframe_list[0]), float(oframe_list[1]),
                                  float(oframe_list[2]), float(oframe_list[3]), float(oframe_list[4]),
@@ -325,7 +325,7 @@ def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe
                     if robhold == 0: robhold = False
                     if ufprog == 1: ufprog = True
                     if ufprog == 0: ufprog = False
-                    new_wobjdata = "[%s,%s,%s,[[%d,%d,%d],[%d,%d,%d,%d]],[[%d,%d,%d],[%d,%d,%d,%d]]]" % \
+                    new_wobjdata = "[%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]],[[%G,%G,%G],[%G,%G,%G,%G]]]" % \
                                    (robhold, ufprog, ctrlrs.RapidDomain.String(ufmec), float(uframe_list[0]),
                                     float(uframe_list[1]), float(uframe_list[2]), float(uframe_list[3]),
                                     float(uframe_list[4]), float(uframe_list[5]), float(uframe_list[6]),

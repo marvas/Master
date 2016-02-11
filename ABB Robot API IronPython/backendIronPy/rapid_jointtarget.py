@@ -126,7 +126,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 if property.lower() == 'robax':
                     robax_list = new_value.split(',')
                     if len(robax_list) == 6:
-                        robax = "[[%d,%d,%d,%d,%d,%d],%s]" % \
+                        robax = "[[%G,%G,%G,%G,%G,%G],%s]" % \
                                 (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
                                  float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
                                  jointtarget_extax)
@@ -143,7 +143,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 elif property.lower() == 'extax':
                     extax_list = new_value.split(',')
                     if len(extax_list) == 6:
-                        extax = "[%s,[%d,%d,%d,%d,%d,%d]]" % \
+                        extax = "[%s,[%G,%G,%G,%G,%G,%G]]" % \
                                 (jointtarget_robax, float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
                                  float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
                         jointtarget.FillFromString2(extax)
@@ -196,7 +196,7 @@ def edit_and_write_rapid_data(rapid_data, robax, extax):
                 robax_list = robax.split(',')
                 extax_list = extax.split(',')
                 if (len(robax_list) == 6) and (len(extax_list) == 6):
-                    new_jointtarget = "[[%d,%d,%d,%d,%d,%d],[%d,%d,%d,%d,%d,%d]]" % \
+                    new_jointtarget = "[[%G,%G,%G,%G,%G,%G],[%G,%G,%G,%G,%G,%G]]" % \
                                    (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]),
                                     float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
                                     float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),

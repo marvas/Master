@@ -76,7 +76,7 @@ Examples:
 def get_tload_tostring(rapid_data):
     if rapid_data.RapidType == 'tooldata':
         try:
-            res = 'Tload: [Mass,Cog,Aom,Ix,Iy,Iz] = [%g,%s,%s,%g,%g,%g]' % \
+            res = 'Tload: [Mass,Cog,Aom,Ix,Iy,Iz] = [%G,%s,%s,%G,%G,%G]' % \
                   (rapid_data.Value.Tload.Mass, rapid_data.Value.Tload.Cog.ToString(),
                    rapid_data.Value.Tload.Aom.ToString(),rapid_data.Value.Tload.Ix,
                    rapid_data.Value.Tload.Iy, rapid_data.Value.Tload.Iz)
@@ -158,7 +158,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     new_value = new_value.translate(None, "[]")
                     tframe_list = new_value.split(',')
                     if len(tframe_list) == 7:
-                        tframe = "[%s,[[%g,%g,%g],[%g,%g,%g,%g]],%s]" % \
+                        tframe = "[%s,[[%G,%G,%G],[%G,%G,%G,%G]],%s]" % \
                                  (tooldata_robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
                                   float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),float(tframe_list[6]),
                                   tooldata_tload)
@@ -181,7 +181,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     new_value = new_value.translate(None, "[]")
                     tload_list = new_value.split(',')
                     if len(tload_list) == 11:
-                        tload = "[%s,%s,[%g,[%g,%g,%g],[%g,%g,%g,%g],%g,%g,%g]]" % \
+                        tload = "[%s,%s,[%G,[%G,%G,%G],[%G,%G,%G,%G],%G,%G,%G]]" % \
                                 (tooldata_robhold, tooldata_tframe, float(tload_list[0]), float(tload_list[1]),
                                  float(tload_list[2]), float(tload_list[3]), float(tload_list[4]), float(tload_list[5]),
                                  float(tload_list[6]), float(tload_list[7]), float(tload_list[8]), float(tload_list[9]),
@@ -240,7 +240,7 @@ def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
                 if (robhold == True or robhold == False) and (len(tframe_list) == 7) and (len(tload_list) == 11):
                     if robhold == 1: robhold = True
                     if robhold == 0: robhold = False
-                    new_tooldata = "[%s,[[%g,%g,%g],[%g,%g,%g,%g]],[%g,[%g,%g,%g],[%g,%g,%g,%g],%g,%g,%g]]" % \
+                    new_tooldata = "[%s,[[%G,%G,%G],[%G,%G,%G,%G]],[%G,[%G,%G,%G],[%G,%G,%G,%G],%G,%G,%G]]" % \
                                    (robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
                                     float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
                                     float(tframe_list[6]), float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),

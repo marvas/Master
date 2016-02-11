@@ -26,7 +26,7 @@ Examples:
 def get_trans_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
-            res = 'Trans: [X,Y,Z] = [%d,%d,%d]' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
+            res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
             return True, res
         except Exception, err:
             return False, err
@@ -50,7 +50,7 @@ Examples:
 def get_rot_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
-            res = 'Rot: [Q1,Q2,Q3,Q4] = [%d,%d,%d,%d]' % (rapid_data.Value.Rot.Q1,rapid_data.Value.Rot.Q2,
+            res = 'Rot: [Q1,Q2,Q3,Q4] = [%G,%G,%G,%G]' % (rapid_data.Value.Rot.Q1,rapid_data.Value.Rot.Q2,
                                                      rapid_data.Value.Rot.Q3,rapid_data.Value.Rot.Q4)
             return True, res
         except Exception, err:
@@ -178,7 +178,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 if property.lower() == 'trans':
                     trans_list = new_value.split(',')
                     if len(trans_list) == 3:
-                        trans = "[[%d,%d,%d],%s,%s,%s]" % \
+                        trans = "[[%G,%G,%G],%s,%s,%s]" % \
                                 (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
                                  robtarget_rot, robtarget_robconf, robtarget_extax)
                         robtarget.FillFromString2(trans)
@@ -194,7 +194,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 elif property.lower() == 'rot':
                     rot_list = new_value.split(',')
                     if len(rot_list) == 4:
-                        rot = "[%s,[%d,%d,%d,%d],%s,%s]" % \
+                        rot = "[%s,[%G,%G,%G,%G],%s,%s]" % \
                               (robtarget_trans, float(rot_list[0]),float(rot_list[1]),float(rot_list[2]),float(rot_list[3]),
                                robtarget_robconf, robtarget_extax)
                         robtarget.FillFromString2(rot)
@@ -227,7 +227,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 elif property.lower() == 'extax':
                     extax_list = new_value.split(',')
                     if len(extax_list) == 6:
-                        extax = "[%s,%s,%s,[%d,%d,%d,%d,%d,%d]]" % \
+                        extax = "[%s,%s,%s,[%G,%G,%G,%G,%G,%G]]" % \
                                 (robtarget_trans, robtarget_rot, robtarget_robconf,
                                  float(extax_list[0]),float(extax_list[1]),
                                  float(extax_list[2]),float(extax_list[3]),
@@ -290,7 +290,7 @@ def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
                 robconf_list = robconf.split(',')
                 extax_list = extax.split(',')
                 if (len(trans_list) == 3) and (len(rot_list) == 4) and (len(robconf_list) == 4) and (len(extax_list) == 6):
-                    new_robtarget = "[[%d,%d,%d],[%d,%d,%d,%d],[%d,%d,%d,%d],[%d,%d,%d,%d,%d,%d]]" % \
+                    new_robtarget = "[[%G,%G,%G],[%G,%G,%G,%G],[%d,%d,%d,%d],[%G,%G,%G,%G,%G,%G]]" % \
                                     (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
                                      float(rot_list[0]), float(rot_list[1]), float(rot_list[2]), float(rot_list[3]),
                                      float(robconf_list[0]), float(robconf_list[1]), float(robconf_list[2]),
