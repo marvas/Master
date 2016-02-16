@@ -26,7 +26,8 @@ Examples:
 def get_trans_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
-            res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,rapid_data.Value.Trans.Z )
+            res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,
+                                                   rapid_data.Value.Trans.Z )
             return True, res
         except Exception, err:
             return False, err
@@ -173,6 +174,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             robtarget_robconf = rapid_data.Value.Robconf.ToString()
             robtarget_extax = rapid_data.Value.Extax.ToString()
 
+            #Checks if new_value is string
             if isinstance(new_value, basestring):
                 new_value = new_value.translate(None, "[]")
                 if property.lower() == 'trans':
