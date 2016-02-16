@@ -1,15 +1,6 @@
 """
-Module for reading and setting speeddata. Speeddata is not currently supported in PC SDK as a type so
-a userdefined struct is made to represent speeddata until it is made available through PC SDK.
+Module for reading and setting speeddata. Speeddata is not in RapidDomain in PC SDK as of now (16.02.16).
 """
-
-import clr
-
-clr.AddReferenceToFileAndPath(
-        'C:\\Program Files (x86)\\ABB Industrial IT\\Robotics IT\\SDK\PCSDK 6.02\\ABB.Robotics.Controllers.PC.dll')
-# clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
-import ABB.Robotics.Controllers as ctrlrs
-
 
 
 base_speeddata_list = [5, 10, 20, 30, 40, 50, 60, 80, 100, 150, 200,
@@ -41,7 +32,7 @@ def get_speeddata_tostring(rapid_data):
                 return True, res
             else:
                 res = 'Speeddata: %s' % rapid_data.Value.ToString()
-                return False, res
+                return True, res
         except Exception, err:
             return False, err
     else:
