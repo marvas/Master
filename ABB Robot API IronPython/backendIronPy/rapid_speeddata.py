@@ -49,7 +49,7 @@ Base speeddata supported:
 
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    String: new_value
+    String: value
 Returns:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
@@ -71,7 +71,7 @@ def edit_and_write_rapid_data_speeddata_base(rapid_data, value):
                 if value[:1].lower() == 'v':
                     value = value.split('v')
                     # Checks if what comes after v is a digit. Checks if the value is in the base list.
-                    # Checks if the value list is of length 2 in case the user inserted a longer string ex 'v100v200'.
+                    # Checks if the value list is of length 2 in case the user inserted a longer string, ex 'v100v200'.
                     if value[1].isdigit() and (int(value[1]) in base_speeddata_list) and (len(value) == 2):
                         new_speeddata = '[%d,500,5000,1000]' % int(value[1])
                         speeddata.FillFromString2(new_speeddata)
