@@ -105,7 +105,7 @@ Returns:
     String: result message or error
 Examples:
     If RAPID array is of length 3:
-    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [])
+    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, []) Formats array to default.
     rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50])
     rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100,1.1,50])
     rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100])
