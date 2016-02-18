@@ -1,5 +1,5 @@
 """
-Module handling arrays in RAPID. This module only supports editing and writing rapid type num.
+Module handling one dimensional arrays in RAPID. This module only supports editing and writing rapid type num.
 """
 
 
