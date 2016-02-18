@@ -43,6 +43,7 @@ Args:
 Returns:
     ABB.Robotics.Controllers.Controller OR 0: Output depends on if the connection is successful or not.
     String: Message with the outcome
+    Boolean: Indicates if the controller was found and connected to.
 Examples:
     None
 """
@@ -58,11 +59,11 @@ def connect_robot_with_name(controllers, robot_name):
                 controller_found = True
                 msg = 'Found controller with name: ' + robot_name
                 break
-        if controller_found is False:
+        if controller_found == False:
             msg = 'Could not find controller with name: ' + robot_name
     except SystemError:
         msg = 'Remember to discover the controllers first before trying to connect to one'
-    return ctrl, msg
+    return ctrl, msg, controller_found
 
 
 """
@@ -75,6 +76,7 @@ Args:
 Returns:
     ABB.Robotics.Controllers.Controller OR 0: Output depends on if the connection is successful or not.
     String: Message with the outcome
+    Boolean: Indicates if the controller was found and connected to.
 Examples:
     None
 """
@@ -90,11 +92,11 @@ def connect_robot_with_ipaddr(controllers, IPAddress):
                 controller_found = True
                 msg = 'Found controller with specified IP address: ' + IPAddress
                 break
-        if controller_found is False:
+        if controller_found == False:
             msg = 'Could not find controller with the specified IP address: ' + IPAddress
     except SystemError:
         msg = 'Remember to discover the controllers first before trying to connect to one'
-    return ctrl, msg
+    return ctrl, msg, controller_found
 
 
 """
