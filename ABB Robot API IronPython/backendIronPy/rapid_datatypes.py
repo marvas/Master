@@ -4,12 +4,6 @@ back to the controller in order to update a data instance.
 """
 
 
-import clr
-clr.AddReferenceToFileAndPath(
-        'C:\\Program Files (x86)\\ABB Industrial IT\\Robotics IT\\SDK\PCSDK 6.02\\ABB.Robotics.Controllers.PC.dll')
-import ABB.Robotics.Controllers as ctrlrs
-# clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
-
 
 
 """

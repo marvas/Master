@@ -4,13 +4,6 @@ jointtarget, as well as displaying the different properties of the jointtarget.
 """
 
 
-import clr
-clr.AddReferenceToFileAndPath(
-        'C:\\Program Files (x86)\\ABB Industrial IT\\Robotics IT\\SDK\PCSDK 6.02\\ABB.Robotics.Controllers.PC.dll')
-import ABB.Robotics.Controllers as ctrlrs
-# clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
-
-
 
 """
 Gets RobAx from jointtarget and returns it as a string
