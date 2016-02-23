@@ -40,7 +40,7 @@ Args:
     ABB.Robotics.Controllers.Controller: Controller
     String: Username
     String: Password
-Returns
+Returns:
     Boolean: Indicates if logon is successful
     String: Message with the outcome
 Examples:
@@ -66,6 +66,8 @@ Args:
 Returns:
     Boolean: Indicates if logoff is successful
     String: Message with the outcome
+Examples:
+    None
 """
 
 def logoff_robot_controller(controller):
