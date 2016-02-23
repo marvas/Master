@@ -17,7 +17,6 @@ Args:
     ABB.Robotics.Controllers.Controller: Controller
 Returns:
     Boolean: Indicates if master or not
-    String: Message with the outcome
 Examples:
     None
 """
@@ -25,13 +24,11 @@ Examples:
 def is_controller_master(controller):
     try:
         if controller.IsMaster == True:
-            msg = 'Has master access'
-            return True, msg
+            return True
         else:
-            msg = 'Does not have master access'
-            return False, msg
+            return False
     except Exception, err:
-        return False, err
+        return False
 
 
 """
