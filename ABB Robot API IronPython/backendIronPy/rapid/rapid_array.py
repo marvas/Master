@@ -58,7 +58,7 @@ def get_dimensions_array(rapid_data):
 """
 Inserts a value into num array with index and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
-Remember that RAPID starts at index 0.
+Index starts from 0.
 
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
