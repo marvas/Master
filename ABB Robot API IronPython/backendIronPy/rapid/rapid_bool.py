@@ -50,7 +50,10 @@ Examples:
 def get_state(rapid_data):
     if rapid_data.RapidType == 'bool':
         try:
-            return bool(rapid_data.Value)
+            if rapid_data.Value.ToString().lower() == 'true':
+                return True
+            elif rapid_data.Value.ToString().lower() == 'false':
+                return False
         except Exception, err:
             return err
     else:
