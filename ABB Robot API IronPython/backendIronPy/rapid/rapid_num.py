@@ -50,7 +50,7 @@ Examples:
 def get_value(rapid_data):
     if rapid_data.RapidType == 'num':
         try:
-            return rapid_data.Value
+            return float(rapid_data.Value)
         except Exception, err:
             return err
     else:

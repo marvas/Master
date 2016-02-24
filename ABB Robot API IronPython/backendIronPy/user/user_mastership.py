@@ -23,10 +23,7 @@ Examples:
 
 def is_controller_master(controller):
     try:
-        if controller.IsMaster == True:
-            return True
-        else:
-            return False
+        return bool(controller.IsMaster)
     except Exception, err:
         return False
 

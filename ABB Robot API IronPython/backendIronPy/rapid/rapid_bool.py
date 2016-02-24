@@ -50,7 +50,7 @@ Examples:
 def get_state(rapid_data):
     if rapid_data.RapidType == 'bool':
         try:
-            return rapid_data.Value
+            return bool(rapid_data.Value)
         except Exception, err:
             return err
     else:

@@ -25,7 +25,7 @@ Examples:
 def get_length_array(rapid_data):
     if rapid_data.IsArray:
         try:
-            return rapid_data.Value.Length
+            return int(rapid_data.Value.Length)
         except Exception, err:
             return err
     else:
@@ -47,7 +47,7 @@ Examples:
 def get_dimensions_array(rapid_data):
     if rapid_data.IsArray:
         try:
-            return rapid_data.Value.Rank
+            return int(rapid_data.Value.Rank)
         except Exception, err:
             return err
     else:
