@@ -55,7 +55,7 @@ def get_value(rapid_data):
             return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not num.'
-        return False, err
+        return err
 
 
 """
@@ -66,7 +66,6 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     Float: new_value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data(rapid_data, 1)
@@ -78,9 +77,9 @@ def edit_and_write_rapid_data(rapid_data, new_value):
         try:
             rapid_data.Value = ctrlrs.RapidDomain.Num(new_value)
             msg = 'Changed the value'
-            return rapid_data, msg
+            return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not num'
-        return rapid_data, msg
+        return msg

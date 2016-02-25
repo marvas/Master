@@ -58,7 +58,7 @@ def get_state(rapid_data):
             return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not bool.'
-        return False, err
+        return err
 
 
 """
@@ -69,7 +69,6 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     Boolean: new_value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Example:
     rapid_data, message = edit_and_write_rapid_data(rapid_data, True)
@@ -81,9 +80,9 @@ def edit_and_write_rapid_data(rapid_data, new_value):
         try:
             rapid_data.Value = ctrlrs.RapidDomain.Bool(new_value)
             msg = 'Changed the value'
-            return rapid_data, msg
+            return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not bool'
-        return rapid_data, msg
+        return msg

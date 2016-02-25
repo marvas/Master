@@ -65,7 +65,6 @@ Args:
     Integer: Index, array index
     Float: Value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_array_num_index(rapid_data, 0, 100)
@@ -78,18 +77,18 @@ def edit_and_write_rapid_data_array_num_index(rapid_data, index, value):
                 if isinstance(value, (int,float)):
                     rapid_data.WriteItem(ctrlrs.RapidDomain.Num(value), index)
                     msg = 'Array updated.'
-                    return rapid_data, msg
+                    return msg
                 else:
                     msg = 'Value is not a number.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Index is not valid.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'Datatype is not array of num.'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -101,7 +100,6 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     List: values, ex([100,1,2])
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     If RAPID array is of length 3:
@@ -122,12 +120,12 @@ def edit_and_write_rapid_data_array_num(rapid_data, values):
                 #Returns if values are larger than the RAPID list.
                 if len(values) > rapid_data.Value.Length:
                     msg = 'Input list is larger than RAPID list.'
-                    return rapid_data, msg
+                    return msg
                 #Checks if all values in input values are of type int or float.
                 for value in values:
                     if isinstance(value, (int,float)) == False:
                         msg = 'Something wrong in list.'
-                        return rapid_data, msg
+                        return msg
                 #If size of values are smaller than RAPID list, then fill the list
                 #with zeroes until they are the same size.
                 if len(values) < rapid_data.Value.Length:
@@ -137,17 +135,17 @@ def edit_and_write_rapid_data_array_num(rapid_data, values):
                     new_array = '%s' % values
                     num_array.FillFromString(new_array)
                     msg = 'Array updated.'
-                    return rapid_data, msg
+                    return msg
                 else:
                     new_array = '%s' % values
                     num_array.FillFromString(new_array)
                     msg = 'Array updated.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Values is not a list.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'Datatype is not array of num.'
-        return rapid_data, msg
+        return msg

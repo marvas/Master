@@ -65,7 +65,6 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_zonedata_base(rapid_data,'z0')
@@ -90,23 +89,23 @@ def edit_and_write_rapid_data_zonedata_base(rapid_data, value):
                         try:
                             rapid_data.Value = zonedata
                             msg = 'Zonedata updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return  rapid_data, err
+                            return err
                     else:
                         msg = 'Something wrong with the input format, or the input is not a valid base zone.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Something wrong with the input. Not in format \'z1\''
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input has to be string. (ex. \'z1\')'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is ' + rapid_data.RapidType + ' and not zonedata'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -123,7 +122,6 @@ Args:
     Float: zone_leax
     Float: zone_reax
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_zonedata(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
@@ -147,14 +145,14 @@ def edit_and_write_rapid_data_zonedata(rapid_data, finep, pzone_tcp, pzone_ori, 
                 try:
                     rapid_data.Value = zonedata
                     msg = 'Zonedata updated.'
-                    return rapid_data, msg
+                    return msg
                 except Exception, err:
-                    return rapid_data, err
+                    return err
             else:
                 msg = 'Invalid input in one or more of the arguments'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is ' + rapid_data.RapidType + ' and not zonedata'
-        return rapid_data, msg
+        return msg

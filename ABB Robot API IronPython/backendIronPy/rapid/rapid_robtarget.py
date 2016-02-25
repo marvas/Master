@@ -150,7 +150,6 @@ Args:
     String: property (accepted types: trans, rot, robconf, extax)
     String: new_value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_property(rapid_data,'trans','[100,100,0]')
@@ -181,12 +180,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = robtarget
                             msg = 'Trans updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Incorrect format of x,y,z: ex. \'10,50,0\'.'
-                        return rapid_data, msg
+                        return msg
                 elif property.lower() == 'rot':
                     rot_list = new_value.split(',')
                     if len(rot_list) == 4:
@@ -197,12 +196,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = robtarget
                             msg = 'Rot updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Incorrect format of q1,q2,q3,q4: ex. \'0,0,1,0\'.'
-                        return rapid_data, msg
+                        return msg
                 elif property.lower() == 'robconf':
                     conf_data_list = new_value.split(',')
                     if len(conf_data_list) == 4:
@@ -214,12 +213,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = robtarget
                             msg = 'Robconf updated.'
-                            return  rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Incorrect format of Cf1,Cf4,Cf6,Cfx: ex. \'1,0,1,0\'.'
-                        return rapid_data, msg
+                        return msg
                 elif property.lower() == 'extax':
                     extax_list = new_value.split(',')
                     if len(extax_list) == 6:
@@ -232,23 +231,23 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = robtarget
                             msg = 'Extax updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Incorrect format of Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f: ex \'9E9,9E9,9E9,9E9,9E9,9E9\'.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Property not of type trans, rot, robconf or extax.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input is not string.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not robtarget'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -262,7 +261,6 @@ Args:
     String: robconf
     String: extax
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
    rapid_data, message = edit_and_write_rapid_data(rapid_data,'[100,100,0]','[1,0,0,1]','[0,1,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
@@ -296,17 +294,17 @@ def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
                     try:
                         rapid_data.Value = robtarget
                         msg = 'Robtarget updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Incorrect format of input data.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input is not string.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not robtarget'
-        return rapid_data, msg
+        return msg

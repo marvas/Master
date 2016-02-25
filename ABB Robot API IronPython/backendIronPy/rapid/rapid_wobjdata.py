@@ -167,7 +167,6 @@ Args:
     String: property (accepted types: robhold, ufprog, ufmec, uframe, oframe)
     String: new_value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
@@ -198,12 +197,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     try:
                         rapid_data.Value = wobjdata
                         msg = 'Robhold updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Input is not boolean.'
-                    return rapid_data, msg
+                    return msg
             elif property.lower() == 'ufprog':
                 if new_value == True or new_value == False:
                     if new_value == 1: new_value = True
@@ -215,12 +214,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     try:
                         rapid_data.Value = wobjdata
                         msg = 'Ufprog updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Input is not boolean.'
-                    return rapid_data, msg
+                    return msg
             elif property.lower() == 'ufmec':
                 if isinstance(new_value, basestring):
                     ufmec = "[%s,%s,%s,%s,%s]" % \
@@ -230,12 +229,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     try:
                         rapid_data.Value = wobjdata
                         msg = 'Ufmec updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Input is not string.'
-                    return rapid_data, msg
+                    return msg
             elif property.lower() == 'uframe':
                 if isinstance(new_value, basestring):
                     new_value = new_value.translate(None, "[]")
@@ -250,15 +249,15 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = wobjdata
                             msg = 'Uframe updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Input is not a valid Uframe.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Input is not string.'
-                    return rapid_data, msg
+                    return msg
             elif property.lower() == 'oframe':
                 if isinstance(new_value, basestring):
                     new_value = new_value.translate(None, "[]")
@@ -273,20 +272,20 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = wobjdata
                             msg = 'Oframe updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Input is not a valid Oframe.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Input is not string.'
-                    return rapid_data, msg
+                    return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not wobjdata'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -301,7 +300,6 @@ Args:
     String: uframe (ex. '[100,100,100],[1,0,0,0]')
     String: oframe (ex. '[0,0,0],[1,0,0,0]')
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data(rapid_data, True, False,'','[100,100,0],[1,0,0,0]','[0,0,0],[1,0,0,0]')
@@ -336,17 +334,17 @@ def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe
                     try:
                         rapid_data.Value = wobjdata
                         msg = 'Wobjdata updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Incorrect format of input data.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Incorrect format of input data.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not wobjdata'
-        return rapid_data, msg
+        return msg

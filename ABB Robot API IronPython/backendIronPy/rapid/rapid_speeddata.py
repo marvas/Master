@@ -51,7 +51,6 @@ Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_speeddata_base(rapid_data,'v100')
@@ -78,23 +77,23 @@ def edit_and_write_rapid_data_speeddata_base(rapid_data, value):
                         try:
                             rapid_data.Value = speeddata
                             msg = 'Speeddata updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Something wrong with the input format, or the input is not a valid base speed.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Something wrong with the input. Not in format \'v100\''
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input has to be string. (ex. \'v100\')'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is ' + rapid_data.RapidType + ' and not speeddata'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -108,7 +107,6 @@ Args:
     Float: vel_lin_extax
     Float: vel_lin_rot_extax
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_speeddata(rapid_data, 100, 500, 5000, 1000)
@@ -129,14 +127,14 @@ def edit_and_write_rapid_data_speeddata(rapid_data, vel_tcp, vel_orient, vel_lin
                 try:
                     rapid_data.Value = speeddata
                     msg = 'Speeddata updated'
-                    return rapid_data, msg
+                    return msg
                 except Exception, err:
-                    return rapid_data, err
+                    return err
             else:
                 msg = 'Invalid input in one or more of the arguments'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is ' + rapid_data.RapidType + ' and not speeddata'
-        return rapid_data, msg
+        return msg

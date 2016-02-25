@@ -114,7 +114,6 @@ Args:
     String: property (accepted types: robhold, tframe, tload)
     String: new_value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
@@ -139,12 +138,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     try:
                         rapid_data.Value = tooldata
                         msg = 'Robhold updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Input is not boolean.'
-                    return rapid_data, msg
+                    return msg
             elif property.lower() == 'tframe':
                 #Checks to see if input is string
                 if isinstance(new_value, basestring):
@@ -159,15 +158,15 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = tooldata
                             msg = 'Tframe updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Input is not a valid Tframe.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Input is not string.'
-                    return rapid_data, msg
+                    return msg
             elif property.lower() == 'tload':
                 #Checks to see if input is string
                 if isinstance(new_value, basestring):
@@ -183,23 +182,23 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = tooldata
                             msg = 'Tload updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Input is not a valid Tload.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Input is not string.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Property not of type robhold, tframe, tload.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -212,7 +211,6 @@ Args:
     String: tframe (ex. '[0,0,100],[0,0,0,1]')
     String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
@@ -243,17 +241,17 @@ def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
                     try:
                         rapid_data.Value = tooldata
                         msg = 'Tooldata updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Incorrect format of input data.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input is not string.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not tooldata'
-        return rapid_data, msg
+        return msg

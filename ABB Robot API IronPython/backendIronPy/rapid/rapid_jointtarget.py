@@ -98,7 +98,6 @@ Args:
     String: property (accepted types: robax, extax)
     String: new_value
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'robax', '[0,0,0,0,0,0]')
@@ -127,12 +126,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = jointtarget
                             msg = 'Robax updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Incorrect format of input data.'
-                        return rapid_data, msg
+                        return msg
                 elif property.lower() == 'extax':
                     extax_list = new_value.split(',')
                     if len(extax_list) == 6:
@@ -143,23 +142,23 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         try:
                             rapid_data.Value = jointtarget
                             msg = 'Extax updated.'
-                            return rapid_data, msg
+                            return msg
                         except Exception, err:
-                            return rapid_data, err
+                            return err
                     else:
                         msg = 'Incorrect format of input.'
-                        return rapid_data, msg
+                        return msg
                 else:
                     msg = 'Incorrect format of input data.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input is not string.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not jointtarget'
-        return rapid_data, msg
+        return msg
 
 
 """
@@ -171,7 +170,6 @@ Args:
     String: robax (ex. '[0,0,0,0,0,0]')
     String: extax (ex. '[9E9,9E9,9E9,9E9,9E9,9E9]')
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: result message or error
 Examples:
     rapid_data, message = edit_and_write_rapid_data(rapid_data, '[0,0,0,0,0,0]', '[9E9,9E9,9E9,9E9,9E9,9E9]')
@@ -198,17 +196,17 @@ def edit_and_write_rapid_data(rapid_data, robax, extax):
                     try:
                         rapid_data.Value = jointtarget
                         msg = 'Jointtarget updated.'
-                        return rapid_data, msg
+                        return msg
                     except Exception, err:
-                        return rapid_data, err
+                        return err
                 else:
                     msg = 'Incorrect format of input data.'
-                    return rapid_data, msg
+                    return msg
             else:
                 msg = 'Input is not string.'
-                return rapid_data, msg
+                return msg
         except Exception, err:
-            return rapid_data, err
+            return err
     else:
         msg = 'DataType is '+rapid_data.RapidType+' and not jointtarget'
-        return rapid_data, msg
+        return msg
