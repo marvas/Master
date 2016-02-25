@@ -50,20 +50,18 @@ Examples:
 
 def connect_robot_with_name(controllers, robot_name):
     controller_found = False
-    ctrl = 0
-    msg = ''
     try:
         for controller in controllers:
             if robot_name.lower() == str(controller.SystemName).lower():
                 ctrl = ctrlrs.ControllerFactory.CreateFrom(controller)
                 controller_found = True
                 msg = 'Found controller with name: ' + robot_name
-                break
-        if controller_found == False:
-            msg = 'Could not find controller with name: ' + robot_name
+                return ctrl, msg, controller_found
+        msg = 'Could not find controller with name: ' + robot_name
+        return None, msg, controller_found
     except Exception:
         msg = 'Remember to discover the controllers first before trying to connect.'
-    return ctrl, msg, controller_found
+        return None, msg, controller_found
 
 
 """
@@ -83,20 +81,18 @@ Examples:
 
 def connect_robot_with_ipaddr(controllers, IPAddress):
     controller_found = False
-    ctrl = 0
-    msg = ''
     try:
         for controller in controllers:
             if IPAddress == str(controller.IPAddress):
                 ctrl = ctrlrs.ControllerFactory.CreateFrom(controller)
                 controller_found = True
                 msg = 'Found controller with specified IP address: ' + IPAddress
-                break
-        if controller_found == False:
-            msg = 'Could not find controller with the specified IP address: ' + IPAddress
+                return ctrl, msg, controller_found
+        msg = 'Could not find controller with the specified IP address: ' + IPAddress
+        return None, msg, controller_found
     except Exception:
         msg = 'Remember to discover the controllers first before trying to connect.'
-    return ctrl, msg, controller_found
+        return None, msg, controller_found
 
 
 """
