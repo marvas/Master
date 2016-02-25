@@ -35,6 +35,7 @@ _, rapid_drawing = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule'
 _, rapid_new_point = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'new_point')
 _, rapid_sim_started = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'sim_started')
 
+
 # Checks if rapid simulation has started first.
 if rapid_bool.get_state(rapid_sim_started) == False:
     print 'Start rapid simulation first.'
@@ -45,11 +46,11 @@ if rapid_bool.get_state(rapid_sim_started) == False:
 # Properties of the drawn flower
 amplitude = 100 # Length of the petals
 theta = 0 # Current angle
-k = 4 # Petal properties
+k = 4 # Petal properties, if k is decimal number then write number like this: 5.0 or 6.0/5.0
 del_theta = 2 # Step
 num_flowers = 0 # Number of flowers drawn
 # Draws 18 flower
-while num_flowers < 18:
+while num_flowers < 1:
     while theta < 360:
         if rapid_bool.get_state(rapid_drawing) == False:
             x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
@@ -60,17 +61,11 @@ while num_flowers < 18:
             if status == False:
                 print 'Could not get mastership'
                 break
-            status, msg = rapid_num.edit_and_write_rapid_data(rapid_x, x)
+            msg = rapid_num.edit_and_write_rapid_data(rapid_x, x)
             print msg
-            if status == False:
-                print 'Could not write x'
-                break
-            status, msg = rapid_num.edit_and_write_rapid_data(rapid_y, y)
+            msg = rapid_num.edit_and_write_rapid_data(rapid_y, y)
             print msg
-            if status == False:
-                print 'Could not write y'
-                break
-            _, msg = rapid_bool.edit_and_write_rapid_data(rapid_new_point, True)
+            msg = rapid_bool.edit_and_write_rapid_data(rapid_new_point, True)
             print msg
             status, msg = user_mastership.release_and_dispose_master_access(mastership)
             print status, msg
@@ -83,7 +78,7 @@ while num_flowers < 18:
 _, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
 print msg
 # Stops the RAPID execution.
-_, _ = rapid_bool.edit_and_write_rapid_data(rapid_run, False)
+_ = rapid_bool.edit_and_write_rapid_data(rapid_run, False)
 print 'Stopped RAPID code.'
 _, msg = user_mastership.release_and_dispose_master_access(mastership)
 print msg
