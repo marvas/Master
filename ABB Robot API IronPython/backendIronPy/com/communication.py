@@ -41,7 +41,7 @@ Args:
     ABB.Robotics.Controllers: Controllers
     String: Name of the robot
 Returns:
-    ABB.Robotics.Controllers.Controller OR 0: Output depends on if the connection is successful or not.
+    ABB.Robotics.Controllers.Controller OR None: Output depends on if the connection is successful or not.
     String: Message with the outcome
     Boolean: Indicates if the controller was found and connected to.
 Examples:
@@ -72,7 +72,7 @@ Args:
     ABB.Robotics.Controllers: Controllers
     String: IP address
 Returns:
-    ABB.Robotics.Controllers.Controller OR 0: Output depends on if the connection is successful or not.
+    ABB.Robotics.Controllers.Controller OR None: Output depends on if the connection is successful or not.
     String: Message with the outcome
     Boolean: Indicates if the controller was found and connected to.
 Examples:
