@@ -23,14 +23,13 @@ Examples:
 """
 
 def logon_robot_controller_default(controller):
-    logon_success = False
-    msg = 'Logon successful'
     try:
         controller.Logon(ctrlrs.UserInfo.DefaultUser)
-        logon_success = True
+        msg = 'Logon successful'
+        return True, msg
     except Exception:
-        msg = 'Unable to logon:  The operation was not allowed for the given user.'
-    return logon_success, msg
+        msg = 'Unable to log on:  The operation was not allowed for the given user.'
+        return False, msg
 
 
 """
@@ -48,14 +47,13 @@ Examples:
 """
 
 def logon_robot_controller_with_username(controller, username, password):
-    logon_success = False
-    msg = 'Logon successful'
     try:
         controller.Logon(ctrlrs.UserInfo(username, password))
-        logon_success = True
+        msg = 'Logon successful'
+        return True, msg
     except Exception:
         msg = 'Unable to log on:  The operation was not allowed for the given user.'
-    return logon_success, msg
+        return False, msg
 
 
 """
