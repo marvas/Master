@@ -22,7 +22,6 @@ controllers = communication.discover_controllers_on_network()
 # Connects to the specified controller Rudolf
 rudolf, msg, connected = communication.connect_robot_with_name(controllers, 'Rudolf')
 print msg
-print communication.is_connected_to_controller(rudolf)
 # Logs onto the specified controller with default user
 logon, msg = user_authorization.logon_robot_controller_default(rudolf)
 print msg
@@ -34,6 +33,8 @@ _, rapid_run = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'r
 _, rapid_drawing = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'drawing')
 _, rapid_new_point = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'new_point')
 _, rapid_sim_started = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'sim_started')
+_, rapid_speed = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'speed')
+_, rapid_zone = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'zone')
 
 
 # Checks if rapid simulation has started first.
@@ -43,15 +44,44 @@ if rapid_bool.get_state(rapid_sim_started) == False:
     print user_authorization.logoff_robot_controller(rudolf)
     sys.exit()
 
+# Editing the speeddata in order to go faster and the zonedata in order to not cut corners.
+_, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
+print msg
+msg = rapid_speeddata.edit_and_write_rapid_data_speeddata_base(rapid_speed, 'v100')
+print msg
+# Finep is set to True in order to not get corner path failure warning
+msg = rapid_zonedata.edit_and_write_rapid_data_zonedata(rapid_zone, True, 0.3, 0.3, 0.3, 0.03, 0.3 ,0.03)
+print msg
+_, msg = user_mastership.release_and_dispose_master_access(mastership)
+print msg
+
 # Properties of the drawn flower
 amplitude = 100 # Length of the petals
 theta = 0 # Current angle
-k = 4 # Petal properties, if k is decimal number then write number like this: 5.0 or 6.0/5.0
+k = 3 # Petal properties, if k is decimal number then write number like this: 5.0 or 6.0/5.0
 del_theta = 2 # Step
 num_flowers = 0 # Number of flowers drawn
+max_degrees = 0
+
+# Checks if integer is even or odd
+if isinstance(k, int):
+    if k == 0:
+        print 'K can\'t be 0'
+        print user_authorization.logoff_robot_controller(rudolf)
+        sys.exit()
+    if k % 2 == 0:
+        max_degrees = 360
+    else:
+        max_degrees = 180
+else:
+    print 'Float not supported yet'
+    print user_authorization.logoff_robot_controller(rudolf)
+    sys.exit()
+
+
 # Draws 18 flower
 while num_flowers < 1:
-    while theta < 360:
+    while theta < max_degrees:
         if rapid_bool.get_state(rapid_drawing) == False:
             x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
             y = amplitude*math.cos(math.radians(k*theta))*math.sin(math.radians(theta))
