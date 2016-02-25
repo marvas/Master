@@ -106,7 +106,6 @@ Args:
     ABB.Robotics.Controllers: Controllers
 Returns:
     Boolean: Indicates if connected or not
-    String: Message with the result
 Examples:
     None
 """
@@ -114,11 +113,8 @@ Examples:
 def is_connected_to_controller(controller):
     try:
         if controller.Connected == 1:
-            msg = 'Connected to controller'
-            return True, msg
+            return True
         else:
-            msg = 'Not connected to controller'
-            return False, msg
+            return False
     except Exception:
-        msg = 'Controller object is not set up correctly. Controller may not exist.'
-        return False, msg
+        return False
