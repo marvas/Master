@@ -11,7 +11,6 @@ Gets RobAx from jointtarget and returns it as a string
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if RobAx exists or not
     String: RobAx or error
 Examples:
     None
@@ -21,12 +20,12 @@ def get_robax_tostring(rapid_data):
     if rapid_data.RapidType == 'jointtarget':
         try:
             res = 'RobAx: [Rax_1,Rax_2,Rax_3,Rax_4,Rax_5,Rax_6] = %s' % rapid_data.Value.RobAx.ToString()
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not jointtarget.'
-        return False, err
+        return err
 
 
 """
@@ -35,7 +34,6 @@ Gets ExtAx from jointtarget and returns it as a string
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if ExtAx exists or not
     String: ExtAx or error
 Examples:
     None
@@ -57,12 +55,12 @@ def get_extax_tostring(rapid_data):
                     extax_list[i] = eax
             res = 'Extax: [Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f] = [%s,%s,%s,%s,%s,%s]' \
                   % (extax_list[0],extax_list[1],extax_list[2],extax_list[3],extax_list[4],extax_list[5])
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not jointtarget.'
-        return False, err
+        return err
 
 
 """
@@ -71,7 +69,6 @@ Gets jointtarget and returns it as a string
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if jointtarget exists or not
     String: Jointtarget or error
 Examples:
     None
@@ -81,12 +78,12 @@ def get_jointtarget_tostring(rapid_data):
     if rapid_data.RapidType == 'jointtarget':
         try:
             res = 'Jointtarget: %s' % rapid_data.Value.ToString()
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not jointtarget.'
-        return False, err
+        return err
 
 
 """

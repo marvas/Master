@@ -11,7 +11,6 @@ Gets Robhold from tooldata and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if Robhold exists or not
     String: Robhold or error
 Examples:
     None
@@ -21,12 +20,12 @@ def get_robhold_tostring(rapid_data):
     if rapid_data.RapidType == 'tooldata':
         try:
             res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
-        return False, err
+        return err
 
 
 """
@@ -35,7 +34,6 @@ Gets Tframe from tooldata and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if Tframe exists or not
     String: Tframe or error
 Examples:
     None
@@ -46,12 +44,12 @@ def get_tframe_tostring(rapid_data):
         try:
             res = 'Tframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Tframe.Trans.ToString(),
                                                      rapid_data.Value.Tframe.Rot.ToString())
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
-        return False, err
+        return err
 
 
 """
@@ -60,7 +58,6 @@ Gets Tload from tooldata and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if Tload exists or not
     String: Tload or error
 Examples:
     None
@@ -73,12 +70,12 @@ def get_tload_tostring(rapid_data):
                   (rapid_data.Value.Tload.Mass, rapid_data.Value.Tload.Cog.ToString(),
                    rapid_data.Value.Tload.Aom.ToString(),rapid_data.Value.Tload.Ix,
                    rapid_data.Value.Tload.Iy, rapid_data.Value.Tload.Iz)
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
-        return False, err
+        return err
 
 
 """
@@ -87,7 +84,6 @@ Gets tooldata and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if tooldata exists or not
     String: Tooldata or error
 Examples:
     None
@@ -97,12 +93,12 @@ def get_tooldata_tostring(rapid_data):
     if rapid_data.RapidType == 'tooldata':
         try:
             res = 'Tooldata: %s' % rapid_data.Value.ToString()
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
-        return False, err
+        return err
 
 
 """

@@ -27,7 +27,6 @@ Gets zonedata and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if zonedata exists
     String: The result or error
 Examples:
     None
@@ -43,15 +42,15 @@ def get_zonedata_tostring(rapid_data):
                 #Takes all uppercase to lowercase, and trims all whitespaces and tabs.
                 if zonedata.lower() == base_zonedata_dict[zone].translate(None, " \t").lower():
                     res = 'Base zonedata: %s (%s)' % (zone, rapid_data.Value.ToString())
-                    return True, res
+                    return res
             #If base zonedata is not found.
             res = 'Zonedata: %s' % rapid_data.Value.ToString()
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not zonedata.'
-        return False, err
+        return err
 
 
 """

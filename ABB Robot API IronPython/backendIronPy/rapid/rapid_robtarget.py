@@ -11,7 +11,6 @@ Gets the trans data from robtarget and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if trans exists or not
     String: Trans or error
 Examples:
     None
@@ -22,12 +21,12 @@ def get_trans_tostring(rapid_data):
         try:
             res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,
                                                    rapid_data.Value.Trans.Z )
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
-        return False, err
+        return err
 
 
 """
@@ -36,7 +35,6 @@ Gets the rot data from robtarget and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if rot exists or not
     String: Rot or error
 Examples:
     None
@@ -47,12 +45,12 @@ def get_rot_tostring(rapid_data):
         try:
             res = 'Rot: [Q1,Q2,Q3,Q4] = [%G,%G,%G,%G]' % (rapid_data.Value.Rot.Q1,rapid_data.Value.Rot.Q2,
                                                      rapid_data.Value.Rot.Q3,rapid_data.Value.Rot.Q4)
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
-        return False, err
+        return err
 
 
 """
@@ -61,7 +59,6 @@ Gets the robconf data from robtarget and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if robconf exists or not
     String: Robconf or error
 Examples:
     None
@@ -73,12 +70,12 @@ def get_robconf_tostring(rapid_data):
             res = 'Robconf: [Cf1,Cf4,Cf6,Cfx] = [%d,%d,%d,%d]' % \
                   (rapid_data.Value.Robconf.Cf1,rapid_data.Value.Robconf.Cf4,
                     rapid_data.Value.Robconf.Cf6,rapid_data.Value.Robconf.Cfx)
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
-        return False, err
+        return err
 
 
 """
@@ -87,7 +84,6 @@ Gets the extax data from robtarget and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if extax exists or not
     String: Extax or error
 Examples:
     None
@@ -109,12 +105,12 @@ def get_extax_tostring(rapid_data):
                     extax_list[i] = eax
             res = 'Extax: [Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f] = [%s,%s,%s,%s,%s,%s]' \
                   % (extax_list[0],extax_list[1],extax_list[2],extax_list[3],extax_list[4],extax_list[5])
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
-        return False, err
+        return err
 
 
 """
@@ -123,7 +119,6 @@ Gets robtarget and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if robtarget exists or not
     String: Robtarget or error
 Examples:
     None
@@ -133,12 +128,12 @@ def get_robtarget_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
             res = 'Robtarget: %s' % rapid_data.Value.ToString()
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
-        return False, err
+        return err
 
 
 """

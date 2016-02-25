@@ -18,7 +18,6 @@ Gets the value of num and returns it as a string
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if value exists
     String: The result or error
 Examples:
     None
@@ -28,12 +27,12 @@ def get_value_tostring(rapid_data):
     if rapid_data.RapidType == 'num':
         try:
             res = 'Value = %s' % rapid_data.Value
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not num.'
-        return False, err
+        return err
 
 
 """

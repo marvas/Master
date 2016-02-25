@@ -18,7 +18,6 @@ Gets the state of bool and returns it as a string
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if state exists
     String: The state or error
 Examples:
     None
@@ -28,12 +27,12 @@ def get_state_tostring(rapid_data):
     if rapid_data.RapidType == 'bool':
         try:
             res = 'State = %s' % rapid_data.Value
-            return True, res
+            return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not bool.'
-        return False, err
+        return err
 
 
 """

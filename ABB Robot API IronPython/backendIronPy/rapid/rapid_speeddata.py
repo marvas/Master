@@ -13,7 +13,6 @@ Gets speeddata and returns it as a string.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    Boolean: Indicating if speeddata exists
     String: The result or error
 Examples:
     None
@@ -29,15 +28,15 @@ def get_speeddata_tostring(rapid_data):
             if int(speeddata_list[0]) in base_speeddata_list and int(speeddata_list[1])==500 and int(speeddata_list[2])==5000\
                     and int(speeddata_list[3])==1000:
                 res = 'Base speeddata: v%d (%s)' % (int(speeddata_list[0]), rapid_data.Value.ToString())
-                return True, res
+                return res
             else:
                 res = 'Speeddata: %s' % rapid_data.Value.ToString()
-                return True, res
+                return res
         except Exception, err:
-            return False, err
+            return err
     else:
         err = 'DataType is '+rapid_data.RapidType+' and not speeddata.'
-        return False, err
+        return err
 
 
 """
