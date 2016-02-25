@@ -37,7 +37,7 @@ Args:
 Returns:
     Boolean: Indicates if mastership was successful
     String: Message with the outcome
-    ABB.Robotics.Controllers.Mastership OR 0: Mastership is returned if accomplished, 0 if something went wrong
+    ABB.Robotics.Controllers.Mastership OR None: Mastership is returned if accomplished, None if something went wrong
 Examples:
     None
 """
@@ -48,8 +48,7 @@ def get_master_access_to_controller_rapid(controller):
         msg = 'Got master access to controller'
         return True, msg, mastership
     except Exception, err:
-        mastership = 0
-        return False, err, mastership
+        return False, err, None
 
 
 """
