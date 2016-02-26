@@ -67,8 +67,8 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data(rapid_data, 1)
-    rapid_data, message = edit_and_write_rapid_data(rapid_data, 20)
+    message = edit_and_write_rapid_data(rapid_data, 1)
+    message = edit_and_write_rapid_data(rapid_data, 20)
 """
 
 def edit_and_write_rapid_data(rapid_data, new_value):

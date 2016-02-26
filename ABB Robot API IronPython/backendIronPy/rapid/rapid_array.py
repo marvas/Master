@@ -67,7 +67,7 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_array_num_index(rapid_data, 0, 100)
+    message = edit_and_write_rapid_data_array_num_index(rapid_data, 0, 100)
 """
 
 def edit_and_write_rapid_data_array_num_index(rapid_data, index, value):
@@ -103,12 +103,12 @@ Returns:
     String: result message or error
 Examples:
     If RAPID array is of length 3:
-    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, []) Formats array to default.
-    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50])
-    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100,1.1,50])
-    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100])
+    message = edit_and_write_rapid_data_array_num(rapid_data, []) Formats array to default.
+    message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50])
+    message = edit_and_write_rapid_data_array_num(rapid_data, [100,1.1,50])
+    message = edit_and_write_rapid_data_array_num(rapid_data, [100])
     If RAPID array is of length 3 this is not possible:
-    rapid_data, message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50,100])
+    message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50,100])
 """
 
 def edit_and_write_rapid_data_array_num(rapid_data, values):

@@ -66,8 +66,8 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_zonedata_base(rapid_data,'z0')
-    rapid_data, message = edit_and_write_rapid_data_zonedata_base(rapid_data,'z20')
+    message = edit_and_write_rapid_data_zonedata_base(rapid_data,'z0')
+    message = edit_and_write_rapid_data_zonedata_base(rapid_data,'z20')
 """
 
 def edit_and_write_rapid_data_zonedata_base(rapid_data, value):
@@ -123,7 +123,7 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_zonedata(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
+    message = edit_and_write_rapid_data_zonedata(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
 """
 
 def edit_and_write_rapid_data_zonedata(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):

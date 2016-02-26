@@ -97,8 +97,8 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'robax', '[0,0,0,0,0,0]')
-    rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    message = edit_and_write_rapid_data_property(rapid_data, 'robax', '[0,0,0,0,0,0]')
+    message = edit_and_write_rapid_data_property(rapid_data, 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
@@ -169,7 +169,7 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data(rapid_data, '[0,0,0,0,0,0]', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    message = edit_and_write_rapid_data(rapid_data, '[0,0,0,0,0,0]', '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
 def edit_and_write_rapid_data(rapid_data, robax, extax):

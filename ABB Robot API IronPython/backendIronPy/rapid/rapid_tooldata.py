@@ -112,10 +112,10 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
-    rapid_data, message = edit_and_write_rapid_data_property(rapid_data, 'robhold', False)
-    rapid_data, message = edit_and_write_rapid_data_property(rapid_data,'tframe','[0,0,100],[1,0,0,0]')
-    rapid_data, message = edit_and_write_rapid_data_property(rapid_data,'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
+    message = edit_and_write_rapid_data_property(rapid_data, 'robhold', False)
+    message = edit_and_write_rapid_data_property(rapid_data,'tframe','[0,0,100],[1,0,0,0]')
+    message = edit_and_write_rapid_data_property(rapid_data,'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
@@ -209,7 +209,7 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    rapid_data, message = edit_and_write_rapid_data(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    message = edit_and_write_rapid_data(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
 def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
