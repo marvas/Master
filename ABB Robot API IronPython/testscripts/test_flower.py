@@ -74,7 +74,7 @@ if isinstance(k, int):
     else:
         max_degrees = 180
 else:
-    print 'Float not supported yet'
+    print 'Float not supported.'
     print user_authorization.logoff_robot_controller(rudolf)
     sys.exit()
 
