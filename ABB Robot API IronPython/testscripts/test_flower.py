@@ -44,7 +44,7 @@ if rapid_bool.get_state(rapid_sim_started) == False:
     print user_authorization.logoff_robot_controller(rudolf)
     sys.exit()
 
-# Editing the speeddata in order to go faster and the zonedata in order to not cut corners.
+# Editing the speeddata and the zonedata.
 _, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
 print msg
 msg = rapid_speeddata.edit_and_write_rapid_data_speeddata_base(rapid_speed, 'v100')
@@ -58,7 +58,7 @@ print msg
 # Properties of the drawn flower
 amplitude = 100 # Length of the petals
 theta = 0 # Current angle
-k = 3 # Petal properties, if k is decimal number then write number like this: 5.0 or 6.0/5.0
+k = 4 # Petal properties, can only be integers
 del_theta = 2 # Step
 num_flowers = 0 # Number of flowers drawn
 max_degrees = 0
@@ -80,7 +80,7 @@ else:
 
 
 # Draws 18 flower
-while num_flowers < 1:
+while num_flowers < 18:
     while theta < max_degrees:
         if rapid_bool.get_state(rapid_drawing) == False:
             x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
