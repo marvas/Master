@@ -102,7 +102,7 @@ Examples:
 """
 
 def logoff_robot_controller(ipaddress, cookies):
-    if isinstance(ipaddress, basestring):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar):
         if ipaddress.lower() == 'local':
                 url = 'http://{0}/logout'.format('localhost:80')
         else:
@@ -116,7 +116,7 @@ def logoff_robot_controller(ipaddress, cookies):
         except Exception, err:
             return err
     else:
-        err = 'Something wrong with arguments. Needs to be string.'
+        err = 'Something wrong with arguments'
         return err
 
 
