@@ -41,7 +41,7 @@ Gets the value of num and returns it
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.Num OR String: Output depends on if it is possible to get the value or not
+    Float OR String: Output depends on if it is possible to get the value or not
 Examples:
     None
 """
