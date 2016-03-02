@@ -3,7 +3,6 @@ The user mastership module is a module for setting mastership on controller.
 """
 
 import requests
-from requests.auth import HTTPDigestAuth
 
 
 """
