@@ -41,7 +41,7 @@ Gets the state of bool and returns it
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.Bool OR String: Output depends on if it is successful or not
+    Boolean OR String: Output depends on if it is successful or not
 Examples:
     None
 """
