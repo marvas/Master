@@ -1,5 +1,6 @@
 """
-
+Module for getting rapid data information from the robot controller. This data can be shown to user,
+or edited and written back to the controller in order to update a data instance.
 """
 
 import requests
@@ -26,18 +27,27 @@ def get_rapid_data(ipaddress, cookies, program, module, variable_name):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
             and isinstance(program, basestring) and isinstance(module, basestring) \
             and isinstance(variable_name, basestring):
+        # Creates the urls based on input
         if ipaddress.lower() == 'local':
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_value = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_prop = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
         else:
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_value = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_prop = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+
         try:
-            response = requests.get(url, cookies=cookies)
-            print response._content
-            if response.status_code == 200:
-                msg = 'Got variable'
-                return True, msg
+            response_value = requests.get(url_value, cookies=cookies)
+            response_prop = requests.get(url_prop, cookies=cookies)
+            if response_value.status_code == 200 and response_prop.status_code == 200:
+                response_dict = {'value': response_value.json()['_embedded']['_state'][0]['value'],
+                                 'dattyp': response_prop.json()['_embedded']['_state'][0]['dattyp'],
+                                 'ndim': response_prop.json()['_embedded']['_state'][0]['ndim'],
+                                 'dim': response_prop.json()['_embedded']['_state'][0]['dim']
+                                 }
+                return True, response_dict
             else:
-                err = 'Error getting variable: ' + str(response.status_code)
+                err = 'Error getting value and/or property: \nValue status code: %s \nProperty status code: %s' % \
+                      (str(response_value.status_code), str(response_prop.status_code))
                 return False, err
         except Exception, err:
             return False, err
