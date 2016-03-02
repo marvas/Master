@@ -27,7 +27,6 @@ def get_master_access_to_controller(ipaddress, cookies):
         try:
             header = {'Content-Type': 'application/x-www-form-urlencoded'}
             response = requests.post(url, headers=header, cookies=cookies)
-            print response.headers
             if response.status_code == 204:
                 return True
             else:
@@ -61,7 +60,6 @@ def release_master_access_to_controller(ipaddress, cookies):
         try:
             header = {'Content-Type': 'application/x-www-form-urlencoded'}
             response = requests.post(url, headers=header, cookies=cookies)
-            print response.headers
             if response.status_code == 204:
                 return True
             else:
