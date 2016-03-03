@@ -1,5 +1,6 @@
 """
-
+Module for handling rapid datatype num. This module makes it possible to edit and write a rapid datatype num,
+as well as displaying the value of the num.
 """
 
 import requests
@@ -28,7 +29,7 @@ def _is_number(value):
 Gets the value of num from response and returns it as a string
 
 Args:
-    Requests.models.Response: response
+    Dictionary: response_dict
 Returns:
     String: The result or error
 Examples:
@@ -51,7 +52,7 @@ def get_value_tostring(response_dict):
 Gets the value of num from response and returns it
 
 Args:
-    Requests.models.Response: response
+    Dictionary: response_dict
 Returns:
     Float OR String: Output depends on if it is possible to get the value or not
 Examples:
