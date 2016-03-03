@@ -202,8 +202,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     if len(conf_data_list) == 4:
                         robconf = "[%s,%s,[%d,%d,%d,%d],%s]" % \
                                   (robtarget_trans, robtarget_rot,
-                                   float(conf_data_list[0]),float(conf_data_list[1]),float(conf_data_list[2]),
-                                   float(conf_data_list[3]),robtarget_extax)
+                                   int(conf_data_list[0]), int(conf_data_list[1]), int(conf_data_list[2]),
+                                   int(conf_data_list[3]), robtarget_extax)
                         robtarget.FillFromString2(robconf)
                         try:
                             rapid_data.Value = robtarget
