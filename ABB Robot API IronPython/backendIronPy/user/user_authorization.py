@@ -57,7 +57,7 @@ def logon_robot_controller_with_username(controller, username, password):
 
 
 """
-Log off the robot controller and dispose of the controller.
+Log off the robot controller.
 
 Args:
     ABB.Robotics.Controllers.Controller: Controller
@@ -71,7 +71,6 @@ Examples:
 def logoff_robot_controller(controller):
     try:
         controller.Logoff()
-        controller.Dispose()
         msg = 'Logoff successful'
         return True, msg
     except Exception, err:

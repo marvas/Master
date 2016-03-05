@@ -18,7 +18,7 @@ print msg
 logon, msg = user_authorization.logon_robot_controller_default(ctrl)
 print msg
 # Gets the specified rapid variable
-_, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'number')
+_, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'x')
 print 'Got the variable: ', rapid_num.get_value_tostring(variable)
 # Gets mastership to controller in order to write
 _, msg, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
@@ -30,8 +30,10 @@ print msg
 _, msg = user_mastership.release_and_dispose_master_access(mastership)
 print msg
 # Gets the variable again to check if it is updated
-_, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'number')
+_, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'x')
 print 'The changed variable: ', rapid_num.get_value_tostring(variable)
 # Logs off the controller and disposes of controller
 _, msg = user_authorization.logoff_robot_controller(ctrl)
+print msg
+_, msg = communication.disconnect_robot_controller(ctrl)
 print msg

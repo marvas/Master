@@ -96,6 +96,27 @@ def connect_robot_with_ipaddr(controllers, IPAddress):
 
 
 """
+Disconnects from the robot controller.
+
+Args:
+    ABB.Robotics.Controllers.Controller: Controller
+Returns:
+    Boolean: Indicates if disconnect is successful
+    String: Message with the outcome
+Examples:
+    None
+"""
+
+def disconnect_robot_controller(controller):
+    try:
+        controller.Dispose()
+        msg = 'Disconnect successful'
+        return True, msg
+    except Exception, err:
+        return False, err
+
+
+"""
 Checks if there is a connection to the controller
 
 Args:

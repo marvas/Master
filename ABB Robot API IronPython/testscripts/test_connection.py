@@ -39,3 +39,5 @@ print 'The changed variable: ', rapid_num.get_value_tostring(variable)
 # Logs off the controller and disposes of controller
 _, msg = user_authorization.logoff_robot_controller(ctrl)
 print msg
+_, msg = communication.disconnect_robot_controller(ctrl)
+print msg

@@ -42,6 +42,7 @@ if rapid_bool.get_state(rapid_sim_started) == False:
     print 'Start rapid simulation first.'
     # Logs of the controller and disposes.
     print user_authorization.logoff_robot_controller(rudolf)
+    print communication.disconnect_robot_controller(rudolf)
     sys.exit()
 
 # Editing the speeddata and the zonedata.
@@ -68,6 +69,7 @@ if isinstance(k, int):
     if k == 0:
         print 'K can\'t be 0'
         print user_authorization.logoff_robot_controller(rudolf)
+        print communication.disconnect_robot_controller(rudolf)
         sys.exit()
     if k % 2 == 0:
         max_degrees = 360
@@ -76,6 +78,7 @@ if isinstance(k, int):
 else:
     print 'Float not supported.'
     print user_authorization.logoff_robot_controller(rudolf)
+    print communication.disconnect_robot_controller(rudolf)
     sys.exit()
 
 
@@ -115,3 +118,4 @@ print msg
 
 # Logs of the controller and disposes.
 print user_authorization.logoff_robot_controller(rudolf)
+print communication.disconnect_robot_controller(rudolf)
