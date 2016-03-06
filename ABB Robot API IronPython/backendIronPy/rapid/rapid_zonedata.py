@@ -70,7 +70,7 @@ Examples:
     message = edit_and_write_rapid_data_zonedata_base(rapid_data,'z20')
 """
 
-def edit_and_write_rapid_data_zonedata_base(rapid_data, value):
+def edit_and_write_rapid_data_base(rapid_data, value):
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value
@@ -126,7 +126,7 @@ Examples:
     message = edit_and_write_rapid_data_zonedata(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
 """
 
-def edit_and_write_rapid_data_zonedata(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
+def edit_and_write_rapid_data(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value
