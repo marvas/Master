@@ -57,7 +57,7 @@ Examples:
 """
 
 
-def edit_and_write_rapid_data_speeddata_base(rapid_data, value):
+def edit_and_write_rapid_data_base(rapid_data, value):
     if rapid_data.RapidType == 'speeddata':
         try:
             speeddata = rapid_data.Value
@@ -113,7 +113,7 @@ Examples:
 """
 
 
-def edit_and_write_rapid_data_speeddata(rapid_data, vel_tcp, vel_orient, vel_lin_extax, vel_lin_rot_extax):
+def edit_and_write_rapid_data(rapid_data, vel_tcp, vel_orient, vel_lin_extax, vel_lin_rot_extax):
     if rapid_data.RapidType == 'speeddata':
         try:
             speeddata = rapid_data.Value

@@ -48,7 +48,7 @@ if rapid_bool.get_state(rapid_sim_started) == False:
 # Editing the speeddata and the zonedata.
 _, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
 print msg
-msg = rapid_speeddata.edit_and_write_rapid_data_speeddata_base(rapid_speed, 'v100')
+msg = rapid_speeddata.edit_and_write_rapid_data_base(rapid_speed, 'v100')
 print msg
 # Finep is set to True in order to not get corner path failure warning
 msg = rapid_zonedata.edit_and_write_rapid_data_zonedata(rapid_zone, True, 0.3, 0.3, 0.3, 0.03, 0.3 ,0.03)
