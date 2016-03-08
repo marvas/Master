@@ -7,14 +7,14 @@ the robot needs to move to. The coordinates will be points on a flower.
 import math
 import sys
 
-import backendIronPy.com.communication as communication
-import backendIronPy.user.user_authorization as user_authorization
-import backendIronPy.user.user_mastership as user_mastership
-import backendIronPy.rapid.rapid_datatypes as rapid_datatypes
-import backendIronPy.rapid.rapid_num as rapid_num
-import backendIronPy.rapid.rapid_bool as rapid_bool
-import backendIronPy.rapid.rapid_speeddata as rapid_speeddata
-import backendIronPy.rapid.rapid_zonedata as rapid_zonedata
+import frontendIronPy.com.communication as communication
+import frontendIronPy.user.user_authorization as user_authorization
+import frontendIronPy.user.user_mastership as user_mastership
+import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
+import frontendIronPy.rapid.rapid_num as rapid_num
+import frontendIronPy.rapid.rapid_bool as rapid_bool
+import frontendIronPy.rapid.rapid_speeddata as rapid_speeddata
+import frontendIronPy.rapid.rapid_zonedata as rapid_zonedata
 
 
 # Discovers all controllers on network
