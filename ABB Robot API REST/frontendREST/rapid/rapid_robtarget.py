@@ -219,7 +219,7 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
             # Gets the robtarget from controller.
             response = requests.get(url_get, cookies=cookies)
             if response.status_code == 200:
-                # Gets the robtarget form response.
+                # Gets the robtarget from response.
                 robtarget = response.json()['_embedded']['_state'][0]['value']
                 # Formats the robtargets attributes into a list.
                 robtarget = unicodedata.normalize('NFKD', robtarget).encode('ascii','ignore')
