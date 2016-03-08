@@ -101,10 +101,10 @@ Remember to get mastership before calling this function, and release the masters
 
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    Float: vel_tcp
-    Float: vel_orient
-    Float: vel_lin_extax
-    Float: vel_lin_rot_extax
+    Float|Int: vel_tcp
+    Float|Int: vel_orient
+    Float|Int: vel_lin_extax
+    Float|Int: vel_lin_rot_extax
 Returns:
     String: result message or error
 Examples:
