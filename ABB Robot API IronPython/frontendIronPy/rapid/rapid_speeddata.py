@@ -24,12 +24,19 @@ def get_speeddata_tostring(rapid_data):
             speeddata = rapid_data.Value.ToString()
             speeddata = speeddata.translate(None, "[]")
             speeddata_list = speeddata.split(',')
-            #Checks if the data is base speeddata values
-            if int(speeddata_list[0]) in base_speeddata_list and int(speeddata_list[1])==500 and int(speeddata_list[2])==5000\
-                    and int(speeddata_list[3])==1000:
-                res = 'Base speeddata: v%d (%s)' % (int(speeddata_list[0]), rapid_data.Value.ToString())
-                return res
-            else:
+            try:
+                #Checks if the data is base speeddata values
+                if int(speeddata_list[0]) in base_speeddata_list and int(speeddata_list[1])==500 and int(speeddata_list[2])==5000\
+                        and int(speeddata_list[3])==1000:
+                    res = 'Base speeddata: v%d (%s)' % (int(speeddata_list[0]), rapid_data.Value.ToString())
+                    return res
+                # If not base speed then custom speed.
+                else:
+                    res = 'Speeddata: %s' % rapid_data.Value.ToString()
+                    return res
+            # If value is of type float then it will fail on base speed check above.
+            # Then the speed must be a custom speed with float.
+            except ValueError:
                 res = 'Speeddata: %s' % rapid_data.Value.ToString()
                 return res
         except Exception, err:
