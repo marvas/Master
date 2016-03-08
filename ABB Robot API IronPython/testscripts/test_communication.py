@@ -3,11 +3,11 @@ Script used to test communication with controller. Can easily be modify part of 
 all the different rapid types.
 """
 
-import backendIronPy.rapid.rapid_datatypes as rapid_datatypes
-import backendIronPy.user.user_mastership as user_mastership
-import backendIronPy.com.communication as communication
-import backendIronPy.rapid.rapid_num as rapid_num
-import backendIronPy.user.user_authorization as user_authorization
+import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
+import frontendIronPy.user.user_mastership as user_mastership
+import frontendIronPy.com.communication as communication
+import frontendIronPy.rapid.rapid_num as rapid_num
+import frontendIronPy.user.user_authorization as user_authorization
 
 # Gets all the controllers on the network
 controllers = communication.discover_controllers_on_network()
