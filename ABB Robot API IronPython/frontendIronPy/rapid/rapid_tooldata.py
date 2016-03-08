@@ -108,7 +108,7 @@ Remember to get mastership before calling this function, and release the masters
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     String: property (accepted types: robhold, tframe, tload)
-    String: new_value
+    String|Bool: new_value
 Returns:
     String: result message or error
 Examples:
