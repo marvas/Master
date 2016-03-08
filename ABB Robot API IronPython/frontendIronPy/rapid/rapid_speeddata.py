@@ -52,8 +52,8 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    message = edit_and_write_rapid_data_speeddata_base(rapid_data,'v100')
-    message = edit_and_write_rapid_data_speeddata_base(rapid_data,'v200')
+    message = edit_and_write_rapid_data_base(rapid_data,'v100')
+    message = edit_and_write_rapid_data_base(rapid_data,'v200')
 """
 
 
@@ -108,8 +108,8 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    message = edit_and_write_rapid_data_speeddata(rapid_data, 100, 500, 5000, 1000)
-    message = edit_and_write_rapid_data_speeddata(rapid_data, 100.5, 500, 5000.37, 1000)
+    message = edit_and_write_rapid_data(rapid_data, 100, 500, 5000, 1000)
+    message = edit_and_write_rapid_data(rapid_data, 100.5, 500, 5000.37, 1000)
 """
 
 
