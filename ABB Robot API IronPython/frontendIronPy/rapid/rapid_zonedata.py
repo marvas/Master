@@ -81,7 +81,7 @@ def edit_and_write_rapid_data_base(rapid_data, value):
                 if value[:1].lower() == 'z':
                     value_list = value.split('z')
                     # Checks if what comes after z is a digit. Checks if the value is in the base dictionary.
-                    # Checks if the value list is of length 2 in case the user inserted a longer string, ex 'z1v10'.
+                    # Checks if the value list is of length 2 in case the user inserted a longer string, ex 'z1z10'.
                     if value_list[1].isdigit() and (value in base_zonedata_dict) and (len(value_list) == 2):
                         new_zonedata = '[%s]' % base_zonedata_dict[value]
                         zonedata.FillFromString2(new_zonedata)

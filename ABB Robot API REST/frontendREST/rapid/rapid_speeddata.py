@@ -86,9 +86,9 @@ def edit_and_write_rapid_data_base(ipaddress, cookies, program, module, variable
         and isinstance(variable_name, basestring) and isinstance(value, basestring):
         # Constructs the urls
         if ipaddress.lower() == 'local':
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
         else:
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
         try:
             # Strips value for all leading and trailing whitespaces
             value = value.strip()
@@ -101,7 +101,7 @@ def edit_and_write_rapid_data_base(ipaddress, cookies, program, module, variable
                     new_speeddata = '[%d,500,5000,1000]' % int(value[1])
 
                     payload = {'value': new_speeddata}
-                    response = requests.post(url_write, cookies=cookies, data=payload)
+                    response = requests.post(url, cookies=cookies, data=payload)
                     if response.status_code == 204:
                         msg = 'Base speeddata updated.'
                         return msg
@@ -148,7 +148,7 @@ def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name
         and isinstance(variable_name, basestring) and isinstance(vel_tcp, (int, float)) \
         and isinstance(vel_orient, (int, float)) and isinstance(vel_lin_extax, (int, float)) \
         and isinstance(vel_lin_rot_extax, (int, float)):
-        # Constructs the urls
+        # Constructs the url
         if ipaddress.lower() == 'local':
             url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
         else:
