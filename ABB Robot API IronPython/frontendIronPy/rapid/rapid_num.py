@@ -63,7 +63,7 @@ Remember to get mastership before calling this function, and release the masters
 
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    Float: new_value
+    Float|Int: new_value
 Returns:
     String: result message or error
 Examples:

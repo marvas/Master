@@ -17,7 +17,7 @@ Gets the length of array and returns it. Only shows the length of first dimensio
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.Num OR String: Output depends on if it is possible to get the length or not
+    Int OR String: Output depends on if it is possible to get the length or not
 Examples:
     None
 """
@@ -39,7 +39,7 @@ Gets the dimension of array and returns it.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
 Returns:
-    ABB.Robotics.Controllers.RapidDomain.Num OR String: Output depends on if it is possible to get the dimension or not
+    Int OR String: Output depends on if it is possible to get the dimension or not
 Examples:
     None
 """
@@ -63,7 +63,7 @@ Index starts from 0.
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     Integer: Index, array index
-    Float: Value
+    Float|Int: Value
 Returns:
     String: result message or error
 Examples:
