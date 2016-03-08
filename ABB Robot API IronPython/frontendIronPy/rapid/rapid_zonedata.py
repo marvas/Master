@@ -114,12 +114,12 @@ Remember to get mastership before calling this function, and release the masters
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     Boolean: finep
-    Float: pzone_tcp
-    Float: pzone_ori
-    Float: pzone_eax
-    Float: zone_ori
-    Float: zone_leax
-    Float: zone_reax
+    Float|Int: pzone_tcp
+    Float|Int: pzone_ori
+    Float|Int: pzone_eax
+    Float|Int: zone_ori
+    Float|Int: zone_leax
+    Float|Int: zone_reax
 Returns:
     String: result message or error
 Examples:
