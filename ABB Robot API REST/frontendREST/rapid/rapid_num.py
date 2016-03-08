@@ -80,7 +80,7 @@ Args:
     String: program (name of program, ex T_ROB1)
     String: module (name of module, ex MainModule)
     String: variable_name (name of the variable to update, ex x)
-    Int or Float: new_value
+    Float|Int: new_value
 Returns:
     String: result message or error
 Examples:
