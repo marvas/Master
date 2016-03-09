@@ -283,7 +283,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
 
 
 """
-Edits a wobjdata and writes it to the controller.
+Edits the wobjdata and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
 Args:
