@@ -19,7 +19,7 @@ print msg
 # Logs onto the controller with default user
 logon, msg = user_authorization.logon_robot_controller_default(ctrl)
 print msg
-# Pauses the execution for 15 minutes and the proceeds.
+# Pauses the execution for 15 minutes and then proceeds.
 time.sleep(60*15)
 # Gets the specified rapid variable
 _, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'number')
