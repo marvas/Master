@@ -18,13 +18,13 @@ _, response_dict = rapid_datatypes.get_rapid_data('local', cookies, 'T_ROB1', 'M
 print rapid_num.get_value_tostring(response_dict)
 # Gets mastership on specified controller.
 res = user_mastership.get_master_access_to_controller('local', cookies)
-print res
+print 'Got mastership: %s' % res
 # Edits and writes the new value of num to controller
 msg = rapid_num.edit_and_write_rapid_data('local', cookies, 'T_ROB1', 'MainModule', 'number', 10)
 print msg
 # Releases mastership of controller after it is finished writing.
 res = user_mastership.release_master_access_to_controller('local', cookies)
-print res
+print 'Released mastership: %s' % res
 # Gets information of specified rapid variable
 _, response_dict = rapid_datatypes.get_rapid_data('local', cookies, 'T_ROB1', 'MainModule', 'number')
 print rapid_num.get_value_tostring(response_dict)
