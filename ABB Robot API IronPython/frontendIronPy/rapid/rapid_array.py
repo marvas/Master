@@ -22,7 +22,7 @@ Examples:
     None
 """
 
-def get_length_array(rapid_data):
+def get_length(rapid_data):
     if rapid_data.IsArray:
         try:
             return int(rapid_data.Value.Length)
@@ -44,7 +44,7 @@ Examples:
     None
 """
 
-def get_dimensions_array(rapid_data):
+def get_dimensions(rapid_data):
     if rapid_data.IsArray:
         try:
             return int(rapid_data.Value.Rank)
@@ -67,10 +67,10 @@ Args:
 Returns:
     String: result message or error
 Examples:
-    message = edit_and_write_rapid_data_array_num_index(rapid_data, 0, 100)
+    message = edit_and_write_rapid_data_num_index(rapid_data, 0, 100)
 """
 
-def edit_and_write_rapid_data_array_num_index(rapid_data, index, value):
+def edit_and_write_rapid_data_num_index(rapid_data, index, value):
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
             if index < rapid_data.Value.Length and index >= 0 and isinstance(index, int):
@@ -103,15 +103,15 @@ Returns:
     String: result message or error
 Examples:
     If RAPID array is of length 3:
-    message = edit_and_write_rapid_data_array_num(rapid_data, []) Formats array to default.
-    message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50])
-    message = edit_and_write_rapid_data_array_num(rapid_data, [100,1.1,50])
-    message = edit_and_write_rapid_data_array_num(rapid_data, [100])
+    message = edit_and_write_rapid_data_num(rapid_data, []) Formats array to default.
+    message = edit_and_write_rapid_data_num(rapid_data, [100,1,50])
+    message = edit_and_write_rapid_data_num(rapid_data, [100,1.1,50])
+    message = edit_and_write_rapid_data_num(rapid_data, [100])
     If RAPID array is of length 3 this is not possible:
-    message = edit_and_write_rapid_data_array_num(rapid_data, [100,1,50,100])
+    message = edit_and_write_rapid_data_num(rapid_data, [100,1,50,100])
 """
 
-def edit_and_write_rapid_data_array_num(rapid_data, values):
+def edit_and_write_rapid_data_num(rapid_data, values):
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
             num_array = rapid_data.Value
