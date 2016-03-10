@@ -92,9 +92,8 @@ def edit_and_write_rapid_data_num_index(rapid_data, index, value):
 
 
 """
-Inserts a value into num array with index and writes it to the controller.
+Inserts a list of values into num array and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
-Remember that RAPID starts at index 0.
 
 Args:
     ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
@@ -115,29 +114,29 @@ def edit_and_write_rapid_data_num(rapid_data, values):
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
             num_array = rapid_data.Value
-            #Checks if values are a list.
+            # Checks if values are a list.
             if isinstance(values, list):
-                #Returns if values are larger than the RAPID list.
+                # Returns if values are larger than the RAPID list.
                 if len(values) > rapid_data.Value.Length:
                     msg = 'Input list is larger than RAPID list.'
                     return msg
-                #Checks if all values in input values are of type int or float.
+                # Checks if all values in input values are of type int or float.
                 for value in values:
                     if isinstance(value, (int,float)) == False:
                         msg = 'Something wrong in list.'
                         return msg
-                #If size of values are smaller than RAPID list, then fill the list
-                #with zeroes until they are the same size.
+                # If size of values are smaller than RAPID list, then fill the list
+                # with zeroes until they are the same size.
                 if len(values) < rapid_data.Value.Length:
                     diff = rapid_data.Value.Length - len(values)
                     for _ in range(0, diff):
                         values.append(0)
-                    new_array = '%s' % values
+                    new_array = str(values)
                     num_array.FillFromString(new_array)
                     msg = 'Array updated.'
                     return msg
                 else:
-                    new_array = '%s' % values
+                    new_array = str(values)
                     num_array.FillFromString(new_array)
                     msg = 'Array updated.'
                     return msg
