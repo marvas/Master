@@ -17,9 +17,10 @@ Args:
     String: Name of the variable to get (ex "target_10")
 Returns:
     Boolean: Indicates if able to get the information or not
+    Dictionary|String: Output depends on the result. Dict if successful and string if error
 Examples:
-     = rapid_datatypes.get_rapid_data('local', cookies ,'T_ROB1','MainModule','p20')
-     = rapid_datatypes.get_rapid_data('10.0.0.10', cookies ,'T_ROB1','MainModule','p20')
+     b, response_dict = rapid_datatypes.get_rapid_data('local', cookies ,'T_ROB1','MainModule','p20')
+     b, response_dict = rapid_datatypes.get_rapid_data('10.0.0.10', cookies ,'T_ROB1','MainModule','p20')
 
 """
 
