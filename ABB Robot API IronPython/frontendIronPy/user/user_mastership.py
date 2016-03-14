@@ -11,7 +11,7 @@ import ABB.Robotics.Controllers as ctrlrs
 
 
 """
-Checks if controller has master access
+Checks if controller is holding mastership
 
 Args:
     ABB.Robotics.Controllers.Controller: Controller
