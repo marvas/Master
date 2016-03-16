@@ -117,10 +117,12 @@ def get_jointtarget_tostring(response_dict):
 """
 Edits the specified property of the jointtarget and writes it to the controller.
 Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'x')
@@ -128,16 +130,19 @@ Args:
     String: new_value (new value, ex '[0,0,0,0,0,0]' for robax)
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'jtarget', 'robax', '[0,0,0,0,0,0]')
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'jtarget', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'jtarget', 'robax', '[0,0,0,0,0,0]')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'jtarget', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
-def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, variable_name, property, new_value):
+def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name, property, new_value):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
         and isinstance(variable_name, basestring) and isinstance(property, basestring) \
-        and isinstance(new_value, basestring):
+        and isinstance(new_value, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -148,6 +153,14 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
         try:
             # Gets the jointtarget from controller.
             response = requests.get(url_get, cookies=cookies)
+            # If response includes a new cookie to use, set the new cookie.
+            if len(response.cookies) > 0:
+                cookies = response.cookies
+            # If the user has timed out, need to authenticate again.
+            if response.status_code == 401:
+                response = requests.get(url_get, auth=digest_auth, cookies=cookies)
+                if response.status_code == 200:
+                    cookies = response.cookies
             if response.status_code == 200:
                 # Gets the jointtarget form response.
                 jointtarget = response.json()['_embedded']['_state'][0]['value']
@@ -167,16 +180,9 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                          float(jointtarget_list[10]), float(jointtarget_list[11]))
 
                         payload = {'value': jointtarget}
-                        response = requests.post(url_write, cookies=cookies, data=payload)
-                        if response.status_code == 204:
-                            msg = 'Jointtarget robax updated.'
-                            return msg
-                        else:
-                            err = 'Error updating jointtarget: ' + str(response.status_code)
-                            return err
                     else:
                         err = 'Incorrect format of robax. Ex \'[0,0,0,0,0,0]\''
-                        return err
+                        return err, cookies
                 elif property.lower() == 'extax':
                     extax_list = new_value.split(',')
                     if len(extax_list) == 6:
@@ -188,36 +194,47 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                          float(extax_list[4]),float(extax_list[5]))
 
                         payload = {'value': jointtarget}
-                        response = requests.post(url_write, cookies=cookies, data=payload)
-                        if response.status_code == 204:
-                            msg = 'Jointtarget extax updated.'
-                            return msg
-                        else:
-                            err = 'Error updating jointtarget: ' + str(response.status_code)
-                            return err
                     else:
                         err = 'Incorrect format of extax. Ex \'[9E9,9E9,9E9,9E9,9E9,9E9]\''
-                        return err
+                        return err, cookies
                 else:
                     msg = 'Property not of type robax or extax.'
-                    return msg
+                    return msg, cookies
+                # Tries to update variable on controller.
+                response = requests.post(url_write, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url_write, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
+                if response.status_code == 204:
+                    msg = 'Jointtarget %s updated.' % property.lower()
+                    return msg, cookies
+                else:
+                    err = 'Error updating jointtarget: ' + str(response.status_code)
+                    return err, cookies
             else:
                 err = 'Error getting jointtarget from controller: ' + str(response.status_code)
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
 
 
 """
 Edits and writes the jointtarget.
 Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'x')
@@ -225,15 +242,17 @@ Args:
     String: extax (ex '[9E9,9E9,9E9,9E9,9E9,9E9]')
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data('local', cookies,'T_ROB1', 'MainModule', 'jtarget', '[0,0,0,0,0,0], '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    message = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                            'jtarget', '[0,0,0,0,0,0], '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
-def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name, robax, extax):
+def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robax, extax):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
         and isinstance(variable_name, basestring) and isinstance(robax, basestring) \
-        and isinstance(extax, basestring):
+        and isinstance(extax, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the url
         if ipaddress.lower() == 'local':
             url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -252,17 +271,25 @@ def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name
                              float(extax_list[2]),float(extax_list[3]),float(extax_list[4]),float(extax_list[5]))
                 payload = {'value': jointtarget}
                 response = requests.post(url, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
                 if response.status_code == 204:
                     msg = 'Jointtarget updated.'
-                    return msg
+                    return msg, cookies
                 else:
                     err = 'Error updating jointtarget: ' + str(response.status_code)
-                    return err
+                    return err, cookies
             else:
                 err = 'Incorrect format of input data.'
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies

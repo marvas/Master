@@ -63,28 +63,32 @@ def get_zonedata_tostring(response_dict):
 """
 Edits and writes the zonedata. Only supports base zonedata.
 Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Base zonedata supported:
 0, 1, 5, 10, 15, 20, 30, 40, 50, 60, 80, 100, 150, 200
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'zone')
     String: value (ex, 'z0')
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data_base('local', cookies, 'T_ROB1', 'MainModule', 'zone', 'z0')
-    message = edit_and_write_rapid_data_base('local', cookies, 'T_ROB1', 'MainModule', 'zone', 'z20')
+    message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'zone', 'z0')
+    message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'zone', 'z20')
 """
 
-def edit_and_write_rapid_data_base(ipaddress, cookies, program, module, variable_name, value):
+def edit_and_write_rapid_data_base(ipaddress, cookies, digest_auth, program, module, variable_name, value):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(value, basestring):
+        and isinstance(variable_name, basestring) and isinstance(value, basestring) \
+        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -103,32 +107,42 @@ def edit_and_write_rapid_data_base(ipaddress, cookies, program, module, variable
 
                     payload = {'value': new_zonedata}
                     response = requests.post(url, cookies=cookies, data=payload)
+                    # If response includes a new cookie to use, set the new cookie.
+                    if len(response.cookies) > 0:
+                        cookies = response.cookies
+                    # If the user has timed out, need to authenticate again.
+                    if response.status_code == 401:
+                        response = requests.post(url, auth=digest_auth, cookies=cookies, data=payload)
+                        if response.status_code == 204:
+                            cookies = response.cookies
                     if response.status_code == 204:
                         msg = 'Base zonedata updated.'
-                        return msg
+                        return msg, cookies
                     else:
                         err = 'Error updating base zonedata: ' + str(response.status_code)
-                        return err
+                        return err, cookies
                 else:
                     msg = 'Something wrong with the input format, or the input is not a valid base zone.'
-                    return msg
+                    return msg, cookies
             else:
                 msg = 'Something wrong with the input. Not in format \'z1\''
-                return msg
+                return msg, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
 
 
 """
 Edits and writes the zonedata.
 Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'zone')
@@ -141,18 +155,21 @@ Args:
     Float|Int: zone_reax
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data('local', cookies, 'T_ROB1', 'MainModule', 'zone', False, 1, 1, 1, 0.1, 1, 0.1)
+    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                            'zone', False, 1, 1, 1, 0.1, 1, 0.1)
 """
 
-def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name, finep, pzone_tcp, pzone_ori,
-                              pzone_eax, zone_ori, zone_leax, zone_reax):
+def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, finep,
+                              pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
         and isinstance(variable_name, basestring) and (finep == True or finep == False) \
         and isinstance(pzone_tcp,(int,float)) and isinstance(pzone_ori, (int,float)) \
         and isinstance(pzone_eax, (int,float)) and isinstance(zone_ori, (int,float)) \
-        and isinstance(zone_leax, (int,float)) and isinstance(zone_reax, (int,float)):
+        and isinstance(zone_leax, (int,float)) and isinstance(zone_reax, (int,float)) \
+        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the url
         if ipaddress.lower() == 'local':
             url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -166,14 +183,22 @@ def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name
                                                            float(zone_reax))
             payload = {'value': new_zonedata}
             response = requests.post(url, cookies=cookies, data=payload)
+            # If response includes a new cookie to use, set the new cookie.
+            if len(response.cookies) > 0:
+                cookies = response.cookies
+            # If the user has timed out, need to authenticate again.
+            if response.status_code == 401:
+                response = requests.post(url, auth=digest_auth, cookies=cookies, data=payload)
+                if response.status_code == 204:
+                    cookies = response.cookies
             if response.status_code == 204:
                 msg = 'Zonedata updated.'
-                return msg
+                return msg, cookies
             else:
                 err = 'Error updating zonedata: ' + str(response.status_code)
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
