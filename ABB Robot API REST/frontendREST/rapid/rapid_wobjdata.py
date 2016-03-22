@@ -219,12 +219,13 @@ def get_wobjdata_tostring(response_dict):
 
 
 """
-Edits and writes specified property of wobjdata.
+Edits and writes specified property of wobjdata on controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'wobj')
@@ -232,18 +233,25 @@ Args:
     String|Bool: new_value
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'wobj', 'robhold', True)
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'wobj', 'ufprog', False)
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'wobj', 'ufmec', '')
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'wobj', 'uframe','[0,0,100],[1,0,0,0]')
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'wobj', 'oframe','[0,0,100],[1,0,0,0]')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'robhold', True)
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'ufprog', False)
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'ufmec', '')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'uframe','[0,0,100],[1,0,0,0]')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'oframe','[0,0,100],[1,0,0,0]')
 """
 
-def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, variable_name, property, new_value):
+def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name, property, new_value):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(property, basestring):
+        and isinstance(variable_name, basestring) and isinstance(property, basestring)\
+        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -254,6 +262,14 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
         try:
             # Gets wobjdata from controller.
             response = requests.get(url_get, cookies=cookies)
+            # If response includes a new cookie to use, set the new cookie.
+            if len(response.cookies) > 0:
+                cookies = response.cookies
+            # If the user has timed out, need to authenticate again.
+            if response.status_code == 401:
+                response = requests.get(url_get, auth=digest_auth, cookies=cookies)
+                if response.status_code == 200:
+                    cookies = response.cookies
             if response.status_code == 200:
                 # Gets the wobjdata from response.
                 wobjdata = response.json()['_embedded']['_state'][0]['value']
@@ -274,16 +290,9 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                         )
 
                         payload = {'value': new_wobjdata}
-                        response = requests.post(url_write, cookies=cookies, data=payload)
-                        if response.status_code == 204:
-                            msg = 'Wobjdata robhold updated.'
-                            return msg
-                        else:
-                            err = 'Error updating wobjdata: ' + str(response.status_code)
-                            return err
                     else:
                         msg = 'Input is not boolean.'
-                        return msg
+                        return msg, cookies
                 elif property.lower() == 'ufprog':
                     if new_value == True or new_value == False:
                         if new_value == 1: new_value = True
@@ -297,16 +306,9 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                         )
 
                         payload = {'value': new_wobjdata}
-                        response = requests.post(url_write, cookies=cookies, data=payload)
-                        if response.status_code == 204:
-                            msg = 'Wobjdata ufprog updated.'
-                            return msg
-                        else:
-                            err = 'Error updating wobjdata: ' + str(response.status_code)
-                            return err
                     else:
                         msg = 'Input is not boolean.'
-                        return msg
+                        return msg, cookies
                 elif property.lower() == 'ufmec':
                     if isinstance(new_value, basestring):
                         # Creates the new wobjdata.
@@ -320,16 +322,9 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                         )
 
                         payload = {'value': new_wobjdata}
-                        response = requests.post(url_write, cookies=cookies, data=payload)
-                        if response.status_code == 204:
-                            msg = 'Wobjdata ufmec updated.'
-                            return msg
-                        else:
-                            err = 'Error updating wobjdata: ' + str(response.status_code)
-                            return err
                     else:
                         msg = 'Input is not string.'
-                        return msg
+                        return msg, cookies
                 elif property.lower() == 'uframe':
                     if isinstance(new_value, basestring):
                         new_value = new_value.translate(None, "[]")
@@ -345,19 +340,12 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                             )
 
                             payload = {'value': new_wobjdata}
-                            response = requests.post(url_write, cookies=cookies, data=payload)
-                            if response.status_code == 204:
-                                msg = 'Wobjdata uframe updated.'
-                                return msg
-                            else:
-                                err = 'Error updating wobjdata: ' + str(response.status_code)
-                                return err
                         else:
                             msg = 'Input is not a valid uframe.'
-                            return msg
+                            return msg, cookies
                     else:
                         msg = 'Input is not string.'
-                        return msg
+                        return msg, cookies
                 elif property.lower() == 'oframe':
                     if isinstance(new_value, basestring):
                         new_value = new_value.translate(None, "[]")
@@ -373,39 +361,48 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                             )
 
                             payload = {'value': new_wobjdata}
-                            response = requests.post(url_write, cookies=cookies, data=payload)
-                            if response.status_code == 204:
-                                msg = 'Wobjdata oframe updated.'
-                                return msg
-                            else:
-                                err = 'Error updating wobjdata: ' + str(response.status_code)
-                                return err
                         else:
                             msg = 'Input is not a valid oframe.'
-                            return msg
+                            return msg, cookies
                     else:
                         msg = 'Input is not string.'
-                        return msg
+                        return msg, cookies
                 else:
                     msg = 'Property not of type robhold, ufprog, ufmec, uframe or oframe.'
-                    return msg
+                    return msg, cookies
+                response = requests.post(url_write, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url_write, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
+                if response.status_code == 204:
+                    msg = 'Wobjdata %s updated.' % property
+                    return msg, cookies
+                else:
+                    err = 'Error updating wobjdata: ' + str(response.status_code)
+                    return err, cookies
             else:
                 err = 'Error getting wobjdata from controller: ' + str(response.status_code)
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
 
 
 """
-Edits and writes wobjdata.
+Edits and writes wobjdata on controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'wobj')
@@ -416,16 +413,18 @@ Args:
     String: oframe (ex. '[0,0,0],[1,0,0,0]')
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data('local', cookies, 'T_ROB1', 'MainModule', 'wobj', True, False, '',
-                                                                '[100,100,0],[1,0,0,0]', '[0,0,0],[1,0,0,0]')
+    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'wobj', True,
+                                                            False, '', '[100,100,0],[1,0,0,0]', '[0,0,0],[1,0,0,0]')
 """
 
-def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name, robhold, ufprog, ufmec, uframe, oframe):
+def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, ufprog, ufmec, uframe, oframe):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
         and isinstance(variable_name, basestring) and isinstance(ufmec, basestring) \
-        and isinstance(uframe, basestring) and isinstance(oframe, basestring):
+        and isinstance(uframe, basestring) and isinstance(oframe, basestring)\
+        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         if ipaddress.lower() == 'local':
             url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
         else:
@@ -454,17 +453,25 @@ def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name
 
                 payload = {'value': new_wobjdata}
                 response = requests.post(url, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
                 if response.status_code == 204:
                     msg = 'Wobjdata updated.'
-                    return msg
+                    return msg, cookies
                 else:
                     err = 'Error updating wobjdata: ' + str(response.status_code)
-                    return err
+                    return err, cookies
             else:
                 msg = 'Incorrect format of input data.'
-                return msg
+                return msg, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
