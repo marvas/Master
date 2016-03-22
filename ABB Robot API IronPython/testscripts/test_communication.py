@@ -12,16 +12,17 @@ import frontendIronPy.user.user_authorization as user_authorization
 # Gets all the controllers on the network
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified robot controller
-ctrl, msg, connected = communication.connect_robot_with_name(controllers, 'Rudolf')
+rudolf, msg, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
 print msg
 # Logs onto the controller with default user
-logon, msg = user_authorization.logon_robot_controller_default(ctrl)
+logon, msg = user_authorization.logon_robot_controller_default(rudolf)
 print msg
 # Gets the specified rapid variable
-_, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'x')
+_, variable = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'number')
 print 'Got the variable: ', rapid_num.get_value_tostring(variable)
+print 'Tests that get value works: ', rapid_num.get_value(variable)
 # Gets mastership to controller in order to write
-_, msg, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
+_, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
 print msg
 # Edits and writes the specified rapid variable
 msg = rapid_num.edit_and_write_rapid_data(variable, 10)
@@ -30,10 +31,10 @@ print msg
 _, msg = user_mastership.release_and_dispose_master_access(mastership)
 print msg
 # Gets the variable again to check if it is updated
-_, variable = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'x')
+_, variable = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', 'number')
 print 'The changed variable: ', rapid_num.get_value_tostring(variable)
 # Logs off the controller and disposes of controller
-_, msg = user_authorization.logoff_robot_controller(ctrl)
+_, msg = user_authorization.logoff_robot_controller(rudolf)
 print msg
-_, msg = communication.disconnect_robot_controller(ctrl)
+_, msg = communication.disconnect_robot_controller(rudolf)
 print msg
