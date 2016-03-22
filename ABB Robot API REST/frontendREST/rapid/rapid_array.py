@@ -64,7 +64,8 @@ Index starts from 0.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'array')
@@ -72,19 +73,21 @@ Args:
     Float|Int: Value
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data_array_num_index('local', cookies, 'T_ROB1', 'MainModule', 'array', 0, 100)
+    message, cookies = edit_and_write_rapid_data_array_num_index('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                                        'array', 0, 100)
 """
 
-def edit_and_write_rapid_data_num_index(ipaddress, cookies, program, module, variable_name, index, value):
+def edit_and_write_rapid_data_num_index(ipaddress, cookies, digest_auth, program, module, variable_name, index, value):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
         and isinstance(variable_name, basestring) and isinstance(index, int) \
-        and isinstance(value, (int,float)):
+        and isinstance(value, (int,float)) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Checks if index is negative.
         if index < 0:
             err = 'Index can\'t be negative'
-            return err
+            return err, cookies
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -95,6 +98,14 @@ def edit_and_write_rapid_data_num_index(ipaddress, cookies, program, module, var
         try:
             # Gets the array from controller.
             response = requests.get(url_get, cookies=cookies)
+            # If response includes a new cookie to use, set the new cookie.
+            if len(response.cookies) > 0:
+                cookies = response.cookies
+            # If the user has timed out, need to authenticate again.
+            if response.status_code == 401:
+                response = requests.get(url_get, auth=digest_auth, cookies=cookies)
+                if response.status_code == 200:
+                    cookies = response.cookies
             if response.status_code == 200:
                 # Gets the array from response.
                 rapid_array = response.json()['_embedded']['_state'][0]['value']
@@ -110,23 +121,31 @@ def edit_and_write_rapid_data_num_index(ipaddress, cookies, program, module, var
                     # Write to controller.
                     payload = {'value': rapid_array}
                     response = requests.post(url_write, cookies=cookies, data=payload)
+                    # If response includes a new cookie to use, set the new cookie.
+                    if len(response.cookies) > 0:
+                        cookies = response.cookies
+                    # If the user has timed out, need to authenticate again.
+                    if response.status_code == 401:
+                        response = requests.post(url_write, auth=digest_auth, cookies=cookies, data=payload)
+                        if response.status_code == 204:
+                            cookies = response.cookies
                     if response.status_code == 204:
                         msg = 'Array index %d updated.' % index
-                        return msg
+                        return msg, cookies
                     else:
                         err = 'Error updating array: ' + str(response.status_code)
-                        return err
+                        return err, cookies
                 else:
                     msg = 'Index is not valid.'
-                    return msg
+                    return msg, cookies
             else:
                 err = 'Error getting array from controller: ' + str(response.status_code)
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
 
 
 """
@@ -135,27 +154,35 @@ Remember to get mastership before calling this function, and release the masters
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'array')
     List: values, ex([100,1,2])
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
     If RAPID array is of length 3:
-    message = edit_and_write_rapid_data_num('local', cookies, 'T_ROB1', 'MainModule', 'array', []) Formats array to default.
-    message = edit_and_write_rapid_data_num('local', cookies, 'T_ROB1', 'MainModule', 'array', [100,1,50])
-    message = edit_and_write_rapid_data_num('local', cookies, 'T_ROB1', 'MainModule', 'array', [100,1.1,50])
-    message = edit_and_write_rapid_data_num('local', cookies, 'T_ROB1', 'MainModule', 'array', [100])
+    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', []) Formats array to default.
+    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100,1,50])
+    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100,1.1,50])
+    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100])
     If RAPID array is of length 3 this is not possible:
-    message = edit_and_write_rapid_data_num('local', cookies, 'T_ROB1', 'MainModule', 'array', [100,1,50,100])
+    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100,1,50,100])
 """
 
-def edit_and_write_rapid_data_num(ipaddress, cookies, program, module, variable_name, values):
+def edit_and_write_rapid_data_num(ipaddress, cookies, digest_auth, program, module, variable_name, values):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(values, list):
+        and isinstance(variable_name, basestring) and isinstance(values, list)\
+        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -167,25 +194,33 @@ def edit_and_write_rapid_data_num(ipaddress, cookies, program, module, variable_
         for value in values:
             if isinstance(value, (int,float)) == False:
                 msg = 'Something wrong in list.'
-                return msg
+                return msg, cookies
         try:
             response = requests.get(url_get, cookies=cookies)
+            # If response includes a new cookie to use, set the new cookie.
+            if len(response.cookies) > 0:
+                cookies = response.cookies
+            # If the user has timed out, need to authenticate again.
+            if response.status_code == 401:
+                response = requests.get(url_get, auth=digest_auth, cookies=cookies)
+                if response.status_code == 200:
+                    cookies = response.cookies
             if response.status_code == 200:
                 num_dimensions = int(response.json()['_embedded']['_state'][0]['ndim'])
                 # Checks if the specified variable is a rapid array.
                 if num_dimensions == 0:
                     err = 'Specified variable is not an array.'
-                    return err
+                    return err, cookies
                 # Checks if the array is one dimensional.
                 try:
                     array_length = int(response.json()['_embedded']['_state'][0]['dim'])
                 except ValueError:
                     err = 'Rapid array is not one dimensional.'
-                    return err
+                    return err, cookies
                 # Check if input list is larger than the rapid list.
                 if len(values) > array_length:
                     msg = 'Input list is larger than RAPID list.'
-                    return msg
+                    return msg, cookies
                 # If size of values are smaller than RAPID list, then fill the list
                 # with zeroes until they are the same size.
                 if len(values) < array_length:
@@ -198,17 +233,25 @@ def edit_and_write_rapid_data_num(ipaddress, cookies, program, module, variable_
                 # Writes to controller.
                 payload = {'value': str(new_array)}
                 response = requests.post(url_write, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url_write, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
                 if response.status_code == 204:
                     msg = 'Array updated.'
-                    return msg
+                    return msg, cookies
                 else:
                     err = 'Error updating array: ' + str(response.status_code)
-                    return err
+                    return err, cookies
             else:
                 err = 'Error getting array from controller: ' + str(response.status_code)
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
