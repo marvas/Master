@@ -152,12 +152,13 @@ def get_tooldata_tostring(response_dict):
 
 
 """
-Edits and writes the specified property of the tooldata.
+Edits and writes the specified property of the tooldata to controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'tool')
@@ -165,17 +166,23 @@ Args:
     String|Bool: new_value
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'tool', 'robhold', True)
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'tool', 'robhold', False)
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'tool', 'tframe','[0,0,100],[1,0,0,0]')
-    message = edit_and_write_rapid_data_property('local', cookies, 'T_ROB1', 'MainModule', 'tool', 'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                            'tool', 'robhold', True)
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                            'tool', 'robhold', False)
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'tool', 'tframe','[0,0,100],[1,0,0,0]')
+    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                        'tool', 'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
-def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, variable_name, property, new_value):
+def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name, property, new_value):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(property, basestring):
+        and isinstance(variable_name, basestring) and isinstance(property, basestring)\
+        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
@@ -186,6 +193,14 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
         try:
             # Gets tooldata from controller.
             response = requests.get(url_get, cookies=cookies)
+            # If response includes a new cookie to use, set the new cookie.
+            if len(response.cookies) > 0:
+                cookies = response.cookies
+            # If the user has timed out, need to authenticate again.
+            if response.status_code == 401:
+                response = requests.get(url_get, auth=digest_auth, cookies=cookies)
+                if response.status_code == 200:
+                    cookies = response.cookies
             if response.status_code == 200:
                 # Gets the tooldata from response.
                 tooldata = response.json()['_embedded']['_state'][0]['value']
@@ -206,16 +221,9 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                         )
 
                         payload = {'value': new_tooldata}
-                        response = requests.post(url_write, cookies=cookies, data=payload)
-                        if response.status_code == 204:
-                            msg = 'Tooldata robhold updated.'
-                            return msg
-                        else:
-                            err = 'Error updating tooldata: ' + str(response.status_code)
-                            return err
                     else:
                         msg = 'Input is not boolean.'
-                        return msg
+                        return msg, cookies
                 elif property.lower() == 'tframe':
                     if isinstance(new_value, basestring):
                         new_value = new_value.translate(None, "[]")
@@ -230,19 +238,12 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                             )
 
                             payload = {'value': new_tooldata}
-                            response = requests.post(url_write, cookies=cookies, data=payload)
-                            if response.status_code == 204:
-                                msg = 'Tooldata tframe updated.'
-                                return msg
-                            else:
-                                err = 'Error updating tooldata: ' + str(response.status_code)
-                                return err
                         else:
                             msg = 'Input is not a valid Tframe.'
-                            return msg
+                            return msg, cookies
                     else:
                         msg = 'Input is not string.'
-                        return msg
+                        return msg, cookies
                 elif property.lower() == 'tload':
                     if isinstance(new_value, basestring):
                         new_value = new_value.translate(None, "[]")
@@ -257,39 +258,48 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, program, module, vari
                             )
 
                             payload = {'value': new_tooldata}
-                            response = requests.post(url_write, cookies=cookies, data=payload)
-                            if response.status_code == 204:
-                                msg = 'Tooldata tload updated.'
-                                return msg
-                            else:
-                                err = 'Error updating tooldata: ' + str(response.status_code)
-                                return err
                         else:
                             msg = 'Input is not a valid tload.'
-                            return msg
+                            return msg, cookies
                     else:
                         msg = 'Input is not string.'
-                        return msg
+                        return msg, cookies
                 else:
                     msg = 'Property not of type robhold, tframe, tload.'
-                    return msg
+                    return msg, cookies
+                response = requests.post(url_write, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url_write, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
+                if response.status_code == 204:
+                    msg = 'Tooldata %s updated.' % property
+                    return msg, cookies
+                else:
+                    err = 'Error updating tooldata: ' + str(response.status_code)
+                    return err, cookies
             else:
                 err = 'Error getting tooldata from controller: ' + str(response.status_code)
-                return err
+                return err, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
 
 
 """
-Edits and writes tooldata.
+Edits and writes tooldata to controller.
 Remember to get mastership before calling this function, and release the mastership right after.
 
 Args:
     String: IP address
-    Requests.cookies.requestsCookieJar: cookies
+    Requests.cookies.RequestsCookieJar: cookies
+    Requests.auth.HTTPDigestAuth: digest_auth
     String: program (name of program, ex 'T_ROB1')
     String: module (name of module, ex 'MainModule')
     String: variable_name (name of variable, ex 'tool')
@@ -298,16 +308,17 @@ Args:
     String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
 Returns:
     String: result message or error
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data('local', cookies, 'T_ROB1', 'MainModule', 'tool',
-                                                True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'tool',
+                                                        True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
-def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name, robhold, tframe, tload):
+def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, tframe, tload):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
         and isinstance(variable_name, basestring) and isinstance(tframe, basestring) \
-        and isinstance(tload, basestring):
+        and isinstance(tload, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         if ipaddress.lower() == 'local':
             url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
         else:
@@ -331,17 +342,25 @@ def edit_and_write_rapid_data(ipaddress, cookies, program, module, variable_name
 
                 payload = {'value': new_tooldata}
                 response = requests.post(url, cookies=cookies, data=payload)
+                # If response includes a new cookie to use, set the new cookie.
+                if len(response.cookies) > 0:
+                    cookies = response.cookies
+                # If the user has timed out, need to authenticate again.
+                if response.status_code == 401:
+                    response = requests.post(url, auth=digest_auth, cookies=cookies, data=payload)
+                    if response.status_code == 204:
+                        cookies = response.cookies
                 if response.status_code == 204:
                     msg = 'Tooldata updated.'
-                    return msg
+                    return msg, cookies
                 else:
                     err = 'Error updating tooldata: ' + str(response.status_code)
-                    return err
+                    return err, cookies
             else:
                 msg = 'Incorrect format of input data.'
-                return msg
+                return msg, cookies
         except Exception, err:
-            return err
+            return err, cookies
     else:
         err = 'Something wrong with arguments.'
-        return err
+        return err, cookies
