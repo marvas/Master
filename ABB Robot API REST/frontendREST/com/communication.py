@@ -35,8 +35,8 @@ def connect_robot_with_ipaddr(ipaddress, username, password):
             if response.status_code == 200:
                 # Gets the system information
                 rob_info_dict = response.json()['_embedded']['_state'][0]
-                rob_info = 'System name: %s, System ID: %s, Controller Version: %s' % \
-                           (rob_info_dict['name'], rob_info_dict['sysid'], rob_info_dict['rwversion'])
+                rob_info = 'System name: %s, Controller Version: %s' % \
+                           (rob_info_dict['name'], rob_info_dict['rwversion'])
                 return True, rob_info, digest_auth, response.cookies
             else:
                 err = 'Something went wrong. Status code: ' + str(response.status_code)
@@ -75,8 +75,8 @@ def connect_robot_with_ipaddr_def_user(ipaddress):
             if response.status_code == 200:
                 # Gets the system information
                 rob_info_dict = response.json()['_embedded']['_state'][0]
-                rob_info = 'System name: %s, System ID: %s, Controller Version: %s' % \
-                           (rob_info_dict['name'], rob_info_dict['sysid'], rob_info_dict['rwversion'])
+                rob_info = 'System name: %s, Controller Version: %s' % \
+                           (rob_info_dict['name'], rob_info_dict['rwversion'])
                 return True, rob_info, digest_auth, response.cookies
             else:
                 err = 'Something went wrong. Status code: ' + str(response.status_code)
@@ -101,14 +101,22 @@ Examples:
     None
 """
 
-def logoff_robot_controller(ipaddress, cookies):
+def logoff_robot_controller(ipaddress, cookies, digest_auth):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar):
         if ipaddress.lower() == 'local':
                 url = 'http://{0}/logout'.format('localhost:80')
         else:
                 url = 'http://{0}/logout'.format(ipaddress.lower())
         try:
-            response = requests.get(url, cookies = cookies)
+            print cookies
+            response = requests.get(url)
+            print response.cookies
+            print response.status_code
+            # # If the user has timed out, need to authenticate again.
+            # if response.status_code == 401:
+            #     response = requests.get(url, auth=digest_auth, cookies=cookies)
+            #     if response.status_code == 200:
+            #         cookies = response.cookies
             if response.status_code == 200:
                 return 'Logout successful.'
             else:
