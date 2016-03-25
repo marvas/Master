@@ -24,7 +24,7 @@ Examples:
     None
 """
 
-def connect_robot_with_ipaddr(ipaddress, username, password):
+def connect_robot_with_ipaddr_and_user(ipaddress, username, password):
     if isinstance(ipaddress, basestring) and isinstance(username, basestring) and isinstance(password, basestring):
         # Inserts ip address into the url
         if ipaddress.lower() == 'local':
