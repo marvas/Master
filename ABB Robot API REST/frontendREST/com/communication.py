@@ -101,23 +101,19 @@ Examples:
     None
 """
 
-def logoff_robot_controller(ipaddress, cookies, digest_auth):
+def logoff_robot_controller(ipaddress, cookies):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar):
         if ipaddress.lower() == 'local':
                 url = 'http://{0}/logout'.format('localhost:80')
         else:
                 url = 'http://{0}/logout'.format(ipaddress.lower())
         try:
-            print cookies
-            response = requests.get(url)
-            print response.cookies
-            print response.status_code
-            # # If the user has timed out, need to authenticate again.
-            # if response.status_code == 401:
-            #     response = requests.get(url, auth=digest_auth, cookies=cookies)
-            #     if response.status_code == 200:
-            #         cookies = response.cookies
-            if response.status_code == 200:
+            response = requests.get(url, cookies=cookies)
+            # Error logging out because user is already logged out.
+            if response.status_code == 401 or response.status_code == 400:
+                return 'Already logged out.'
+            # If user is not logged out then logout successful.
+            elif response.status_code == 200:
                 return 'Logout successful.'
             else:
                 return 'Logout failed. ' + str(response.status_code)
