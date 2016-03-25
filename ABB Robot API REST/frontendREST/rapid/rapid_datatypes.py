@@ -1,6 +1,5 @@
 """
-Module for getting rapid data information from the robot controller. This data can be shown to user,
-or edited and written back to the controller in order to update a data instance.
+Module for getting rapid data information from the robot controller. This data can be shown or used by user.
 """
 
 import requests
@@ -24,7 +23,6 @@ Returns:
 Examples:
      b, response_dict, cookies = rapid_datatypes.get_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'p20')
      b, response_dict, cookies = rapid_datatypes.get_rapid_data('10.0.0.10', cookies, digest_auth, 'T_ROB1', 'MainModule', 'p20')
-
 """
 
 def get_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name):

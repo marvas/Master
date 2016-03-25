@@ -116,7 +116,6 @@ def get_jointtarget_tostring(response_dict):
 
 """
 Edits the specified property of the jointtarget and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
@@ -228,7 +227,6 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
 
 """
 Edits and writes the jointtarget.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
@@ -244,7 +242,7 @@ Returns:
     String: result message or error
     Requests.cookies.RequestsCookieJar: cookies
 Examples:
-    message = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
                                                             'jtarget', '[0,0,0,0,0,0], '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 

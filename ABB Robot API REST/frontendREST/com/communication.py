@@ -18,6 +18,8 @@ Args:
 Returns:
     Boolean: Indicates if connection to robot was successful.
     String: Message with the outcome
+    Requests.auth.HTTPDigestAuth: digest_auth
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
     None
 """
@@ -58,6 +60,8 @@ Args:
 Returns:
     Boolean: Indicates if connection to robot was successful.
     String: Message with the outcome
+    Requests.auth.HTTPDigestAuth: digest_auth
+    Requests.cookies.RequestsCookieJar: cookies
 Examples:
     None
 """

@@ -36,7 +36,7 @@ Gets the state of bool and returns it
 Args:
     Dictionary: response_dict
 Returns:
-    Boolean OR String: Output depends on if it is successful or not
+    Boolean|String: Output depends on if it is successful or not
 Examples:
     None
 """
@@ -57,7 +57,6 @@ def get_state(response_dict):
 
 """
 Edits and writes the boolean variable to the specified state.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:

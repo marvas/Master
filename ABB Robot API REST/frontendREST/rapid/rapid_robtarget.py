@@ -184,7 +184,6 @@ def get_robtarget_tostring(response_dict):
 
 """
 Edit and write the specified robtarget property.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
@@ -329,7 +328,6 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
 
 """
 Edit and write the robtarget.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:

@@ -220,7 +220,7 @@ def get_wobjdata_tostring(response_dict):
 
 """
 Edits and writes specified property of wobjdata on controller.
-Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
     String: IP address
@@ -397,7 +397,7 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
 
 """
 Edits and writes wobjdata on controller.
-Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
     String: IP address

@@ -35,7 +35,7 @@ Gets the value of num from response and returns it
 Args:
     Dictionary: response_dict
 Returns:
-    Float OR String: Output depends on if it is possible to get the value or not
+    Float|String: Output depends on if it is possible to get the value or not
 Examples:
     None
 """
@@ -53,7 +53,6 @@ def get_value(response_dict):
 
 """
 Edits and writes the num variable to the specified value.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:

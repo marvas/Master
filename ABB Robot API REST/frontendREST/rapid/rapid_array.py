@@ -14,7 +14,7 @@ Gets the length of array and returns it. Only shows the length of first dimensio
 Args:
     Dictionary: response_dict
 Returns:
-    Int OR String: Output depends on if it is possible to get the length or not
+    Int|String: Output depends on if it is possible to get the length or not
 Examples:
     None
 """
@@ -41,7 +41,7 @@ Gets the dimension of array and returns it.
 Args:
     Dictionary: response_dict
 Returns:
-    Int OR String: Output depends on if it is possible to get the dimension or not
+    Int|String: Output depends on if it is possible to get the dimension or not
 Examples:
     None
 """
@@ -59,7 +59,7 @@ def get_dimensions(response_dict):
 
 """
 Inserts a value into num array with index and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 Index starts from 0.
 
 Args:
@@ -150,7 +150,7 @@ def edit_and_write_rapid_data_num_index(ipaddress, cookies, digest_auth, program
 
 """
 Inserts a list of values into num array and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
+Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
     String: IP address

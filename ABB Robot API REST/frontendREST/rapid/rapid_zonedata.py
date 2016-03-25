@@ -62,7 +62,6 @@ def get_zonedata_tostring(response_dict):
 
 """
 Edits and writes the zonedata. Only supports base zonedata.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Base zonedata supported:
@@ -136,7 +135,6 @@ def edit_and_write_rapid_data_base(ipaddress, cookies, digest_auth, program, mod
 
 """
 Edits and writes the zonedata.
-Remember to get mastership before calling this function, and release the mastership right after.
 Remember to overwrite the old cookie with the new returned cookie from this function.
 
 Args:
