@@ -86,7 +86,6 @@ def connect_robot_with_ipaddr_def_user(ipaddress):
                 err = 'Something went wrong. Status code: ' + str(response.status_code)
                 return False, err, None, None
         except Exception, err:
-            # err = 'Can\'t connect to robot with the specified ip address.'
             return False, err, None, None
     else:
         err = 'Something wrong with arguments. Needs to be string.'
