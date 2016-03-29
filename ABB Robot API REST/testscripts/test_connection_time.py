@@ -23,7 +23,10 @@ for i in range(100):
     if not connected:
         print 'Error connecting and logging in'
         break
-    print communication.logoff_robot_controller('local', cookies)
+    logoff, _ = communication.logoff_robot_controller('local', cookies)
+    if not logoff:
+        print 'Error logging off'
+        break
     # Writes the time to the specified text file
     with open('connection_time_rest.txt', 'a+') as f:
         f.write('%g\n' % elap_time)

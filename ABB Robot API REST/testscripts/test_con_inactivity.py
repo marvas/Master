@@ -26,4 +26,5 @@ print msg
 _, response_dict, cookies = rapid_datatypes.get_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'number')
 print rapid_num.get_value_tostring(response_dict)
 # Logs of the controller.
-print communication.logoff_robot_controller('local', cookies)
+_, msg = communication.logoff_robot_controller('local', cookies)
+print msg

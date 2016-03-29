@@ -99,6 +99,7 @@ Args:
     String: IP address
     Requests.cookies.RequestsCookieJar: cookies
 Returns:
+    Boolean: Indicates if successful or not
     String: Message with the outcome
 Examples:
     None
@@ -114,17 +115,17 @@ def logoff_robot_controller(ipaddress, cookies):
             response = requests.get(url, cookies=cookies)
             # Error logging out because user is already logged out.
             if response.status_code == 401 or response.status_code == 400:
-                return 'Already logged out.'
+                return True, 'Already logged out.'
             # If user is not logged out then logout successful.
             elif response.status_code == 200:
-                return 'Logout successful.'
+                return True, 'Logout successful.'
             else:
-                return 'Logout failed. ' + str(response.status_code)
+                return False, 'Logout failed. ' + str(response.status_code)
         except Exception, err:
-            return err
+            return False, err
     else:
         err = 'Something wrong with arguments'
-        return err
+        return False, err
 
 
 
