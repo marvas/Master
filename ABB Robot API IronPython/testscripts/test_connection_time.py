@@ -42,6 +42,6 @@ for i in range(100):
         print 'Error disconnecting from controller'
         break
     # Writes the time to the specified text file
-    with open('connection_time_irpy.txt', 'a+') as f:
+    with open('output/connection_time_irpy.txt', 'a+') as f:
         f.write('%g\n' % elap_time)
     f.close()
