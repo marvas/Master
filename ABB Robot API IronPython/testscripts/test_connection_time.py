@@ -1,5 +1,6 @@
 """
-Module for testing the time it takes to connect and logon to a controller. The result is written to file.
+Module for testing the time it takes to connect and logon to a controller with IronPython API.
+The result is written to file.
 """
 
 
@@ -23,17 +24,13 @@ for i in range(100):
     stop_time = time.clock()
     # Calculate elapsed time
     elap_time = stop_time - start_time
-    # Checks if everything went ok before writing result.
+    # Checks if everything went ok.
     if not connected:
         print 'Error connecting to controller'
         break
     if not logon:
         print 'Error logging on'
         break
-    # Writes the time to the specified text file
-    with open('connection_time_irpy.txt', 'a+') as f:
-        f.write('%g\n' % elap_time)
-    f.close()
     # Logs off the controller
     logoff, _ = user_authorization.logoff_robot_controller(ctrl)
     if not logoff:
@@ -44,3 +41,7 @@ for i in range(100):
     if not disconnected:
         print 'Error disconnecting from controller'
         break
+    # Writes the time to the specified text file
+    with open('connection_time_irpy.txt', 'a+') as f:
+        f.write('%g\n' % elap_time)
+    f.close()
