@@ -20,7 +20,7 @@ import frontendIronPy.rapid.rapid_zonedata as rapid_zonedata
 # Discovers all controllers on network
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified controller Rudolf
-rudolf, msg, connected = communication.connect_robot_with_name(controllers, 'Rudolf')
+rudolf, msg, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
 print msg
 # Logs onto the specified controller with default user
 logon, msg = user_authorization.logon_robot_controller_default(rudolf)
@@ -48,7 +48,7 @@ if rapid_bool.get_state(rapid_sim_started) == False:
 # Editing the speeddata and the zonedata.
 _, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
 print msg
-msg = rapid_speeddata.edit_and_write_rapid_data_base(rapid_speed, 'v100')
+msg = rapid_speeddata.edit_and_write_rapid_data_base(rapid_speed, 'v10')
 print msg
 # Finep is set to True in order to not get corner path failure warning
 msg = rapid_zonedata.edit_and_write_rapid_data(rapid_zone, True, 0.3, 0.3, 0.3, 0.03, 0.3 ,0.03)
@@ -82,8 +82,8 @@ else:
     sys.exit()
 
 
-# Draws 18 flower
-while num_flowers < 18:
+# Draws a specified amount of flowers
+while num_flowers < 10:
     while theta < max_degrees:
         if rapid_bool.get_state(rapid_drawing) == False:
             x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
