@@ -25,7 +25,7 @@ for i in range(1000):
     # Stop timestamp
     stop_time = time.clock()
     # Gets the value from the controller in order to see if it is updated
-    if msg is not 'Array updated.':
+    if msg != 'Array updated.':
         print 'Error updating variable'
         sys.exit()
     # Calculates the time taken
