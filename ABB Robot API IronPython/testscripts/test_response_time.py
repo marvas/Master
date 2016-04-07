@@ -17,39 +17,39 @@ import frontendIronPy.rapid.rapid_num as rapid_num
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified robot controller
 ctrl, _, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
-if not connected:
+if connected == False:
     print 'Error connecting to controller'
     sys.exit()
 # Logs onto the controller with default user
 logon, _ = user_authorization.logon_robot_controller_default(ctrl)
-if not logon:
+if logon == False:
     print 'Error logging on to controller'
     sys.exit()
 # Gets the rapid data from controller
 _, rapid_number = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'number')
+# Get mastership on controller
+master, msg, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
+if master == False:
+    print 'Error getting mastership'
+    sys.exit()
 for i in range(1000):
-    # Get mastership on controller
-    master, _, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
-    if master == False:
-        print 'Error getting mastership'
-        sys.exit()
     start_time = time.clock()
     # Edit variable on controller
     msg = rapid_num.edit_and_write_rapid_data(rapid_number, i)
     stop_time = time.clock()
     if msg != 'Changed the value':
         print 'Error updating variable'
-        sys.exit()
-    # Release mastership on controller
-    released, _ = user_mastership.release_and_dispose_master_access(mastership)
-    if released == False:
-        print 'Error releasing mastership'
-        sys.exit()
+        break
     elap_time = stop_time - start_time
     # Writes the time to the specified text file
     with open('output/response_time_irpy.txt', 'a+') as f:
         f.write('%d %g\n' % (i, elap_time))
     f.close()
+# Release mastership on controller
+released, msg = user_mastership.release_and_dispose_master_access(mastership)
+if released == False:
+    print 'Error releasing mastership'
+    sys.exit()
 # Logs off the controller
 logoff, _ = user_authorization.logoff_robot_controller(ctrl)
 if not logoff:
