@@ -21,7 +21,7 @@ for i in range(1000):
     # Start timestamp
     start_time = time.clock()
     # Edits the number on the controller
-    msg, cookies = rapid_array.edit_and_write_rapid_data_num(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'arr', [i,i+1])
+    msg, cookies = rapid_array.edit_and_write_rapid_data_num(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'arr2elem', [i,i+1])
     # Stop timestamp
     stop_time = time.clock()
     # Gets the value from the controller in order to see if it is updated
