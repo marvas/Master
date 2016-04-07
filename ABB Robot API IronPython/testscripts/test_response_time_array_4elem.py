@@ -41,7 +41,7 @@ for i in range(1000):
         print 'Error updating array'
         sys.exit()
     # Release mastership on controller
-    released, _ = user_mastership.release_and_dispose_master_access(ctrl)
+    released, _ = user_mastership.release_and_dispose_master_access(mastership)
     if released == False:
         print 'Error releasing mastership'
         sys.exit()
