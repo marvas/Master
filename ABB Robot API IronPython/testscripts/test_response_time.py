@@ -1,0 +1,57 @@
+"""
+Tests the response time of frontend REST
+"""
+
+
+import sys
+import time
+
+import frontendIronPy.com.communication as communication
+import frontendIronPy.user.user_authorization as user_authorization
+import frontendIronPy.user.user_mastership as user_mastership
+import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
+import frontendIronPy.rapid.rapid_num as rapid_num
+
+
+# Gets all the controllers on the network
+controllers = communication.discover_controllers_on_network()
+# Connects to the specified robot controller
+ctrl, _, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
+if not connected:
+    print 'Error connecting to controller'
+    sys.exit()
+# Logs onto the controller with default user
+logon, _ = user_authorization.logon_robot_controller_default(ctrl)
+if not logon:
+    print 'Error logging on to controller'
+    sys.exit()
+# Gets the rapid data from controller
+_, rapid_number = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'number')
+for i in range(1000):
+    # Get mastership on controller
+    master, _, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
+    if master == False:
+        print 'Error getting mastership'
+        sys.exit()
+    start_time = time.clock()
+    # Edit variable on controller
+    msg = rapid_num.edit_and_write_rapid_data(rapid_number, i)
+    stop_time = time.clock()
+    if msg != 'Changed the value':
+        print 'Error updating variable'
+        sys.exit()
+    # Release mastership on controller
+    released, _ = user_mastership.release_and_dispose_master_access(ctrl)
+    if released == False:
+        print 'Error releasing mastership'
+        sys.exit()
+    elap_time = stop_time - start_time
+    # Writes the time to the specified text file
+    with open('output/response_time_irpy.txt', 'a+') as f:
+        f.write('%d %g\n' % (i, elap_time))
+    f.close()
+# Logs off the controller
+logoff, _ = user_authorization.logoff_robot_controller(ctrl)
+if not logoff:
+    print 'Error logging off'
+    sys.exit()
