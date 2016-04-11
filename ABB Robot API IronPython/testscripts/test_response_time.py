@@ -32,7 +32,7 @@ master, msg, mastership = user_mastership.get_master_access_to_controller_rapid(
 if master == False:
     print 'Error getting mastership'
     sys.exit()
-for i in range(1000):
+for i in range(100):
     start_time = time.clock()
     # Edit variable on controller
     msg = rapid_num.edit_and_write_rapid_data(rapid_number, i)

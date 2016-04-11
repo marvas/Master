@@ -17,7 +17,7 @@ connected, _, digest_auth, cookies = communication.connect_robot_with_ipaddr_def
 if not connected:
     print 'Not connected to controller'
     sys.exit()
-for i in range(1000):
+for i in range(100):
     # Start timestamp
     start_time = time.clock()
     # Edits the number on the controller
