@@ -10,7 +10,7 @@ import frontendREST.rapid.rapid_array as rapid_array
 
 
 
-ipaddr = 'local'
+ipaddr = '152.94.0.39'
 
 # Connects to the controller
 connected, _, digest_auth, cookies = communication.connect_robot_with_ipaddr_def_user(ipaddr)
@@ -21,7 +21,7 @@ for i in range(100):
     # Start timestamp
     start_time = time.clock()
     # Edits the number on the controller
-    msg, cookies = rapid_array.edit_and_write_rapid_data_num(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'arr2elem', [i,i+1])
+    msg, cookies = rapid_array.edit_and_write_rapid_data_num(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'arr2elem', [1,2])
     # Stop timestamp
     stop_time = time.clock()
     # Gets the value from the controller in order to see if it is updated
@@ -34,5 +34,5 @@ for i in range(100):
     with open('output/response_time_array_2elem_rest.txt', 'a+') as f:
         f.write('%d %g\n' % (i, elap_time))
     f.close()
-_, msg = communication.logoff_robot_controller('local', cookies)
+_, msg = communication.logoff_robot_controller(ipaddr, cookies)
 print msg
