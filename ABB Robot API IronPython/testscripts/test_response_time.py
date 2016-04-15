@@ -16,7 +16,7 @@ import frontendIronPy.rapid.rapid_num as rapid_num
 # Gets all the controllers on the network
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified robot controller
-ctrl, _, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
+ctrl, _, connected = communication.connect_robot_with_name(controllers, 'RudolfEGM')
 if connected == False:
     print 'Error connecting to controller'
     sys.exit()
@@ -35,7 +35,7 @@ if master == False:
 for i in range(100):
     start_time = time.clock()
     # Edit variable on controller
-    msg = rapid_num.edit_and_write_rapid_data(rapid_number, i)
+    msg = rapid_num.edit_and_write_rapid_data(rapid_number, 10)
     stop_time = time.clock()
     if msg != 'Changed the value':
         print 'Error updating variable'
