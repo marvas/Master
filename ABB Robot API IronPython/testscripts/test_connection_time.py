@@ -10,14 +10,14 @@ import frontendIronPy.com.communication as communication
 import frontendIronPy.user.user_authorization as user_authorization
 
 
-# Gets all the controllers on the network
-controllers = communication.discover_controllers_on_network()
 # Connects and logs onto the controller a set amount of times and writes the result to a file.
 for i in range(100):
     # Timestamp start
     start_time = time.clock()
+    # Gets all the controllers on the network
+    controllers = communication.discover_controllers_on_network()
     # Connects to the specified robot controller
-    ctrl, _, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
+    ctrl, _, connected = communication.connect_robot_with_name(controllers, 'RudolfEGM')
     # Logs onto the controller with default user
     logon, _ = user_authorization.logon_robot_controller_default(ctrl)
     # Timestamp stop
