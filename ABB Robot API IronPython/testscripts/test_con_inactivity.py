@@ -14,7 +14,7 @@ import frontendIronPy.user.user_authorization as user_authorization
 # Gets all the controllers on the network
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified robot controller
-ctrl, msg, connected = communication.connect_robot_with_name(controllers, 'Rudolf')
+ctrl, msg, connected = communication.connect_robot_with_name(controllers, 'RudolfEGM')
 print msg
 # Logs onto the controller with default user
 logon, msg = user_authorization.logon_robot_controller_default(ctrl)
@@ -28,7 +28,7 @@ print 'Got the variable: ', rapid_num.get_value_tostring(variable)
 _, msg, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
 print msg
 # Edits and writes the specified rapid variable
-msg = rapid_num.edit_and_write_rapid_data(variable, 11)
+msg = rapid_num.edit_and_write_rapid_data(variable, 12)
 print msg
 # Releases mastership when the editing and writing is performed
 _, msg = user_mastership.release_and_dispose_master_access(mastership)
