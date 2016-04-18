@@ -20,7 +20,7 @@ import frontendIronPy.rapid.rapid_zonedata as rapid_zonedata
 # Discovers all controllers on network
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified controller Rudolf
-rudolf, msg, connected = communication.connect_robot_with_name(controllers, 'IRB_140_6kg_0.81m')
+rudolf, msg, connected = communication.connect_robot_with_name(controllers, 'RudolfEGM')
 print msg
 # Logs onto the specified controller with default user
 logon, msg = user_authorization.logon_robot_controller_default(rudolf)
@@ -83,7 +83,7 @@ else:
 
 
 # Draws a specified amount of flowers
-while num_flowers < 10:
+while num_flowers < 1:
     while theta < max_degrees:
         if rapid_bool.get_state(rapid_drawing) == False:
             x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
