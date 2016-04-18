@@ -17,7 +17,7 @@ import frontendREST.rapid.rapid_zonedata as rapid_zonedata
 
 start_time = time.clock()
 
-ipaddr = 'local'
+ipaddr = '152.94.0.39'
 
 # Connects to the specified controller and logs on with default user.
 _, sys_info, digest_auth, cookies = communication.connect_robot_with_ipaddr_def_user(ipaddr)
@@ -64,11 +64,10 @@ else:
     sys.exit()
 
 # Draws a specified amount of flowers
-while num_flowers < 10:
+while num_flowers < 3:
     while theta < max_degrees:
         got_value, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies, digest_auth,
                                                               'T_ROB1', 'MainModule', 'drawing')
-        time.sleep(1)
         if got_value:
             if rapid_bool.get_state(response) == False:
                 x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
