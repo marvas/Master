@@ -15,7 +15,7 @@ import frontendREST.rapid.rapid_speeddata as rapid_speeddata
 import frontendREST.rapid.rapid_zonedata as rapid_zonedata
 
 
-ipaddr = 'local'
+ipaddr = '152.94.0.39'
 
 # Connects to the specified controller and logs on with default user.
 _, sys_info, digest_auth, cookies = communication.connect_robot_with_ipaddr_def_user(ipaddr)
@@ -31,7 +31,7 @@ if rapid_bool.get_state(response) == False:
 
 # Editing the speeddata and zonedata
 msg, cookies = rapid_speeddata.edit_and_write_rapid_data_base(ipaddr, cookies, digest_auth,
-                                                              'T_ROB1', 'MainModule', 'speed', 'v10')
+                                                              'T_ROB1', 'MainModule', 'speed', 'v100')
 print msg
 # Finep is set to True in order to not get corner path failure warning
 msg, cookies = rapid_zonedata.edit_and_write_rapid_data(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'zone',
@@ -62,7 +62,7 @@ else:
     sys.exit()
 
 # Draws a specified amount of flowers
-while num_flowers < 10:
+while num_flowers < 1:
     while theta < max_degrees:
         got_value, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies, digest_auth,
                                                               'T_ROB1', 'MainModule', 'drawing')
