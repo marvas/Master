@@ -10,41 +10,37 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-"""
-Checks if controller is holding mastership
-
-Args:
-    ABB.Robotics.Controllers.Controller: Controller
-Returns:
-    Boolean: Indicates if master or not
-Examples:
-    None
-"""
-
-
 def is_controller_master(controller):
+    """
+    Checks if controller is holding mastership
+
+    Input:
+        ABB.Robotics.Controllers.Controller: Controller
+    Output:
+        Boolean: Indicates if master or not
+    Examples:
+        None
+    """
     try:
         return bool(controller.IsMaster)
     except Exception:
         return False
 
 
-"""
-Gets the user access as master on the robot controller. This will make it possible to edit and write RAPID code.
-Remember to call this method before editing and writing data to controller.
-
-Args:
-    ABB.Robotics.Controllers.Controller: Controller
-Returns:
-    Boolean: Indicates if mastership was successful
-    String: Message with the outcome
-    ABB.Robotics.Controllers.Mastership OR None: Mastership is returned if accomplished, None if something went wrong
-Examples:
-    None
-"""
-
-
 def get_master_access_to_controller_rapid(controller):
+    """
+    Gets the user access as master on the robot controller. This will make it possible to edit and write RAPID code.
+    Remember to call this method before editing and writing data to controller.
+
+    Input:
+        ABB.Robotics.Controllers.Controller: Controller
+    Output:
+        Boolean: Indicates if mastership was successful
+        String: Message with the outcome
+        ABB.Robotics.Controllers.Mastership OR None: Mastership is returned if successful, None if something went wrong
+    Examples:
+        None
+    """
     try:
         mastership = ctrlrs.Mastership.Request(controller.Rapid)
         msg = 'Got master access to controller'
@@ -53,21 +49,19 @@ def get_master_access_to_controller_rapid(controller):
         return False, err, None
 
 
-"""
-Releases any master access granted on the controller.
-Remember to call this method after editing and writing data to controller.
-
-Args:
-    ABB.Robotics.Controllers.Mastership: Mastership
-Returns:
-    Boolean: Indicates if mastership was released and disposed
-    String: Message with the outcome
-Examples:
-    None
-"""
-
-
 def release_and_dispose_master_access(mastership):
+    """
+    Releases any master access granted on the controller.
+    Remember to call this method after editing and writing data to controller.
+
+    Input:
+        ABB.Robotics.Controllers.Mastership: Mastership
+    Output:
+        Boolean: Indicates if mastership was released and disposed
+        String: Message with the outcome
+    Examples:
+        None
+    """
     try:
         mastership.Release()
         mastership.Dispose()

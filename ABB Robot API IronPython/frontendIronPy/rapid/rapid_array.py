@@ -10,19 +10,17 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-"""
-Gets the length of array and returns it. Only shows the length of first dimension.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    Int OR String: Output depends on if it is possible to get the length or not
-Examples:
-    None
-"""
-
-
 def get_length(rapid_data):
+    """
+    Gets the length of array and returns it. Only shows the length of first dimension.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        Int OR String: Output depends on if it is possible to get the length or not
+    Examples:
+        None
+    """
     if rapid_data.IsArray:
         try:
             return int(rapid_data.Value.Length)
@@ -33,19 +31,17 @@ def get_length(rapid_data):
         return err
 
 
-"""
-Gets the dimension of array and returns it.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    Int OR String: Output depends on if it is possible to get the dimension or not
-Examples:
-    None
-"""
-
-
 def get_dimensions(rapid_data):
+    """
+    Gets the dimension of array and returns it.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        Int OR String: Output depends on if it is possible to get the dimension or not
+    Examples:
+        None
+    """
     if rapid_data.IsArray:
         try:
             return int(rapid_data.Value.Rank)
@@ -56,23 +52,21 @@ def get_dimensions(rapid_data):
         return err
 
 
-"""
-Inserts a value into num array with index and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-Index starts from 0.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    Integer: Index, array index
-    Float|Int: Value
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data_num_index(rapid_data, 0, 100)
-"""
-
-
 def edit_and_write_rapid_data_num_index(rapid_data, index, value):
+    """
+    Inserts a value into num array with index and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+    Index starts from 0.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        Integer: Index, array index
+        Float|Int: Value
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data_num_index(rapid_data, 0, 100)
+    """
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
             if index < rapid_data.Value.Length and index >= 0 and isinstance(index, int):
@@ -93,27 +87,25 @@ def edit_and_write_rapid_data_num_index(rapid_data, index, value):
         return msg
 
 
-"""
-Inserts a list of values into num array and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    List: values, ex([100,1,2])
-Returns:
-    String: result message or error
-Examples:
-    If RAPID array is of length 3:
-    message = edit_and_write_rapid_data_num(rapid_data, []) Formats array to default.
-    message = edit_and_write_rapid_data_num(rapid_data, [100,1,50])
-    message = edit_and_write_rapid_data_num(rapid_data, [100,1.1,50])
-    message = edit_and_write_rapid_data_num(rapid_data, [100])
-    If RAPID array is of length 3 this is not possible:
-    message = edit_and_write_rapid_data_num(rapid_data, [100,1,50,100])
-"""
-
-
 def edit_and_write_rapid_data_num(rapid_data, values):
+    """
+    Inserts a list of values into num array and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        List: values, ex([100,1,2])
+    Output:
+        String: result message or error
+    Examples:
+        If RAPID array is of length 3:
+        message = edit_and_write_rapid_data_num(rapid_data, []) Formats array to default.
+        message = edit_and_write_rapid_data_num(rapid_data, [100,1,50])
+        message = edit_and_write_rapid_data_num(rapid_data, [100,1.1,50])
+        message = edit_and_write_rapid_data_num(rapid_data, [100])
+        If RAPID array is of length 3 this is not possible:
+        message = edit_and_write_rapid_data_num(rapid_data, [100,1,50,100])
+    """
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
             num_array = rapid_data.Value

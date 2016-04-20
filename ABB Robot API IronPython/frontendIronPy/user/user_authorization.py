@@ -10,20 +10,18 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-"""
-Log on to a controller after connecting to it with default user.
-
-Args:
-    ABB.Robotics.Controllers.Controller: Controller
-Returns:
-    Boolean: Indicates if logon is successful
-    String: Message with the outcome
-Examples:
-    None
-"""
-
-
 def logon_robot_controller_default(controller):
+    """
+    Log on to a controller after connecting to it with default user.
+
+    Input:
+        ABB.Robotics.Controllers.Controller: Controller
+    Output:
+        Boolean: Indicates if logon is successful
+        String: Message with the outcome
+    Examples:
+        None
+    """
     try:
         controller.Logon(ctrlrs.UserInfo.DefaultUser)
         msg = 'Logon successful'
@@ -33,22 +31,20 @@ def logon_robot_controller_default(controller):
         return False, msg
 
 
-"""
-Log on to a controller after connecting to it with a username and password.
-
-Args:
-    ABB.Robotics.Controllers.Controller: Controller
-    String: Username
-    String: Password
-Returns:
-    Boolean: Indicates if logon is successful
-    String: Message with the outcome
-Examples:
-    None
-"""
-
-
 def logon_robot_controller_with_username(controller, username, password):
+    """
+    Log on to a controller after connecting to it with a username and password.
+
+    Input:
+        ABB.Robotics.Controllers.Controller: Controller
+        String: Username
+        String: Password
+    Output:
+        Boolean: Indicates if logon is successful
+        String: Message with the outcome
+    Examples:
+        None
+    """
     try:
         controller.Logon(ctrlrs.UserInfo(username, password))
         msg = 'Logon successful'
@@ -58,20 +54,18 @@ def logon_robot_controller_with_username(controller, username, password):
         return False, msg
 
 
-"""
-Log off the robot controller.
-
-Args:
-    ABB.Robotics.Controllers.Controller: Controller
-Returns:
-    Boolean: Indicates if logoff is successful
-    String: Message with the outcome
-Examples:
-    None
-"""
-
-
 def logoff_robot_controller(controller):
+    """
+    Log off the robot controller.
+
+    Input:
+        ABB.Robotics.Controllers.Controller: Controller
+    Output:
+        Boolean: Indicates if logoff is successful
+        String: Message with the outcome
+    Examples:
+        None
+    """
     try:
         controller.Logoff()
         msg = 'Logoff successful'

@@ -10,19 +10,17 @@ clr.AddReferenceToFileAndPath(
 import ABB.Robotics.Controllers as ctrlrs
 
 
-"""
-Scans the network for controllers.
-
-Args:
-    None
-Returns:
-    ABB.Robotics.Controllers: Controllers found on the network
-Examples:
-    None
-"""
-
-
 def discover_controllers_on_network():
+    """
+    Scans the network for controllers.
+
+    Input:
+        None
+    Output:
+        ABB.Robotics.Controllers: Controllers found on the network
+    Examples:
+        None
+    """
     net_scan = ctrlrs.Discovery.NetworkScanner()
     net_scan.Scan()
     controllers = net_scan.Controllers
@@ -34,22 +32,20 @@ def discover_controllers_on_network():
     return controllers
 
 
-"""
-Creates a controller instance based on the robot name.
-
-Args:
-    ABB.Robotics.Controllers: Controllers
-    String: Name of the robot
-Returns:
-    ABB.Robotics.Controllers.Controller OR None: Output depends on if the connection is successful or not.
-    String: Message with the outcome
-    Boolean: Indicates if the controller was found and connected to.
-Examples:
-    None
-"""
-
-
 def connect_robot_with_name(controllers, robot_name):
+    """
+    Creates a controller instance based on the robot name.
+
+    Input:
+        ABB.Robotics.Controllers: controllers
+        String: robot_name
+    Output:
+        ABB.Robotics.Controllers.Controller OR None: Output depends on if the connection is successful or not.
+        String: Message with the outcome
+        Boolean: Indicates if the controller was found and connected to.
+    Examples:
+        None
+    """
     controller_found = False
     try:
         for controller in controllers:
@@ -65,23 +61,21 @@ def connect_robot_with_name(controllers, robot_name):
         return None, msg, controller_found
 
 
-"""
-Creates a controller instance based on the specified IP address. If no controller can be found
-with the specified IP address the controller instance will not be created.
-
-Args:
-    ABB.Robotics.Controllers: Controllers
-    String: IP address
-Returns:
-    ABB.Robotics.Controllers.Controller OR None: Output depends on if the connection is successful or not.
-    String: Message with the outcome
-    Boolean: Indicates if the controller was found and connected to.
-Examples:
-    None
-"""
-
-
 def connect_robot_with_ipaddr(controllers, ipaddress):
+    """
+    Creates a controller instance based on the specified IP address. If no controller can be found
+    with the specified IP address the controller instance will not be created.
+
+    Input:
+        ABB.Robotics.Controllers: controllers
+        String: ipaddress
+    Output:
+        ABB.Robotics.Controllers.Controller OR None: Output depends on if the connection is successful or not.
+        String: Message with the outcome
+        Boolean: Indicates if the controller was found and connected to.
+    Examples:
+        None
+    """
     controller_found = False
     try:
         for controller in controllers:
@@ -97,20 +91,18 @@ def connect_robot_with_ipaddr(controllers, ipaddress):
         return None, msg, controller_found
 
 
-"""
-Disconnects from the robot controller.
-
-Args:
-    ABB.Robotics.Controllers.Controller: Controller
-Returns:
-    Boolean: Indicates if disconnect is successful
-    String: Message with the outcome
-Examples:
-    None
-"""
-
-
 def disconnect_robot_controller(controller):
+    """
+    Disconnects from the robot controller.
+
+    Input:
+        ABB.Robotics.Controllers.Controller: controller
+    Output:
+        Boolean: Indicates if disconnect is successful
+        String: Message with the outcome
+    Examples:
+        None
+    """
     try:
         controller.Dispose()
         msg = 'Disconnect successful'
@@ -119,19 +111,17 @@ def disconnect_robot_controller(controller):
         return False, err
 
 
-"""
-Checks if there is a connection to the controller
-
-Args:
-    ABB.Robotics.Controllers: Controllers
-Returns:
-    Boolean: Indicates if connected or not
-Examples:
-    None
-"""
-
-
 def is_connected_to_controller(controller):
+    """
+    Checks if there is a connection to the controller
+
+    Input:
+        ABB.Robotics.Controllers: controller
+    Output:
+        Boolean: Indicates if connected or not
+    Examples:
+        None
+    """
     try:
         if controller.Connected == 1:
             return True

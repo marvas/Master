@@ -4,19 +4,17 @@ tooldata, as well as displaying the different properties of the tooldata.
 """
 
 
-"""
-Gets Robhold from tooldata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Robhold or error
-Examples:
-    None
-"""
-
-
 def get_robhold_tostring(rapid_data):
+    """
+    Gets Robhold from tooldata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Robhold or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'tooldata':
         try:
             res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
@@ -24,23 +22,21 @@ def get_robhold_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
         return err
 
 
-"""
-Gets Tframe from tooldata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Tframe or error
-Examples:
-    None
-"""
-
-
 def get_tframe_tostring(rapid_data):
+    """
+    Gets Tframe from tooldata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Tframe or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'tooldata':
         try:
             res = 'Tframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Tframe.Trans.ToString(),
@@ -49,23 +45,21 @@ def get_tframe_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
         return err
 
 
-"""
-Gets Tload from tooldata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Tload or error
-Examples:
-    None
-"""
-
-
 def get_tload_tostring(rapid_data):
+    """
+    Gets Tload from tooldata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Tload or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'tooldata':
         try:
             res = 'Tload: [Mass,Cog,Aom,Ix,Iy,Iz] = [%G,%s,%s,%G,%G,%G]' % \
@@ -76,23 +70,21 @@ def get_tload_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
         return err
 
 
-"""
-Gets tooldata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Tooldata or error
-Examples:
-    None
-"""
-
-
 def get_tooldata_tostring(rapid_data):
+    """
+    Gets tooldata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Tooldata or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'tooldata':
         try:
             res = 'Tooldata: %s' % rapid_data.Value.ToString()
@@ -100,29 +92,27 @@ def get_tooldata_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
         return err
 
 
-"""
-Edits the specified property of the tooldata and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    String: property (accepted types: robhold, tframe, tload)
-    String|Bool: new_value
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
-    message = edit_and_write_rapid_data_property(rapid_data, 'robhold', False)
-    message = edit_and_write_rapid_data_property(rapid_data,'tframe','[0,0,100],[1,0,0,0]')
-    message = edit_and_write_rapid_data_property(rapid_data,'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
-"""
-
-
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
+    """
+    Edits the specified property of the tooldata and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        String: property (accepted types: robhold, tframe, tload)
+        String|Bool: new_value
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
+        message = edit_and_write_rapid_data_property(rapid_data, 'robhold', False)
+        message = edit_and_write_rapid_data_property(rapid_data,'tframe','[0,0,100],[1,0,0,0]')
+        message = edit_and_write_rapid_data_property(rapid_data,'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    """
     if rapid_data.RapidType == 'tooldata':
         try:
             tooldata = rapid_data.Value
@@ -199,27 +189,25 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is '+rapid_data.RapidType+' and not tooldata.'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
         return msg
 
 
-"""
-Edits tooldata and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    Boolean: robhold (ex. True or False)
-    String: tframe (ex. '[0,0,100],[0,0,0,1]')
-    String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
-"""
-
-
 def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
+    """
+    Edits tooldata and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        Boolean: robhold (ex. True or False)
+        String: tframe (ex. '[0,0,100],[0,0,0,1]')
+        String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    """
     if rapid_data.RapidType == 'tooldata':
         try:
             tooldata = rapid_data.Value
@@ -259,5 +247,5 @@ def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is '+rapid_data.RapidType+' and not tooldata'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not tooldata'
         return msg

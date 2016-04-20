@@ -11,19 +11,17 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-"""
-Gets Robhold from wobjdata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Robhold or error
-Examples:
-    None
-"""
-
-
 def get_robhold_tostring(rapid_data):
+    """
+    Gets Robhold from wobjdata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Robhold or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
@@ -31,23 +29,21 @@ def get_robhold_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Ufprog from wobjdata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Ufprog or error
-Examples:
-    None
-"""
-
-
 def get_ufprog_tostring(rapid_data):
+    """
+    Gets Ufprog from wobjdata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Ufprog or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             res = 'Ufprog = %s' % rapid_data.Value.Ufprog.ToString()
@@ -55,23 +51,21 @@ def get_ufprog_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Ufmec from wobjdata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Ufmec or error
-Examples:
-    None
-"""
-
-
 def get_ufmec_tostring(rapid_data):
+    """
+    Gets Ufmec from wobjdata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Ufmec or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             res = 'Ufmec = %s' % rapid_data.Value.Ufmec
@@ -79,23 +73,21 @@ def get_ufmec_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Uframe from wobjdata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Uframe or error
-Examples:
-    None
-"""
-
-
 def get_uframe_tostring(rapid_data):
+    """
+    Gets Uframe from wobjdata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Uframe or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             res = 'Uframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Uframe.Trans.ToString(),
@@ -104,23 +96,21 @@ def get_uframe_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Oframe from wobjdata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Oframe or error
-Examples:
-    None
-"""
-
-
 def get_oframe_tostring(rapid_data):
+    """
+    Gets Oframe from wobjdata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Oframe or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             res = 'Oframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Oframe.Trans.ToString(),
@@ -129,23 +119,21 @@ def get_oframe_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
         return err
 
 
-"""
-Gets wobjdata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Wobjdata or error
-Examples:
-    None
-"""
-
-
 def get_wobjdata_tostring(rapid_data):
+    """
+    Gets wobjdata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Wobjdata or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             res = 'Wobjdata: %s' % rapid_data.Value.ToString()
@@ -153,30 +141,28 @@ def get_wobjdata_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not wobjdata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
         return err
 
 
-"""
-Edits the specified property of the wobjdata and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    String: property (accepted types: robhold, ufprog, ufmec, uframe, oframe)
-    String|Bool: new_value
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
-    message = edit_and_write_rapid_data_property(rapid_data, 'ufprog', False)
-    message = edit_and_write_rapid_data_property(rapid_data, 'ufmec', '')
-    message = edit_and_write_rapid_data_property(rapid_data,'uframe','[0,0,100],[1,0,0,0]')
-    message = edit_and_write_rapid_data_property(rapid_data,'oframe','[0,0,100],[1,0,0,0]')
-"""
-
-
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
+    """
+    Edits the specified property of the wobjdata and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        String: property (accepted types: robhold, ufprog, ufmec, uframe, oframe)
+        String|Bool: new_value
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data_property(rapid_data, 'robhold', True)
+        message = edit_and_write_rapid_data_property(rapid_data, 'ufprog', False)
+        message = edit_and_write_rapid_data_property(rapid_data, 'ufmec', '')
+        message = edit_and_write_rapid_data_property(rapid_data,'uframe','[0,0,100],[1,0,0,0]')
+        message = edit_and_write_rapid_data_property(rapid_data,'oframe','[0,0,100],[1,0,0,0]')
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             wobjdata = rapid_data.Value
@@ -288,29 +274,27 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is '+rapid_data.RapidType+' and not wobjdata'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata'
         return msg
 
 
-"""
-Edits the wobjdata and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    Boolean: robhold (ex. True or False)
-    Boolean: ufprog (ex. True or False)
-    String: ufmec (ex. '')
-    String: uframe (ex. '[100,100,100],[1,0,0,0]')
-    String: oframe (ex. '[0,0,0],[1,0,0,0]')
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data(rapid_data, True, False,'','[100,100,0],[1,0,0,0]','[0,0,0],[1,0,0,0]')
-"""
-
-
 def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe):
+    """
+    Edits the wobjdata and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        Boolean: robhold (ex. True or False)
+        Boolean: ufprog (ex. True or False)
+        String: ufmec (ex. '')
+        String: uframe (ex. '[100,100,100],[1,0,0,0]')
+        String: oframe (ex. '[0,0,0],[1,0,0,0]')
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data(rapid_data, True, False,'','[100,100,0],[1,0,0,0]','[0,0,0],[1,0,0,0]')
+    """
     if rapid_data.RapidType == 'wobjdata':
         try:
             wobjdata = rapid_data.Value
@@ -355,5 +339,5 @@ def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe
         except Exception, err:
             return err
     else:
-        msg = 'DataType is '+rapid_data.RapidType+' and not wobjdata'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata'
         return msg

@@ -5,35 +5,33 @@ Module for reading and setting zonedata. Zonedata is not in RapidDomain in PC SD
 
 # Base zonedata in format 'fine, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax'.
 # First three points are for tool center point movement and last three point for tool reorientation.
-base_zonedata_dict = {'z0':     'FALSE, 0.3, 0.3, 0.3, 0.03, 0.3, 0.03',
-                      'z1':     'FALSE, 1, 1, 1, 0.1, 1, 0.1',
-                      'z5':     'FALSE, 5, 8, 8, 0.8, 8, 0.8',
-                      'z10':    'FALSE, 10, 15, 15, 1.5, 15, 1.5',
-                      'z15':    'FALSE, 15, 23, 23, 2.3, 23, 2.3',
-                      'z20':    'FALSE, 20, 30, 30, 3.0, 30, 3.0',
-                      'z30':    'FALSE, 30, 45, 45, 4.5, 45, 4.5',
-                      'z40':    'FALSE, 40, 60, 60, 6.0, 60, 6.0',
-                      'z50':    'FALSE, 50, 75, 75, 7.5, 75, 7.5',
-                      'z60':    'FALSE, 60, 90, 90, 9.0, 90, 9.0',
-                      'z80':    'FALSE, 80, 120, 120, 12, 120, 12',
-                      'z100':   'FALSE, 100, 150, 150, 15, 150, 15',
-                      'z150':   'FALSE, 150, 225, 225, 23, 225, 23',
-                      'z200':   'FALSE, 200, 300, 300, 30, 300, 30'}
-
-
-"""
-Gets zonedata and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: The result or error
-Examples:
-    None
-"""
+base_zonedata_dict = {'z0': 'FALSE, 0.3, 0.3, 0.3, 0.03, 0.3, 0.03',
+                      'z1': 'FALSE, 1, 1, 1, 0.1, 1, 0.1',
+                      'z5': 'FALSE, 5, 8, 8, 0.8, 8, 0.8',
+                      'z10': 'FALSE, 10, 15, 15, 1.5, 15, 1.5',
+                      'z15': 'FALSE, 15, 23, 23, 2.3, 23, 2.3',
+                      'z20': 'FALSE, 20, 30, 30, 3.0, 30, 3.0',
+                      'z30': 'FALSE, 30, 45, 45, 4.5, 45, 4.5',
+                      'z40': 'FALSE, 40, 60, 60, 6.0, 60, 6.0',
+                      'z50': 'FALSE, 50, 75, 75, 7.5, 75, 7.5',
+                      'z60': 'FALSE, 60, 90, 90, 9.0, 90, 9.0',
+                      'z80': 'FALSE, 80, 120, 120, 12, 120, 12',
+                      'z100': 'FALSE, 100, 150, 150, 15, 150, 15',
+                      'z150': 'FALSE, 150, 225, 225, 23, 225, 23',
+                      'z200': 'FALSE, 200, 300, 300, 30, 300, 30'}
 
 
 def get_zonedata_tostring(rapid_data):
+    """
+    Gets zonedata and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: The result or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value.ToString()
@@ -50,29 +48,27 @@ def get_zonedata_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not zonedata.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not zonedata.'
         return err
 
 
-"""
-Edits the zonedata and writes it to the controller. Only supports base zonedata.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Base zonedata supported:
-0, 1, 5, 10, 15, 20, 30, 40, 50, 60, 80, 100, 150, 200
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    String: value
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data_base(rapid_data,'z0')
-    message = edit_and_write_rapid_data_base(rapid_data,'z20')
-"""
-
-
 def edit_and_write_rapid_data_base(rapid_data, value):
+    """
+    Edits the zonedata and writes it to the controller. Only supports base zonedata.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Base zonedata supported:
+    0, 1, 5, 10, 15, 20, 30, 40, 50, 60, 80, 100, 150, 200
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        String: value
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data_base(rapid_data,'z0')
+        message = edit_and_write_rapid_data_base(rapid_data,'z20')
+    """
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value
@@ -109,27 +105,25 @@ def edit_and_write_rapid_data_base(rapid_data, value):
         return msg
 
 
-"""
-Edits the zonedata and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    Boolean: finep
-    Float|Int: pzone_tcp
-    Float|Int: pzone_ori
-    Float|Int: pzone_eax
-    Float|Int: zone_ori
-    Float|Int: zone_leax
-    Float|Int: zone_reax
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
-"""
-
-
 def edit_and_write_rapid_data(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
+    """
+    Edits the zonedata and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        Boolean: finep
+        Float|Int: pzone_tcp
+        Float|Int: pzone_ori
+        Float|Int: pzone_eax
+        Float|Int: zone_ori
+        Float|Int: zone_leax
+        Float|Int: zone_reax
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
+    """
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value

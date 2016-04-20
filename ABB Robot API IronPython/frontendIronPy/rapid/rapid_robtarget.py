@@ -4,19 +4,17 @@ robtarget, as well as displaying the different properties of the robtarget.
 """
 
 
-"""
-Gets the trans data from robtarget and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Trans or error
-Examples:
-    None
-"""
-
-
 def get_trans_tostring(rapid_data):
+    """
+    Gets the trans data from robtarget and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Trans or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X, rapid_data.Value.Trans.Y,
@@ -25,23 +23,21 @@ def get_trans_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
         return err
 
 
-"""
-Gets the rot data from robtarget and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Rot or error
-Examples:
-    None
-"""
-
-
 def get_rot_tostring(rapid_data):
+    """
+    Gets the rot data from robtarget and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Rot or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             res = 'Rot: [Q1,Q2,Q3,Q4] = [%G,%G,%G,%G]' % (rapid_data.Value.Rot.Q1, rapid_data.Value.Rot.Q2,
@@ -50,23 +46,21 @@ def get_rot_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
         return err
 
 
-"""
-Gets the robconf data from robtarget and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Robconf or error
-Examples:
-    None
-"""
-
-
 def get_robconf_tostring(rapid_data):
+    """
+    Gets the robconf data from robtarget and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Robconf or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             res = 'Robconf: [Cf1,Cf4,Cf6,Cfx] = [%d,%d,%d,%d]' % \
@@ -76,23 +70,21 @@ def get_robconf_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
         return err
 
 
-"""
-Gets the extax data from robtarget and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Extax or error
-Examples:
-    None
-"""
-
-
 def get_extax_tostring(rapid_data):
+    """
+    Gets the extax data from robtarget and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Extax or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             extax = rapid_data.Value.Extax.ToString()
@@ -102,7 +94,7 @@ def get_extax_tostring(rapid_data):
             for i, eax in list(enumerate(extax_list)):
                 if "E" in eax:
                     eax = eax.split('E')
-                    eax = eax[0]+"E%d" % float(eax[1])
+                    eax = eax[0] + "E%d" % float(eax[1])
                     extax_list[i] = eax
                 else:
                     extax_list[i] = eax
@@ -112,23 +104,21 @@ def get_extax_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
         return err
 
 
-"""
-Gets robtarget and returns it as a string.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-Returns:
-    String: Robtarget or error
-Examples:
-    None
-"""
-
-
 def get_robtarget_tostring(rapid_data):
+    """
+    Gets robtarget and returns it as a string.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+    Output:
+        String: Robtarget or error
+    Examples:
+        None
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             res = 'Robtarget: %s' % rapid_data.Value.ToString()
@@ -136,29 +126,27 @@ def get_robtarget_tostring(rapid_data):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+rapid_data.RapidType+' and not robtarget.'
+        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
         return err
 
 
-"""
-Edits the specified robtarget property and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    String: property (accepted types: trans, rot, robconf, extax)
-    String: new_value
-Returns:
-    String: result message or error
-Examples:
-    message = edit_and_write_rapid_data_property(rapid_data,'trans','[100,100,0]')
-    message = edit_and_write_rapid_data_property(rapid_data,'rot','[1,0,0,0]')
-    message = edit_and_write_rapid_data_property(rapid_data,'robconf','[1,0,1,0]')
-    message = edit_and_write_rapid_data_property(rapid_data,'extax','[9E9,9E9,9E9,9E9,9E9,9E9]')
-"""
-
-
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
+    """
+    Edits the specified robtarget property and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        String: property (accepted types: trans, rot, robconf, extax)
+        String: new_value
+    Output:
+        String: result message or error
+    Examples:
+        message = edit_and_write_rapid_data_property(rapid_data,'trans','[100,100,0]')
+        message = edit_and_write_rapid_data_property(rapid_data,'rot','[1,0,0,0]')
+        message = edit_and_write_rapid_data_property(rapid_data,'robconf','[1,0,1,0]')
+        message = edit_and_write_rapid_data_property(rapid_data,'extax','[9E9,9E9,9E9,9E9,9E9,9E9]')
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             robtarget = rapid_data.Value
@@ -246,28 +234,26 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is '+rapid_data.RapidType+' and not robtarget'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not robtarget'
         return msg
 
 
-"""
-Edits the robtarget and writes it to the controller.
-Remember to get mastership before calling this function, and release the mastership right after.
-
-Args:
-    ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
-    String: trans
-    String: rot
-    String: robconf
-    String: extax
-Returns:
-    String: result message or error
-Examples:
-   message = edit_and_write_rapid_data(rapid_data,'[100,100,0]','[1,0,0,0]','[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
-"""
-
-
 def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
+    """
+    Edits the robtarget and writes it to the controller.
+    Remember to get mastership before calling this function, and release the mastership right after.
+
+    Input:
+        ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
+        String: trans
+        String: rot
+        String: robconf
+        String: extax
+    Output:
+        String: result message or error
+    Examples:
+       message = edit_and_write_rapid_data(rapid_data,'[100,100,0]','[1,0,0,0]','[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
+    """
     if rapid_data.RapidType == 'robtarget':
         try:
             robtarget = rapid_data.Value
@@ -309,5 +295,5 @@ def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is '+rapid_data.RapidType+' and not robtarget'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not robtarget'
         return msg
