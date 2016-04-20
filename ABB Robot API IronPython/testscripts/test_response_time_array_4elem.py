@@ -35,7 +35,7 @@ if master == False:
 for i in range(100):
     start_time = time.clock()
     # Edits the array on controller
-    msg = rapid_array.edit_and_write_rapid_data_num(rapid_array4elem, [1,2,1,2])
+    msg = rapid_array.edit_and_write_rapid_data_num(rapid_array4elem, [1, 2, 1, 2])
     stop_time = time.clock()
     if msg != 'Array updated.':
         print 'Error updating array'
