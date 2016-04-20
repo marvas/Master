@@ -11,7 +11,6 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-
 """
 Gets Robhold from wobjdata and returns it as a string.
 
@@ -22,6 +21,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_robhold_tostring(rapid_data):
     if rapid_data.RapidType == 'wobjdata':
@@ -46,6 +46,7 @@ Examples:
     None
 """
 
+
 def get_ufprog_tostring(rapid_data):
     if rapid_data.RapidType == 'wobjdata':
         try:
@@ -69,6 +70,7 @@ Examples:
     None
 """
 
+
 def get_ufmec_tostring(rapid_data):
     if rapid_data.RapidType == 'wobjdata':
         try:
@@ -91,6 +93,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_uframe_tostring(rapid_data):
     if rapid_data.RapidType == 'wobjdata':
@@ -116,6 +119,7 @@ Examples:
     None
 """
 
+
 def get_oframe_tostring(rapid_data):
     if rapid_data.RapidType == 'wobjdata':
         try:
@@ -139,6 +143,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_wobjdata_tostring(rapid_data):
     if rapid_data.RapidType == 'wobjdata':
@@ -170,6 +175,7 @@ Examples:
     message = edit_and_write_rapid_data_property(rapid_data,'oframe','[0,0,100],[1,0,0,0]')
 """
 
+
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
     if rapid_data.RapidType == 'wobjdata':
         try:
@@ -182,8 +188,10 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             wobjdata_oframe = rapid_data.Value.Oframe.ToString()
             if property.lower() == 'robhold':
                 if new_value == True or new_value == False:
-                    if new_value == 1: new_value = True
-                    if new_value == 0: new_value = False
+                    if new_value == 1:
+                        new_value = True
+                    if new_value == 0:
+                        new_value = False
                     robhold = "[%s,%s,%s,%s,%s]" % \
                               (new_value, wobjdata_ufprog, ctrlrs.RapidDomain.String(wobjdata_ufmec),
                                wobjdata_uframe, wobjdata_oframe)
@@ -199,8 +207,10 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     return msg
             elif property.lower() == 'ufprog':
                 if new_value == True or new_value == False:
-                    if new_value == 1: new_value = True
-                    if new_value == 0: new_value = False
+                    if new_value == 1:
+                        new_value = True
+                    if new_value == 0:
+                        new_value = False
                     ufprog = "[%s,%s,%s,%s,%s]" % \
                              (wobjdata_robhold, new_value, ctrlrs.RapidDomain.String(wobjdata_ufmec),
                               wobjdata_uframe, wobjdata_oframe)
@@ -299,12 +309,13 @@ Examples:
     message = edit_and_write_rapid_data(rapid_data, True, False,'','[100,100,0],[1,0,0,0]','[0,0,0],[1,0,0,0]')
 """
 
+
 def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe):
     if rapid_data.RapidType == 'wobjdata':
         try:
             wobjdata = rapid_data.Value
 
-            #Checks if uframe and oframe is of type string.
+            # Checks if uframe and oframe is of type string.
             if isinstance(uframe, basestring) and isinstance(oframe, basestring):
                 uframe = uframe.translate(None, "[]")
                 oframe = oframe.translate(None, "[]")
@@ -313,10 +324,14 @@ def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe
                 oframe_list = oframe.split(',')
                 if (robhold == True or robhold == False) and (ufprog == True or ufprog == False)\
                         and (isinstance(ufmec, basestring)) and (len(uframe_list) == 7) and (len(oframe_list) == 7):
-                    if robhold == 1: robhold = True
-                    if robhold == 0: robhold = False
-                    if ufprog == 1: ufprog = True
-                    if ufprog == 0: ufprog = False
+                    if robhold == 1:
+                        robhold = True
+                    if robhold == 0:
+                        robhold = False
+                    if ufprog == 1:
+                        ufprog = True
+                    if ufprog == 0:
+                        ufprog = False
                     new_wobjdata = "[%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]],[[%G,%G,%G],[%G,%G,%G,%G]]]" % \
                                    (robhold, ufprog, ctrlrs.RapidDomain.String(ufmec), float(uframe_list[0]),
                                     float(uframe_list[1]), float(uframe_list[2]), float(uframe_list[3]),
