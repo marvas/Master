@@ -18,6 +18,7 @@ Examples:
     None
 """
 
+
 def get_speeddata_tostring(rapid_data):
     if rapid_data.RapidType == 'speeddata':
         try:
@@ -25,9 +26,9 @@ def get_speeddata_tostring(rapid_data):
             speeddata = speeddata.translate(None, "[]")
             speeddata_list = speeddata.split(',')
             try:
-                #Checks if the data is base speeddata values
-                if int(speeddata_list[0]) in base_speeddata_list and int(speeddata_list[1])==500 and int(speeddata_list[2])==5000\
-                        and int(speeddata_list[3])==1000:
+                # Checks if the data is base speeddata values
+                if int(speeddata_list[0]) in base_speeddata_list and int(speeddata_list[1]) == 500 and \
+                                int(speeddata_list[2]) == 5000 and int(speeddata_list[3]) == 1000:
                     res = 'Base speeddata: v%d (%s)' % (int(speeddata_list[0]), rapid_data.Value.ToString())
                     return res
                 # If not base speed then custom speed.
@@ -125,8 +126,8 @@ def edit_and_write_rapid_data(rapid_data, vel_tcp, vel_orient, vel_lin_extax, ve
         try:
             speeddata = rapid_data.Value
             # Checks if all values are either integers or floats.
-            if (isinstance(vel_tcp, (int, float)) and isinstance(vel_orient, (int, float))
-                and isinstance(vel_lin_extax, (int, float)) and isinstance(vel_lin_rot_extax, (int, float))):
+            if (isinstance(vel_tcp, (int, float)) and isinstance(vel_orient, (int, float)) and
+                    isinstance(vel_lin_extax, (int, float)) and isinstance(vel_lin_rot_extax, (int, float))):
                 new_speeddata = '[%G,%G,%G,%G]' % (float(vel_tcp), float(vel_orient),
                                                    float(vel_lin_extax), float(vel_lin_rot_extax))
                 speeddata.FillFromString2(new_speeddata)
