@@ -6,6 +6,8 @@ wobjdata, as well as displaying the different properties of the wobjdata.
 import unicodedata
 
 import requests
+import requests.auth
+import requests.cookies
 
 
 """
@@ -19,13 +21,14 @@ Examples:
     None
 """
 
+
 def get_robhold_tostring(response_dict):
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
@@ -53,13 +56,14 @@ Examples:
     None
 """
 
+
 def get_ufprog_tostring(response_dict):
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
@@ -87,13 +91,14 @@ Examples:
     None
 """
 
+
 def get_ufmec_tostring(response_dict):
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
@@ -121,13 +126,14 @@ Examples:
     None
 """
 
+
 def get_uframe_tostring(response_dict):
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
@@ -158,13 +164,14 @@ Examples:
     None
 """
 
+
 def get_oframe_tostring(response_dict):
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
@@ -195,13 +202,14 @@ Examples:
     None
 """
 
+
 def get_wobjdata_tostring(response_dict):
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
@@ -247,18 +255,26 @@ Examples:
                                                                                 'wobj', 'oframe','[0,0,100],[1,0,0,0]')
 """
 
-def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name, property, new_value):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(property, basestring)\
-        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+
+def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name,
+                                       property, new_value):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(property, basestring) and \
+            isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module,
+                                                                                        variable_name)
         else:
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program,
+                                                                                        module, variable_name)
         try:
             # Gets wobjdata from controller.
             response = requests.get(url_get, cookies=cookies)
@@ -274,13 +290,15 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                 # Gets the wobjdata from response.
                 wobjdata = response.json()['_embedded']['_state'][0]['value']
                 # Formats the wobjdata attributes into a list.
-                wobjdata = unicodedata.normalize('NFKD', wobjdata).encode('ascii','ignore')
+                wobjdata = unicodedata.normalize('NFKD', wobjdata).encode('ascii', 'ignore')
                 wobjdata = wobjdata.translate(None, "[]")
                 wobjdata_list = wobjdata.split(',')
                 if property.lower() == 'robhold':
                     if new_value == True or new_value == False:
-                        if new_value == 1: new_value = True
-                        if new_value == 0: new_value = False
+                        if new_value == 1:
+                            new_value = True
+                        if new_value == 0:
+                            new_value = False
                         # Creates the new wobjdata.
                         new_wobjdata = '[%s,%s,%s,[[%s,%s,%s],[%s,%s,%s,%s]],[[%s,%s,%s],[%s,%s,%s,%s]]]' % (
                             new_value, wobjdata_list[1], wobjdata_list[2], wobjdata_list[3], wobjdata_list[4],
@@ -295,8 +313,10 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                         return msg, cookies
                 elif property.lower() == 'ufprog':
                     if new_value == True or new_value == False:
-                        if new_value == 1: new_value = True
-                        if new_value == 0: new_value = False
+                        if new_value == 1:
+                            new_value = True
+                        if new_value == 0:
+                            new_value = False
                         # Creates the new wobjdata.
                         new_wobjdata = '[%s,%s,%s,[[%s,%s,%s],[%s,%s,%s,%s]],[[%s,%s,%s],[%s,%s,%s,%s]]]' % (
                             wobjdata_list[0], new_value, wobjdata_list[2], wobjdata_list[3], wobjdata_list[4],
@@ -314,12 +334,12 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                         # Creates the new wobjdata.
                         # Inserting new_value into string would not keep the quotes of string. Need to add
                         # quotes in order to satisfy rapid.
-                        new_wobjdata = '[%s,%s,%s,[[%s,%s,%s],[%s,%s,%s,%s]],[[%s,%s,%s],[%s,%s,%s,%s]]]' % (
-                            wobjdata_list[0], wobjdata_list[1], ('\"%s\"' % new_value), wobjdata_list[3], wobjdata_list[4],
-                            wobjdata_list[5], wobjdata_list[6], wobjdata_list[7], wobjdata_list[8],
-                            wobjdata_list[9], wobjdata_list[10], wobjdata_list[11], wobjdata_list[12],
-                            wobjdata_list[13], wobjdata_list[14], wobjdata_list[15], wobjdata_list[16]
-                        )
+                        new_wobjdata = '[%s,%s,%s,[[%s,%s,%s],[%s,%s,%s,%s]],[[%s,%s,%s],[%s,%s,%s,%s]]]' % \
+                                       (wobjdata_list[0], wobjdata_list[1], ('\"%s\"' % new_value), wobjdata_list[3],
+                                        wobjdata_list[4], wobjdata_list[5], wobjdata_list[6], wobjdata_list[7],
+                                        wobjdata_list[8], wobjdata_list[9], wobjdata_list[10], wobjdata_list[11],
+                                        wobjdata_list[12], wobjdata_list[13], wobjdata_list[14], wobjdata_list[15],
+                                        wobjdata_list[16])
 
                         payload = {'value': new_wobjdata}
                     else:
@@ -419,37 +439,46 @@ Examples:
                                                             False, '', '[100,100,0],[1,0,0,0]', '[0,0,0],[1,0,0,0]')
 """
 
-def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, ufprog, ufmec, uframe, oframe):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(ufmec, basestring) \
-        and isinstance(uframe, basestring) and isinstance(oframe, basestring)\
-        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+
+def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, ufprog,
+                              ufmec, uframe, oframe):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(ufmec, basestring) and \
+            isinstance(uframe, basestring) and isinstance(oframe, basestring) and \
+            isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         if ipaddress.lower() == 'local':
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program,
+                                                                                               module, variable_name)
         else:
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                               program, module,
+                                                                                               variable_name)
         try:
             uframe = uframe.translate(None, "[]")
             oframe = oframe.translate(None, "[]")
 
             uframe_list = uframe.split(',')
             oframe_list = oframe.split(',')
-            if (robhold == True or robhold == False) and (ufprog == True or ufprog == False) \
-                        and (len(uframe_list) == 7) and (len(oframe_list) == 7):
-                if robhold == 1: robhold = True
-                if robhold == 0: robhold = False
-                if ufprog == 1: ufprog = True
-                if ufprog == 0: ufprog = False
+            if (robhold == True or robhold == False) and (ufprog == True or ufprog == False) and \
+                    (len(uframe_list) == 7) and (len(oframe_list) == 7):
+                if robhold == 1:
+                    robhold = True
+                if robhold == 0:
+                    robhold = False
+                if ufprog == 1:
+                    ufprog = True
+                if ufprog == 0:
+                    ufprog = False
                 # Constructs new wobjdata
                 # Inserting ufmec into string would not keep the quotes of string. Need to add
                 # quotes in order to satisfy rapid.
-                new_wobjdata = "[%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]],[[%G,%G,%G],[%G,%G,%G,%G]]]" % (
-                    robhold, ufprog, ('\"%s\"' % ufmec), float(uframe_list[0]), float(uframe_list[1]), float(uframe_list[2]),
-                    float(uframe_list[3]), float(uframe_list[4]), float(uframe_list[5]), float(uframe_list[6]),
-                    float(oframe_list[0]), float(oframe_list[1]), float(oframe_list[2]), float(oframe_list[3]),
-                    float(oframe_list[4]), float(oframe_list[5]), float(oframe_list[6])
-                )
+                new_wobjdata = "[%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]],[[%G,%G,%G],[%G,%G,%G,%G]]]" % \
+                               (robhold, ufprog, ('\"%s\"' % ufmec), float(uframe_list[0]), float(uframe_list[1]),
+                                float(uframe_list[2]), float(uframe_list[3]), float(uframe_list[4]),
+                                float(uframe_list[5]), float(uframe_list[6]), float(oframe_list[0]),
+                                float(oframe_list[1]), float(oframe_list[2]), float(oframe_list[3]),
+                                float(oframe_list[4]), float(oframe_list[5]), float(oframe_list[6]))
 
                 payload = {'value': new_wobjdata}
                 response = requests.post(url, cookies=cookies, data=payload)
