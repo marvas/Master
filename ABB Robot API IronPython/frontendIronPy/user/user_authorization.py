@@ -22,6 +22,7 @@ Examples:
     None
 """
 
+
 def logon_robot_controller_default(controller):
     try:
         controller.Logon(ctrlrs.UserInfo.DefaultUser)
@@ -46,6 +47,7 @@ Examples:
     None
 """
 
+
 def logon_robot_controller_with_username(controller, username, password):
     try:
         controller.Logon(ctrlrs.UserInfo(username, password))
@@ -67,6 +69,7 @@ Returns:
 Examples:
     None
 """
+
 
 def logoff_robot_controller(controller):
     try:
