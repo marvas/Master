@@ -3,8 +3,8 @@ Module for reading and setting zonedata. Zonedata is not in RapidDomain in PC SD
 """
 
 
-#Base zonedata in format 'fine, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax'.
-#First three points are for tool center point movement and last three point for tool reorientation.
+# Base zonedata in format 'fine, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax'.
+# First three points are for tool center point movement and last three point for tool reorientation.
 base_zonedata_dict = {'z0':     'FALSE, 0.3, 0.3, 0.3, 0.03, 0.3, 0.03',
                       'z1':     'FALSE, 1, 1, 1, 0.1, 1, 0.1',
                       'z5':     'FALSE, 5, 8, 8, 0.8, 8, 0.8',
@@ -32,18 +32,19 @@ Examples:
     None
 """
 
+
 def get_zonedata_tostring(rapid_data):
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value.ToString()
             zonedata = zonedata.translate(None, "[]")
-            #Checks if the data is base zonedata values
+            # Checks if the data is base zonedata values
             for zone in base_zonedata_dict:
-                #Takes all uppercase to lowercase, and trims all whitespaces and tabs.
+                # Takes all uppercase to lowercase, and trims all whitespaces and tabs.
                 if zonedata.lower() == base_zonedata_dict[zone].translate(None, " \t").lower():
                     res = 'Base zonedata: %s (%s)' % (zone, rapid_data.Value.ToString())
                     return res
-            #If base zonedata is not found.
+            # If base zonedata is not found.
             res = 'Zonedata: %s' % rapid_data.Value.ToString()
             return res
         except Exception, err:
@@ -69,6 +70,7 @@ Examples:
     message = edit_and_write_rapid_data_base(rapid_data,'z0')
     message = edit_and_write_rapid_data_base(rapid_data,'z20')
 """
+
 
 def edit_and_write_rapid_data_base(rapid_data, value):
     if rapid_data.RapidType == 'zonedata':
@@ -126,17 +128,20 @@ Examples:
     message = edit_and_write_rapid_data(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
 """
 
+
 def edit_and_write_rapid_data(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
     if rapid_data.RapidType == 'zonedata':
         try:
             zonedata = rapid_data.Value
-            #Checks if finep is a boolean, and checks if the rest is a number.
-            if ((finep == True or finep == False) and isinstance(pzone_tcp,(int,float)) and
-                isinstance(pzone_ori, (int,float)) and isinstance(pzone_eax, (int,float)) and
-                isinstance(zone_ori, (int,float)) and isinstance(zone_leax, (int,float)) and
-                isinstance(zone_reax, (int,float))):
-                if finep == 1: finep = True
-                if finep == 0: finep = False
+            # Checks if finep is a boolean, and checks if the rest is a number.
+            if ((finep == True or finep == False) and isinstance(pzone_tcp, (int, float)) and
+                    isinstance(pzone_ori, (int, float)) and isinstance(pzone_eax, (int, float)) and
+                    isinstance(zone_ori, (int, float)) and isinstance(zone_leax, (int, float)) and
+                    isinstance(zone_reax, (int, float))):
+                if finep == 1:
+                    finep = True
+                if finep == 0:
+                    finep = False
                 new_zonedata = '[%s,%G,%G,%G,%G,%G,%G]' % (finep, float(pzone_tcp), float(pzone_ori),
                                                            float(pzone_eax), float(zone_ori), float(zone_leax),
                                                            float(zone_reax))
