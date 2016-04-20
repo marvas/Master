@@ -7,6 +7,8 @@ tooldata, as well as displaying the different properties of the tooldata.
 import unicodedata
 
 import requests
+import requests.auth
+import requests.cookies
 
 
 """
@@ -20,13 +22,14 @@ Examples:
     None
 """
 
+
 def get_robhold_tostring(response_dict):
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting the tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Tooldata should consist of 19 numbers.
@@ -54,13 +57,14 @@ Examples:
     None
 """
 
+
 def get_tframe_tostring(response_dict):
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting the tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Tooldata should consist of 19 numbers.
@@ -90,22 +94,21 @@ Examples:
     None
 """
 
+
 def get_tload_tostring(response_dict):
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting the tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Tooldata should consist of 19 numbers.
             if len(value_list) == 19:
-                res = 'Tload: [Mass,Cog,Aom,Ix,Iy,Iz] = [%s,[%s,%s,%s],[%s,%s,%s,%s],%s,%s,%s]' % (value_list[8],
-                                                                value_list[9], value_list[10], value_list[11],
-                                                                value_list[12], value_list[13], value_list[14],
-                                                                value_list[15],value_list[16],value_list[17],
-                                                                value_list[18])
+                res = 'Tload: [Mass,Cog,Aom,Ix,Iy,Iz] = [%s,[%s,%s,%s],[%s,%s,%s,%s],%s,%s,%s]' % \
+                      (value_list[8], value_list[9], value_list[10], value_list[11], value_list[12],
+                       value_list[13], value_list[14], value_list[15], value_list[16], value_list[17], value_list[18])
                 return res
             else:
                 err = 'Something wrong with tooldata: ' + response_dict['value']
@@ -128,13 +131,14 @@ Examples:
     None
 """
 
+
 def get_tooldata_tostring(response_dict):
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Tooldata should consist of 19 numbers.
@@ -178,18 +182,26 @@ Examples:
                                                                         'tool', 'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
-def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name, property, new_value):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(property, basestring)\
-        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+
+def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name,
+                                       property, new_value):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(property, basestring) and \
+            isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module,
+                                                                                        variable_name)
         else:
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(),
+                                                                                        program, module, variable_name)
         try:
             # Gets tooldata from controller.
             response = requests.get(url_get, cookies=cookies)
@@ -205,20 +217,22 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                 # Gets the tooldata from response.
                 tooldata = response.json()['_embedded']['_state'][0]['value']
                 # Formats the tooldata attributes into a list.
-                tooldata = unicodedata.normalize('NFKD', tooldata).encode('ascii','ignore')
+                tooldata = unicodedata.normalize('NFKD', tooldata).encode('ascii', 'ignore')
                 tooldata = tooldata.translate(None, "[]")
                 tooldata_list = tooldata.split(',')
                 if property.lower() == 'robhold':
                     if new_value == True or new_value == False:
-                        if new_value == 1: new_value = True
-                        if new_value == 0: new_value = False
+                        if new_value == 1:
+                            new_value = True
+                        if new_value == 0:
+                            new_value = False
                         # Creates the new tooldata.
-                        new_tooldata = '[%s,[[%s,%s,%s],[%s,%s,%s,%s]],[%s,[%s,%s,%s],[%s,%s,%s,%s],%s,%s,%s]]' % (
-                            new_value, tooldata_list[1],tooldata_list[2],tooldata_list[3],tooldata_list[4],
-                            tooldata_list[5],tooldata_list[6],tooldata_list[7],tooldata_list[8],tooldata_list[9],
-                            tooldata_list[10],tooldata_list[11],tooldata_list[12],tooldata_list[13],tooldata_list[14],
-                            tooldata_list[15],tooldata_list[16],tooldata_list[17],tooldata_list[18]
-                        )
+                        new_tooldata = '[%s,[[%s,%s,%s],[%s,%s,%s,%s]],[%s,[%s,%s,%s],[%s,%s,%s,%s],%s,%s,%s]]' % \
+                                       (new_value, tooldata_list[1], tooldata_list[2], tooldata_list[3],
+                                        tooldata_list[4], tooldata_list[5], tooldata_list[6], tooldata_list[7],
+                                        tooldata_list[8], tooldata_list[9], tooldata_list[10], tooldata_list[11],
+                                        tooldata_list[12], tooldata_list[13], tooldata_list[14], tooldata_list[15],
+                                        tooldata_list[16], tooldata_list[17], tooldata_list[18])
 
                         payload = {'value': new_tooldata}
                     else:
@@ -229,13 +243,13 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                         new_value = new_value.translate(None, "[]")
                         tframe_list = new_value.split(',')
                         if len(tframe_list) == 7:
-                            new_tooldata = '[%s,[[%G,%G,%G],[%G,%G,%G,%G]],[%s,[%s,%s,%s],[%s,%s,%s,%s],%s,%s,%s]]' % (
-                                tooldata_list[0], float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
-                                float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]), float(tframe_list[6]),
-                                tooldata_list[8], tooldata_list[9], tooldata_list[10], tooldata_list[11], tooldata_list[12],
-                                tooldata_list[13], tooldata_list[14], tooldata_list[15], tooldata_list[16],
-                                tooldata_list[17], tooldata_list[18]
-                            )
+                            new_tooldata = '[%s,[[%G,%G,%G],[%G,%G,%G,%G]],[%s,[%s,%s,%s],[%s,%s,%s,%s],%s,%s,%s]]' % \
+                                           (tooldata_list[0], float(tframe_list[0]), float(tframe_list[1]),
+                                            float(tframe_list[2]), float(tframe_list[3]), float(tframe_list[4]),
+                                            float(tframe_list[5]), float(tframe_list[6]), tooldata_list[8],
+                                            tooldata_list[9], tooldata_list[10], tooldata_list[11], tooldata_list[12],
+                                            tooldata_list[13], tooldata_list[14], tooldata_list[15], tooldata_list[16],
+                                            tooldata_list[17], tooldata_list[18])
 
                             payload = {'value': new_tooldata}
                         else:
@@ -249,13 +263,13 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                         new_value = new_value.translate(None, "[]")
                         tload_list = new_value.split(',')
                         if len(tload_list) == 11:
-                            new_tooldata = '[%s,[[%s,%s,%s],[%s,%s,%s,%s]],[%G,[%G,%G,%G],[%G,%G,%G,%G],%G,%G,%G]]' % (
-                                tooldata_list[0], tooldata_list[1], tooldata_list[2], tooldata_list[3], tooldata_list[4],
-                                tooldata_list[5], tooldata_list[6], tooldata_list[7], float(tload_list[0]),
-                                float(tload_list[1]), float(tload_list[2]), float(tload_list[3]), float(tload_list[4]),
-                                float(tload_list[5]), float(tload_list[6]), float(tload_list[7]), float(tload_list[8]),
-                                float(tload_list[9]), float(tload_list[10])
-                            )
+                            new_tooldata = '[%s,[[%s,%s,%s],[%s,%s,%s,%s]],[%G,[%G,%G,%G],[%G,%G,%G,%G],%G,%G,%G]]' % \
+                                           (tooldata_list[0], tooldata_list[1], tooldata_list[2], tooldata_list[3],
+                                            tooldata_list[4], tooldata_list[5], tooldata_list[6], tooldata_list[7],
+                                            float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),
+                                            float(tload_list[3]), float(tload_list[4]), float(tload_list[5]),
+                                            float(tload_list[6]), float(tload_list[7]), float(tload_list[8]),
+                                            float(tload_list[9]), float(tload_list[10]))
 
                             payload = {'value': new_tooldata}
                         else:
@@ -314,15 +328,19 @@ Examples:
                                                         True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
 """
 
+
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, tframe, tload):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(tframe, basestring) \
-        and isinstance(tload, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(tframe, basestring) and \
+            isinstance(tload, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         if ipaddress.lower() == 'local':
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program,
+                                                                                               module, variable_name)
         else:
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                               program, module,
+                                                                                               variable_name)
         try:
             tframe = tframe.translate(None, "[]")
             tload = tload.translate(None, "[]")
@@ -330,15 +348,16 @@ def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, 
             tframe_list = tframe.split(',')
             tload_list = tload.split(',')
             if (robhold == True or robhold == False) and (len(tframe_list) == 7) and (len(tload_list) == 11):
-                if robhold == 1: robhold = True
-                if robhold == 0: robhold = False
-                new_tooldata = '[%s,[[%G,%G,%G],[%G,%G,%G,%G]],[%G,[%G,%G,%G],[%G,%G,%G,%G],%G,%G,%G]]' % (
-                    robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
-                    float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
-                    float(tframe_list[6]), float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),
-                    float(tload_list[3]), float(tload_list[4]), float(tload_list[5]), float(tload_list[6]),
-                    float(tload_list[7]), float(tload_list[8]), float(tload_list[9]), float(tload_list[10])
-                )
+                if robhold == 1:
+                    robhold = True
+                if robhold == 0:
+                    robhold = False
+                new_tooldata = '[%s,[[%G,%G,%G],[%G,%G,%G,%G]],[%G,[%G,%G,%G],[%G,%G,%G,%G],%G,%G,%G]]' % \
+                               (robhold, float(tframe_list[0]), float(tframe_list[1]), float(tframe_list[2]),
+                                float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
+                                float(tframe_list[6]), float(tload_list[0]), float(tload_list[1]), float(tload_list[2]),
+                                float(tload_list[3]), float(tload_list[4]), float(tload_list[5]), float(tload_list[6]),
+                                float(tload_list[7]), float(tload_list[8]), float(tload_list[9]), float(tload_list[10]))
 
                 payload = {'value': new_tooldata}
                 response = requests.post(url, cookies=cookies, data=payload)
