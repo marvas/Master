@@ -35,15 +35,15 @@ msg, cookies = rapid_speeddata.edit_and_write_rapid_data_base(ipaddr, cookies, d
 print msg
 # Finep is set to True in order to not get corner path failure warning
 msg, cookies = rapid_zonedata.edit_and_write_rapid_data(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'zone',
-                                                        True, 0.3, 0.3, 0.3, 0.03, 0.3 ,0.03)
+                                                        True, 0.3, 0.3, 0.3, 0.03, 0.3, 0.03)
 print msg
 
 # Properties of the drawn flower
-amplitude = 100 # Length of the petals
-theta = 0 # Current angle
-k = 4 # Petal properties, can only be integers
-del_theta = 2 # Step
-num_flowers = 0 # Number of flowers drawn
+amplitude = 100  # Length of the petals
+theta = 0  # Current angle
+k = 4  # Petal properties, can only be integers
+del_theta = 2  # Step
+num_flowers = 0  # Number of flowers drawn
 max_degrees = 0
 
 if isinstance(k, int):
@@ -64,23 +64,24 @@ else:
 # Draws a specified amount of flowers
 while num_flowers < 1:
     while theta < max_degrees:
-        got_value, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies, digest_auth,
-                                                              'T_ROB1', 'MainModule', 'drawing')
+        got_value, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies,
+                                                                      digest_auth, 'T_ROB1', 'MainModule', 'drawing')
         if got_value:
             if rapid_bool.get_state(response) == False:
                 x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
                 y = amplitude*math.cos(math.radians(k*theta))*math.sin(math.radians(theta))
-                theta = theta + del_theta
+                theta += del_theta
                 msg, cookies = rapid_num.edit_and_write_rapid_data(ipaddr, cookies, digest_auth,
                                                                    'T_ROB1', 'MainModule', 'x', x)
                 print msg
                 msg, cookies = rapid_num.edit_and_write_rapid_data(ipaddr, cookies, digest_auth,
                                                                    'T_ROB1', 'MainModule', 'y', y)
                 print msg
-                msg, cookies = rapid_bool.edit_and_write_rapid_data(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'new_point', True)
+                msg, cookies = rapid_bool.edit_and_write_rapid_data(ipaddr, cookies, digest_auth,
+                                                                    'T_ROB1', 'MainModule', 'new_point', True)
                 print msg
     theta = 0
-    num_flowers = num_flowers + 1
+    num_flowers += 1
 
 # Stops the RAPID execution.
 _, cookies = rapid_bool.edit_and_write_rapid_data(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'run', False)
