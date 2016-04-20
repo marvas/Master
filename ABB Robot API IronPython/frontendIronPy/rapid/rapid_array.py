@@ -10,7 +10,6 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-
 """
 Gets the length of array and returns it. Only shows the length of first dimension.
 
@@ -21,6 +20,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_length(rapid_data):
     if rapid_data.IsArray:
@@ -43,6 +43,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_dimensions(rapid_data):
     if rapid_data.IsArray:
@@ -70,11 +71,12 @@ Examples:
     message = edit_and_write_rapid_data_num_index(rapid_data, 0, 100)
 """
 
+
 def edit_and_write_rapid_data_num_index(rapid_data, index, value):
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
             if index < rapid_data.Value.Length and index >= 0 and isinstance(index, int):
-                if isinstance(value, (int,float)):
+                if isinstance(value, (int, float)):
                     rapid_data.WriteItem(ctrlrs.RapidDomain.Num(value), index)
                     msg = 'Array updated.'
                     return msg
@@ -110,6 +112,7 @@ Examples:
     message = edit_and_write_rapid_data_num(rapid_data, [100,1,50,100])
 """
 
+
 def edit_and_write_rapid_data_num(rapid_data, values):
     if rapid_data.RapidType == 'num' and rapid_data.IsArray:
         try:
@@ -122,7 +125,7 @@ def edit_and_write_rapid_data_num(rapid_data, values):
                     return msg
                 # Checks if all values in input values are of type int or float.
                 for value in values:
-                    if isinstance(value, (int,float)) == False:
+                    if isinstance(value, (int, float)) == False:
                         msg = 'Something wrong in list.'
                         return msg
                 # If size of values are smaller than RAPID list, then fill the list
