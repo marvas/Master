@@ -24,6 +24,7 @@ Examples:
     None
 """
 
+
 def connect_robot_with_ipaddr_and_user(ipaddress, username, password):
     if isinstance(ipaddress, basestring) and isinstance(username, basestring) and isinstance(password, basestring):
         # Inserts ip address into the url
@@ -33,7 +34,7 @@ def connect_robot_with_ipaddr_and_user(ipaddress, username, password):
             url = 'http://{0}/rw/system?json=1'.format(ipaddress.lower())
         digest_auth = HTTPDigestAuth(username, password)
         try:
-            response = requests.get(url, auth = digest_auth)
+            response = requests.get(url, auth=digest_auth)
             if response.status_code == 200:
                 # Gets the system information
                 rob_info_dict = response.json()['_embedded']['_state'][0]
@@ -66,6 +67,7 @@ Examples:
     None
 """
 
+
 def connect_robot_with_ipaddr_def_user(ipaddress):
     if isinstance(ipaddress, basestring):
         # Inserts ip address into the url
@@ -75,7 +77,7 @@ def connect_robot_with_ipaddr_def_user(ipaddress):
             url = 'http://{0}/rw/system?json=1'.format(ipaddress.lower())
         digest_auth = HTTPDigestAuth('Default User', 'robotics')
         try:
-            response = requests.get(url, auth = digest_auth)
+            response = requests.get(url, auth=digest_auth)
             if response.status_code == 200:
                 # Gets the system information
                 rob_info_dict = response.json()['_embedded']['_state'][0]
@@ -105,6 +107,7 @@ Examples:
     None
 """
 
+
 def logoff_robot_controller(ipaddress, cookies):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar):
         if ipaddress.lower() == 'local':
@@ -126,6 +129,3 @@ def logoff_robot_controller(ipaddress, cookies):
     else:
         err = 'Something wrong with arguments'
         return False, err
-
-
-
