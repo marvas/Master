@@ -10,7 +10,6 @@ clr.AddReferenceToFileAndPath(
 import ABB.Robotics.Controllers as ctrlrs
 
 
-
 """
 Scans the network for controllers.
 
@@ -21,6 +20,7 @@ Returns:
 Examples:
     None
 """
+
 
 def discover_controllers_on_network():
     net_scan = ctrlrs.Discovery.NetworkScanner()
@@ -47,6 +47,7 @@ Returns:
 Examples:
     None
 """
+
 
 def connect_robot_with_name(controllers, robot_name):
     controller_found = False
@@ -79,16 +80,17 @@ Examples:
     None
 """
 
-def connect_robot_with_ipaddr(controllers, IPAddress):
+
+def connect_robot_with_ipaddr(controllers, ipaddress):
     controller_found = False
     try:
         for controller in controllers:
-            if IPAddress == str(controller.IPAddress):
+            if ipaddress == str(controller.IPAddress):
                 ctrl = ctrlrs.ControllerFactory.CreateFrom(controller)
                 controller_found = True
-                msg = 'Found controller with specified IP address: ' + IPAddress
+                msg = 'Found controller with specified IP address: ' + ipaddress
                 return ctrl, msg, controller_found
-        msg = 'Could not find controller with the specified IP address: ' + IPAddress
+        msg = 'Could not find controller with the specified IP address: ' + ipaddress
         return None, msg, controller_found
     except Exception:
         msg = 'Remember to discover the controllers first before trying to connect.'
@@ -106,6 +108,7 @@ Returns:
 Examples:
     None
 """
+
 
 def disconnect_robot_controller(controller):
     try:
@@ -126,6 +129,7 @@ Returns:
 Examples:
     None
 """
+
 
 def is_connected_to_controller(controller):
     try:
