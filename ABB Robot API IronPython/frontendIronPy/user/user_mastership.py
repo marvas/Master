@@ -21,10 +21,11 @@ Examples:
     None
 """
 
+
 def is_controller_master(controller):
     try:
         return bool(controller.IsMaster)
-    except Exception, err:
+    except Exception:
         return False
 
 
@@ -41,6 +42,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_master_access_to_controller_rapid(controller):
     try:
@@ -63,6 +65,7 @@ Returns:
 Examples:
     None
 """
+
 
 def release_and_dispose_master_access(mastership):
     try:
