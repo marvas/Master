@@ -5,6 +5,8 @@ as well as displaying the value of the bool.
 
 
 import requests
+import requests.cookies
+import requests.auth
 
 
 """

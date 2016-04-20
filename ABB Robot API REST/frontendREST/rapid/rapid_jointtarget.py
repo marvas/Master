@@ -7,6 +7,8 @@ jointtarget, as well as displaying the different properties of the jointtarget.
 import unicodedata
 
 import requests
+import requests.auth
+import requests.cookies
 
 
 """

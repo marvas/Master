@@ -4,6 +4,7 @@ identify resources and HTTP to communicate.
 """
 
 import requests
+import requests.cookies
 from requests.auth import HTTPDigestAuth
 
 

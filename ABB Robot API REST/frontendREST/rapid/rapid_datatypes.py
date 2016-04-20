@@ -3,6 +3,8 @@ Module for getting rapid data information from the robot controller. This data c
 """
 
 import requests
+import requests.auth
+import requests.cookies
 
 
 """

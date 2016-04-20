@@ -6,6 +6,8 @@ Module handling one dimensional arrays in RAPID. This module only supports editi
 import unicodedata
 
 import requests
+import requests.auth
+import requests.cookies
 
 
 """
@@ -191,10 +193,10 @@ Examples:
 
 
 def edit_and_write_rapid_data_num(ipaddress, cookies, digest_auth, program, module, variable_name, values):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(values, list)\
-        and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(values, list) and \
+            isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
             url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
