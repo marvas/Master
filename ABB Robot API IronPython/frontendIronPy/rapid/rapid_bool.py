@@ -11,7 +11,6 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-
 """
 Gets the state of bool and returns it as a string
 
@@ -22,6 +21,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_state_tostring(rapid_data):
     if rapid_data.RapidType == 'bool':
@@ -45,6 +45,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_state(rapid_data):
     if rapid_data.RapidType == 'bool':
@@ -73,6 +74,7 @@ Example:
     message = edit_and_write_rapid_data(rapid_data, True)
     message = edit_and_write_rapid_data(rapid_data, False)
 """
+
 
 def edit_and_write_rapid_data(rapid_data, new_value):
     if rapid_data.RapidType == 'bool':
