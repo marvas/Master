@@ -9,7 +9,6 @@ import frontendREST.com.communication as communication
 import frontendREST.rapid.rapid_num as rapid_num
 
 
-
 ipaddr = '152.94.0.39'
 
 # Connects to the controller
@@ -21,7 +20,8 @@ for i in range(100):
     # Start timestamp
     start_time = time.clock()
     # Edits the number on the controller
-    msg, cookies = rapid_num.edit_and_write_rapid_data(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'number', 10)
+    msg, cookies = rapid_num.edit_and_write_rapid_data(ipaddr, cookies, digest_auth,
+                                                       'T_ROB1', 'MainModule', 'number', 10)
     # Stop timestamp
     stop_time = time.clock()
     if msg != 'Value updated.':
