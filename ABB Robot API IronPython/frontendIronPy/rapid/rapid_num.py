@@ -11,7 +11,6 @@ import ABB.Robotics.Controllers as ctrlrs
 # clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
-
 """
 Gets the value of num and returns it as a string
 
@@ -22,6 +21,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_value_tostring(rapid_data):
     if rapid_data.RapidType == 'num':
@@ -45,6 +45,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_value(rapid_data):
     if rapid_data.RapidType == 'num':
@@ -70,6 +71,7 @@ Examples:
     message = edit_and_write_rapid_data(rapid_data, 1)
     message = edit_and_write_rapid_data(rapid_data, 20)
 """
+
 
 def edit_and_write_rapid_data(rapid_data, new_value):
     if rapid_data.RapidType == 'num':
