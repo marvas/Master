@@ -4,7 +4,6 @@ jointtarget, as well as displaying the different properties of the jointtarget.
 """
 
 
-
 """
 Gets RobAx from jointtarget and returns it as a string
 
@@ -15,6 +14,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_robax_tostring(rapid_data):
     if rapid_data.RapidType == 'jointtarget':
@@ -39,13 +39,14 @@ Examples:
     None
 """
 
+
 def get_extax_tostring(rapid_data):
     if rapid_data.RapidType == 'jointtarget':
         try:
             extax = rapid_data.Value.ExtAx.ToString()
             extax = extax.translate(None, "[]+")
             extax_list = extax.split(',')
-            #Loop to format extax.
+            # Loop to format extax.
             for i, eax in list(enumerate(extax_list)):
                 if "E" in eax:
                     eax = eax.split('E')
@@ -54,7 +55,7 @@ def get_extax_tostring(rapid_data):
                 else:
                     extax_list[i] = eax
             res = 'Extax: [Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f] = [%s,%s,%s,%s,%s,%s]' \
-                  % (extax_list[0],extax_list[1],extax_list[2],extax_list[3],extax_list[4],extax_list[5])
+                  % (extax_list[0], extax_list[1], extax_list[2], extax_list[3], extax_list[4], extax_list[5])
             return res
         except Exception, err:
             return err
@@ -73,6 +74,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_jointtarget_tostring(rapid_data):
     if rapid_data.RapidType == 'jointtarget':
@@ -101,6 +103,7 @@ Examples:
     message = edit_and_write_rapid_data_property(rapid_data, 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
+
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
     if rapid_data.RapidType == 'jointtarget':
         try:
@@ -109,9 +112,9 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             jointtarget_robax = rapid_data.Value.RobAx.ToString()
             jointtarget_extax = rapid_data.Value.ExtAx.ToString()
 
-            #Checks if input is string
+            # Checks if input is string
             if isinstance(new_value, basestring):
-                new_value = new_value.translate(None,"[]")
+                new_value = new_value.translate(None, "[]")
                 if property.lower() == 'robax':
                     robax_list = new_value.split(',')
                     if len(robax_list) == 6:
@@ -172,11 +175,12 @@ Examples:
     message = edit_and_write_rapid_data(rapid_data, '[0,0,0,0,0,0]', '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
+
 def edit_and_write_rapid_data(rapid_data, robax, extax):
     if rapid_data.RapidType == 'jointtarget':
         try:
             jointtarget = rapid_data.Value
-            #Checks if input is string
+            # Checks if input is string
             if isinstance(robax, basestring) and isinstance(extax, basestring):
                 robax = robax.translate(None, "[]")
                 extax = extax.translate(None, "[]")
