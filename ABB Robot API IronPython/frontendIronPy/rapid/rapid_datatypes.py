@@ -4,8 +4,6 @@ back to the controller in order to update a data instance.
 """
 
 
-
-
 """
 Gets a Rapid object that reference a Rapid data instance on the robot controller.
 
@@ -20,6 +18,7 @@ Returns:
 Examples:
     bool, rapid_data = rapid_datatypes.get_rapid_data(controller,'T_ROB1','MainModule','p20')
 """
+
 
 def get_rapid_data(controller, program, module, variable_name):
     try:
