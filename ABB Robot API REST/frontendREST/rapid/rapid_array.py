@@ -19,13 +19,14 @@ Examples:
     None
 """
 
+
 def get_length(response_dict):
     if int(response_dict['ndim']) >= 1:
         try:
             # Formatting the length.
             length = response_dict['dim']
             # Converts from unicode to normalized string
-            length = unicodedata.normalize('NFKD', length).encode('ascii','ignore')
+            length = unicodedata.normalize('NFKD', length).encode('ascii', 'ignore')
             length_list = length.split(' ')
             return int(length_list[0])
         except Exception, err:
@@ -45,6 +46,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_dimensions(response_dict):
     if int(response_dict['ndim']) >= 1:
@@ -79,22 +81,31 @@ Examples:
                                                                                                         'array', 0, 100)
 """
 
+
 def edit_and_write_rapid_data_num_index(ipaddress, cookies, digest_auth, program, module, variable_name, index, value):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(index, int) \
-        and isinstance(value, (int,float)) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(index, int) and \
+            isinstance(value, (int, float)) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Checks if index is negative.
         if index < 0:
             err = 'Index can\'t be negative'
             return err, cookies
         # Constructs the urls
         if ipaddress.lower() == 'local':
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
+                                                                                                     program,
+                                                                                                     module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80',
+                                                                                        program, module, variable_name)
         else:
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                                     program,
+                                                                                                     module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(),
+                                                                                        program, module, variable_name)
         try:
             # Gets the array from controller.
             response = requests.get(url_get, cookies=cookies)
@@ -110,7 +121,7 @@ def edit_and_write_rapid_data_num_index(ipaddress, cookies, digest_auth, program
                 # Gets the array from response.
                 rapid_array = response.json()['_embedded']['_state'][0]['value']
                 # Formats the array attributes into a list.
-                rapid_array = unicodedata.normalize('NFKD', rapid_array).encode('ascii','ignore')
+                rapid_array = unicodedata.normalize('NFKD', rapid_array).encode('ascii', 'ignore')
                 rapid_array = rapid_array.translate(None, "[]")
                 rapid_array_list = rapid_array.split(',')
                 # Checks if index is out of bounds.
@@ -178,6 +189,7 @@ Examples:
                                                                                 'array', [100,1,50,100])
 """
 
+
 def edit_and_write_rapid_data_num(ipaddress, cookies, digest_auth, program, module, variable_name, values):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
         and isinstance(program, basestring) and isinstance(module, basestring) \
@@ -185,14 +197,23 @@ def edit_and_write_rapid_data_num(ipaddress, cookies, digest_auth, program, modu
         and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80',
+                                                                                              program, module,
+                                                                                              variable_name)
         else:
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                                     program,
+                                                                                                     module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(),
+                                                                                              program, module,
+                                                                                              variable_name)
         # Checks if all values in input values are of type int or float.
         for value in values:
-            if isinstance(value, (int,float)) == False:
+            if isinstance(value, (int, float)) == False:
                 msg = 'Something wrong in list.'
                 return msg, cookies
         try:
