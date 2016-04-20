@@ -6,7 +6,8 @@ robtarget, as well as displaying the different properties of the robtarget.
 import unicodedata
 
 import requests
-
+import requests.cookies
+import requests.auth
 
 
 """
@@ -20,13 +21,14 @@ Examples:
     None
 """
 
+
 def get_trans_tostring(response_dict):
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Robtarget should consist of 17 numbers.
@@ -54,18 +56,20 @@ Examples:
     None
 """
 
+
 def get_rot_tostring(response_dict):
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Robtarget should consist of 17 numbers.
             if len(value_list) == 17:
-                res = 'Rot: [Q1,Q2,Q3,Q4] = [%s,%s,%s,%s]' % (value_list[3], value_list[4], value_list[5], value_list[6])
+                res = 'Rot: [Q1,Q2,Q3,Q4] = [%s,%s,%s,%s]' % (value_list[3], value_list[4],
+                                                              value_list[5], value_list[6])
                 return res
             else:
                 err = 'Something wrong with the robtarget: ' + response_dict['value']
@@ -88,13 +92,14 @@ Examples:
     None
 """
 
+
 def get_robconf_tostring(response_dict):
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Robtarget should consist of 17 numbers.
@@ -123,13 +128,14 @@ Examples:
     None
 """
 
+
 def get_extax_tostring(response_dict):
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Robtarget should consist of 17 numbers.
@@ -159,13 +165,14 @@ Examples:
     None
 """
 
+
 def get_robtarget_tostring(response_dict):
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
-            value = unicodedata.normalize('NFKD', value).encode('ascii','ignore')
+            value = unicodedata.normalize('NFKD', value).encode('ascii', 'ignore')
             value = value.translate(None, "[]")
             value_list = value.split(',')
             # Robtarget should consist of 17 numbers.
@@ -200,27 +207,35 @@ Returns:
     Requests.cookies.RequestsCookieJar: cookies
 Examples:
     message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                            'target', 'trans', '[100,100,0]')
+                                                                        'target', 'trans', '[100,100,0]')
     message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                            'target', 'rot', '[1,0,0,0]')
+                                                                        'target', 'rot', '[1,0,0,0]')
     message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                            'target', 'robconf', '[0,0,1,0]')
+                                                                        'target', 'robconf', '[0,0,1,0]')
     message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                            'target', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+                                                                        'target', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
-def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name, property, new_value):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(property, basestring) \
-        and isinstance(new_value, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+
+def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module,
+                                       variable_name, property, new_value):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(property, basestring) and \
+            isinstance(new_value, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the urls
         if ipaddress.lower() == 'local':
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module,
+                                                                                        variable_name)
         else:
-            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
-            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_write = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                                     program, module,
+                                                                                                     variable_name)
+            url_get = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program,
+                                                                                        module, variable_name)
         try:
             # Gets the robtarget from controller.
             response = requests.get(url_get, cookies=cookies)
@@ -236,7 +251,7 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                 # Gets the robtarget from response.
                 robtarget = response.json()['_embedded']['_state'][0]['value']
                 # Formats the robtargets attributes into a list.
-                robtarget = unicodedata.normalize('NFKD', robtarget).encode('ascii','ignore')
+                robtarget = unicodedata.normalize('NFKD', robtarget).encode('ascii', 'ignore')
                 robtarget = robtarget.translate(None, "[]")
                 robtarget_list = robtarget.split(',')
                 new_value = new_value.translate(None, "[]")
@@ -245,10 +260,11 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                     if len(trans_list) == 3:
                         # Creates the new robtarget.
                         robtarget = '[[%G,%G,%G],[%s,%s,%s,%s],[%s,%s,%s,%s],[%s,%s,%s,%s,%s,%s]]' % \
-                        (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]), robtarget_list[3],
-                         robtarget_list[4], robtarget_list[5], robtarget_list[6], robtarget_list[7], robtarget_list[8],
-                         robtarget_list[9], robtarget_list[10], robtarget_list[11], robtarget_list[12],
-                         robtarget_list[13], robtarget_list[14], robtarget_list[15], robtarget_list[16])
+                            (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]), robtarget_list[3],
+                             robtarget_list[4], robtarget_list[5], robtarget_list[6], robtarget_list[7],
+                             robtarget_list[8], robtarget_list[9], robtarget_list[10], robtarget_list[11],
+                             robtarget_list[12], robtarget_list[13], robtarget_list[14], robtarget_list[15],
+                             robtarget_list[16])
 
                         payload = {'value': robtarget}
                     else:
@@ -259,11 +275,11 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                     if len(rot_list) == 4:
                         # Creates the new robtarget.
                         robtarget = '[[%s,%s,%s],[%G,%G,%G,%G],[%s,%s,%s,%s],[%s,%s,%s,%s,%s,%s]]' % \
-                        (robtarget_list[0], robtarget_list[1], robtarget_list[2], float(rot_list[0]),
-                         float(rot_list[1]), float(rot_list[2]), float(rot_list[3]), robtarget_list[7],
-                         robtarget_list[8], robtarget_list[9], robtarget_list[10], robtarget_list[11],
-                         robtarget_list[12], robtarget_list[13], robtarget_list[14], robtarget_list[15],
-                         robtarget_list[16])
+                            (robtarget_list[0], robtarget_list[1], robtarget_list[2], float(rot_list[0]),
+                             float(rot_list[1]), float(rot_list[2]), float(rot_list[3]), robtarget_list[7],
+                             robtarget_list[8], robtarget_list[9], robtarget_list[10], robtarget_list[11],
+                             robtarget_list[12], robtarget_list[13], robtarget_list[14], robtarget_list[15],
+                             robtarget_list[16])
 
                         payload = {'value': robtarget}
                     else:
@@ -274,10 +290,11 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                     if len(robconf_list) == 4:
                         # Creates the new robtarget.
                         robtarget = '[[%s,%s,%s],[%s,%s,%s,%s],[%d,%d,%d,%d],[%s,%s,%s,%s,%s,%s]]' % \
-                        (robtarget_list[0], robtarget_list[1], robtarget_list[2], robtarget_list[3], robtarget_list[4],
-                         robtarget_list[5], robtarget_list[6], int(robconf_list[0]), int(robconf_list[1]),
-                         int(robconf_list[2]), int(robconf_list[3]), robtarget_list[11], robtarget_list[12],
-                         robtarget_list[13], robtarget_list[14], robtarget_list[15], robtarget_list[16])
+                            (robtarget_list[0], robtarget_list[1], robtarget_list[2], robtarget_list[3],
+                             robtarget_list[4], robtarget_list[5], robtarget_list[6], int(robconf_list[0]),
+                             int(robconf_list[1]), int(robconf_list[2]), int(robconf_list[3]), robtarget_list[11],
+                             robtarget_list[12], robtarget_list[13], robtarget_list[14], robtarget_list[15],
+                             robtarget_list[16])
 
                         payload = {'value': robtarget}
                     else:
@@ -288,10 +305,11 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                     if len(extax_list) == 6:
                         # Creates the new robtarget.
                         robtarget = '[[%s,%s,%s],[%s,%s,%s,%s],[%s,%s,%s,%s],[%G,%G,%G,%G,%G,%G]]' % \
-                        (robtarget_list[0], robtarget_list[1], robtarget_list[2],robtarget_list[3], robtarget_list[4],
-                         robtarget_list[5], robtarget_list[6], robtarget_list[7], robtarget_list[8],
-                         robtarget_list[9], robtarget_list[10], float(extax_list[0]), float(extax_list[1]),
-                         float(extax_list[2]), float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                            (robtarget_list[0], robtarget_list[1], robtarget_list[2], robtarget_list[3],
+                             robtarget_list[4], robtarget_list[5], robtarget_list[6], robtarget_list[7],
+                             robtarget_list[8], robtarget_list[9], robtarget_list[10], float(extax_list[0]),
+                             float(extax_list[1]), float(extax_list[2]), float(extax_list[3]), float(extax_list[4]),
+                             float(extax_list[5]))
 
                         payload = {'value': robtarget}
                     else:
@@ -349,16 +367,21 @@ Examples:
                                                     '[100,100,0]','[1,0,0,0]', '[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
-def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, trans, rot, robconf, extax):
-    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
-        and isinstance(program, basestring) and isinstance(module, basestring) \
-        and isinstance(variable_name, basestring) and isinstance(trans, basestring) \
-        and isinstance(rot, basestring) and isinstance(robconf, basestring) \
-        and isinstance(extax, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
+
+def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, trans,
+                              rot, robconf, extax):
+    if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
+            isinstance(program, basestring) and isinstance(module, basestring) and \
+            isinstance(variable_name, basestring) and isinstance(trans, basestring) and \
+            isinstance(rot, basestring) and isinstance(robconf, basestring) and \
+            isinstance(extax, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         if ipaddress.lower() == 'local':
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program,
+                                                                                               module, variable_name)
         else:
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                               program, module,
+                                                                                               variable_name)
         try:
             trans = trans.translate(None, "[]")
             rot = rot.translate(None, "[]")
