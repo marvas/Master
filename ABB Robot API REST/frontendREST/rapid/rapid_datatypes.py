@@ -21,9 +21,12 @@ Returns:
     Dictionary|String: Output depends on the result. Dict if successful and string if error
     Requests.cookies.RequestsCookieJar: cookies
 Examples:
-     b, response_dict, cookies = rapid_datatypes.get_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'p20')
-     b, response_dict, cookies = rapid_datatypes.get_rapid_data('10.0.0.10', cookies, digest_auth, 'T_ROB1', 'MainModule', 'p20')
+     b, response_dict, cookies = rapid_datatypes.get_rapid_data('local', cookies, digest_auth, 'T_ROB1',
+                                                                'MainModule', 'p20')
+     b, response_dict, cookies = rapid_datatypes.get_rapid_data('10.0.0.10', cookies, digest_auth, 'T_ROB1',
+                                                                'MainModule', 'p20')
 """
+
 
 def get_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
@@ -31,11 +34,16 @@ def get_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_na
             and isinstance(variable_name, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Creates the urls based on input
         if ipaddress.lower() == 'local':
-            url_value = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
-            url_prop = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program, module, variable_name)
+            url_value = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program,
+                                                                                          module, variable_name)
+            url_prop = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format('localhost:80', program,
+                                                                                               module, variable_name)
         else:
-            url_value = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
-            url_prop = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program, module, variable_name)
+            url_value = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(), program,
+                                                                                          module, variable_name)
+            url_prop = 'http://{0}/rw/rapid/symbol/properties/RAPID/{1}/{2}/{3}?json=1'.format(ipaddress.lower(),
+                                                                                               program, module,
+                                                                                               variable_name)
         try:
             response_value = requests.get(url_value, cookies=cookies)
             # If response includes a new cookie to use, set the new cookie.
