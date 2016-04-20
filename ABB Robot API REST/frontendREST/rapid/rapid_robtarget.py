@@ -10,19 +10,17 @@ import requests.cookies
 import requests.auth
 
 
-"""
-Gets the trans data from robtarget and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Trans or error
-Examples:
-    None
-"""
-
-
 def get_trans_tostring(response_dict):
+    """
+    Gets the trans data from robtarget and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Trans or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
@@ -41,23 +39,21 @@ def get_trans_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not robtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
         return err
 
 
-"""
-Gets the rot data from robtarget and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Rot or error
-Examples:
-    None
-"""
-
-
 def get_rot_tostring(response_dict):
+    """
+    Gets the rot data from robtarget and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Rot or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
@@ -77,23 +73,21 @@ def get_rot_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not robtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
         return err
 
 
-"""
-Gets the robconf data from robtarget and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Robconf or error
-Examples:
-    None
-"""
-
-
 def get_robconf_tostring(response_dict):
+    """
+    Gets the robconf data from robtarget and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Robconf or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
@@ -113,23 +107,21 @@ def get_robconf_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not robtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
         return err
 
 
-"""
-Gets the extax data from robtarget and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Extax or error
-Examples:
-    None
-"""
-
-
 def get_extax_tostring(response_dict):
+    """
+    Gets the extax data from robtarget and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Extax or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
@@ -150,23 +142,21 @@ def get_extax_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not robtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
         return err
 
 
-"""
-Gets robtarget and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Robtarget or error
-Examples:
-    None
-"""
-
-
 def get_robtarget_tostring(response_dict):
+    """
+    Gets robtarget and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Robtarget or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'robtarget':
         try:
             # Formatting the robtarget to check if it is valid.
@@ -185,40 +175,38 @@ def get_robtarget_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not robtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
         return err
-
-
-"""
-Edit and write the specified robtarget property.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'x')
-    String: property (properties: trans, rot, robconf, extax)
-    String: new_value (new value, ex '[10,0,0]' for trans)
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                        'target', 'trans', '[100,100,0]')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                        'target', 'rot', '[1,0,0,0]')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                        'target', 'robconf', '[0,0,1,0]')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                        'target', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
-"""
 
 
 def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module,
                                        variable_name, property, new_value):
+    """
+    Edit and write the specified robtarget property.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'x')
+        String: property (properties: trans, rot, robconf, extax)
+        String: new_value (new value, ex '[10,0,0]' for trans)
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                            'target', 'trans', '[100,100,0]')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                            'target', 'rot', '[1,0,0,0]')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                            'target', 'robconf', '[0,0,1,0]')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                        'target', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(property, basestring) and \
@@ -344,32 +332,30 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
         return err, cookies
 
 
-"""
-Edit and write the robtarget.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'x')
-    String: trans (ex '[100,0,0]')
-    String: rot (ex '[1,0,0,0]')
-    String: robconf (ex '[0,1,0,0]')
-    String: extax (ex '[9E9,9E9,9E9,9E9,9E9,9E9]')
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-   message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'target',
-                                                    '[100,100,0]','[1,0,0,0]', '[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, trans,
                               rot, robconf, extax):
+    """
+    Edit and write the robtarget.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'x')
+        String: trans (ex '[100,0,0]')
+        String: rot (ex '[1,0,0,0]')
+        String: robconf (ex '[0,1,0,0]')
+        String: extax (ex '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+       message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'target',
+                                                    '[100,100,0]','[1,0,0,0]', '[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(trans, basestring) and \

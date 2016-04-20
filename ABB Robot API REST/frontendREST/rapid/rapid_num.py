@@ -8,19 +8,17 @@ import requests.auth
 import requests.cookies
 
 
-"""
-Gets the value of num from response and returns it as a string
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: The result or error
-Examples:
-    None
-"""
-
-
 def get_value_tostring(response_dict):
+    """
+    Gets the value of num from response and returns it as a string
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: The result or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'num':
         try:
             res = 'Value = %s' % response_dict['value']
@@ -28,55 +26,51 @@ def get_value_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not num.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not num.'
         return err
 
 
-"""
-Gets the value of num from response and returns it
-
-Args:
-    Dictionary: response_dict
-Returns:
-    Float|String: Output depends on if it is possible to get the value or not
-Examples:
-    None
-"""
-
-
 def get_value(response_dict):
+    """
+    Gets the value of num from response and returns it
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        Float|String: Output depends on if it is possible to get the value or not
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'num':
         try:
             return float(response_dict['value'])
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not num.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not num.'
         return err
 
 
-"""
-Edits and writes the num variable to the specified value.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex T_ROB1)
-    String: module (name of module, ex MainModule)
-    String: variable_name (name of the variable to update, ex x)
-    Float|Int: new_value
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'x', 10)
-    message, cookies = edit_and_write_rapid_data('10.0.0.1', cookies, digest_auth, 'T_ROB1', 'MainModule', 'x', 11)
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, new_value):
+    """
+    Edits and writes the num variable to the specified value.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex T_ROB1)
+        String: module (name of module, ex MainModule)
+        String: variable_name (name of the variable to update, ex x)
+        Float|Int: new_value
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'x', 10)
+        message, cookies = edit_and_write_rapid_data('10.0.0.1', cookies, digest_auth, 'T_ROB1', 'MainModule', 'x', 11)
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
             and isinstance(program, basestring) and isinstance(module, basestring) \
             and isinstance(variable_name, basestring) and isinstance(new_value, (float, int)) \

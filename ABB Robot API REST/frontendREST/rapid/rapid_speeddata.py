@@ -8,25 +8,21 @@ import requests
 import requests.auth
 import requests.cookies
 
-
 base_speeddata_list = [5, 10, 20, 30, 40, 50, 60, 80, 100, 150, 200,
                        300, 400, 500, 600, 800, 1000, 1500, 2000, 2500, 3000]
 
 
-"""
-Gets speeddata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: The result or error
-Examples:
-    None
-
-"""
-
-
 def get_speeddata_tostring(response_dict):
+    """
+    Gets speeddata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: The result or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'speeddata':
         try:
             # Formatting the speeddata to check if it is valid.
@@ -39,9 +35,8 @@ def get_speeddata_tostring(response_dict):
             if len(value_list) == 4:
                 try:
                     # Checks if it is base speed.
-                    if int(value_list[0]) in base_speeddata_list and \
-                                    int(value_list[1]) == 500 and int(value_list[2]) == 5000 and \
-                                    int(value_list[3]) == 1000:
+                    if int(value_list[0]) in base_speeddata_list and int(value_list[1]) == 500 and int(
+                            value_list[2]) == 5000 and int(value_list[3]) == 1000:
                         res = 'Base speeddata: v%d (%s)' % (int(value_list[0]), response_dict['value'])
                         return res
                     # If not base speed then custom speed.
@@ -59,37 +54,35 @@ def get_speeddata_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not speeddata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not speeddata.'
         return err
 
 
-"""
-Edits and writes speeddata. Only supports base speeddata.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Base speeddata supported:
-5, 10, 20, 30, 40, 50, 60, 80, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1500, 2000, 2500, 3000
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'speed')
-    String: value (ex, 'v10')
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
-                                                        'MainModule', 'speed', 'v100')
-    message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
-                                                        'MainModule', 'speed', 'v10')
-"""
-
-
 def edit_and_write_rapid_data_base(ipaddress, cookies, digest_auth, program, module, variable_name, value):
+    """
+    Edits and writes speeddata. Only supports base speeddata.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Base speeddata supported:
+    5, 10, 20, 30, 40, 50, 60, 80, 100, 150, 200, 300, 400, 500, 600, 800, 1000, 1500, 2000, 2500, 3000
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'speed')
+        String: value (ex, 'v10')
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
+                                                            'MainModule', 'speed', 'v100')
+        message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
+                                                            'MainModule', 'speed', 'v10')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(value, basestring) and \
@@ -142,34 +135,32 @@ def edit_and_write_rapid_data_base(ipaddress, cookies, digest_auth, program, mod
         return err, cookies
 
 
-"""
-Edits and writes speeddata.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'speed')
-    Float|Int: vel_tcp
-    Float|Int: vel_orient
-    Float|Int: vel_lin_extax
-    Float|Int: vel_lin_rot_extax
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                    'speed', 100, 500, 5000, 1000)
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                    'speed', 100.5, 500, 5000.37, 1000)
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, vel_tcp,
                               vel_orient, vel_lin_extax, vel_lin_rot_extax):
+    """
+    Edits and writes speeddata.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'speed')
+        Float|Int: vel_tcp
+        Float|Int: vel_orient
+        Float|Int: vel_lin_extax
+        Float|Int: vel_lin_rot_extax
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                    'speed', 100, 500, 5000, 1000)
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                    'speed', 100.5, 500, 5000.37, 1000)
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(vel_tcp, (int, float)) and \

@@ -10,19 +10,17 @@ import requests.auth
 import requests.cookies
 
 
-"""
-Gets the length of array and returns it. Only shows the length of first dimension.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    Int|String: Output depends on if it is possible to get the length or not
-Examples:
-    None
-"""
-
-
 def get_length(response_dict):
+    """
+    Gets the length of array and returns it. Only shows the length of first dimension.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        Int|String: Output depends on if it is possible to get the length or not
+    Examples:
+        None
+    """
     if int(response_dict['ndim']) >= 1:
         try:
             # Formatting the length.
@@ -38,19 +36,17 @@ def get_length(response_dict):
         return err
 
 
-"""
-Gets the dimension of array and returns it.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    Int|String: Output depends on if it is possible to get the dimension or not
-Examples:
-    None
-"""
-
-
 def get_dimensions(response_dict):
+    """
+    Gets the dimension of array and returns it.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        Int|String: Output depends on if it is possible to get the dimension or not
+    Examples:
+        None
+    """
     if int(response_dict['ndim']) >= 1:
         try:
             return int(response_dict['ndim'])
@@ -61,30 +57,28 @@ def get_dimensions(response_dict):
         return err
 
 
-"""
-Inserts a value into num array with index and writes it to the controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-Index starts from 0.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'array')
-    Integer: Index (array index)
-    Float|Int: Value
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_array_num_index('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                                        'array', 0, 100)
-"""
-
-
 def edit_and_write_rapid_data_num_index(ipaddress, cookies, digest_auth, program, module, variable_name, index, value):
+    """
+    Inserts a value into num array with index and writes it to the controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+    Index starts from 0.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'array')
+        Integer: Index (array index)
+        Float|Int: Value
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_array_num_index('local', cookies, digest_auth, 'T_ROB1',
+                                                                        'MainModule', 'array', 0, 100)
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(index, int) and \
@@ -161,38 +155,36 @@ def edit_and_write_rapid_data_num_index(ipaddress, cookies, digest_auth, program
         return err, cookies
 
 
-"""
-Inserts a list of values into num array and writes it to the controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'array')
-    List: values, ex([100,1,2])
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    If RAPID array is of length 3:
-    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'array', []) Formats array to default.
-    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'array', [100,1,50])
-    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'array', [100,1.1,50])
-    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'array', [100])
-    If RAPID array is of length 3 this is not possible:
-    message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'array', [100,1,50,100])
-"""
-
-
 def edit_and_write_rapid_data_num(ipaddress, cookies, digest_auth, program, module, variable_name, values):
+    """
+    Inserts a list of values into num array and writes it to the controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'array')
+        List: values, ex([100,1,2])
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        If RAPID array is of length 3:
+        message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', []) Formats array to default.
+        message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100,1,50])
+        message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100,1.1,50])
+        message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100])
+        If RAPID array is of length 3 this is not possible:
+        message, cookies = edit_and_write_rapid_data_num('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'array', [100,1,50,100])
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(values, list) and \

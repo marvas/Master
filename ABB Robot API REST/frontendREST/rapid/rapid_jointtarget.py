@@ -11,19 +11,17 @@ import requests.auth
 import requests.cookies
 
 
-"""
-Gets RobAx from jointtarget and returns it as a string
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: RobAx or error
-Examples:
-    None
-"""
-
-
 def get_robax_tostring(response_dict):
+    """
+    Gets RobAx from jointtarget and returns it as a string
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: RobAx or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'jointtarget':
         try:
             # Formatting the jointtarget to check if it is valid.
@@ -43,23 +41,21 @@ def get_robax_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not jointtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
         return err
 
 
-"""
-Gets the extax data from jointtarget and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Extax or error
-Examples:
-    None
-"""
-
-
 def get_extax_tostring(response_dict):
+    """
+    Gets the extax data from jointtarget and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Extax or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'jointtarget':
         try:
             # Formatting the jointtarget to check if it is valid.
@@ -80,23 +76,21 @@ def get_extax_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not jointtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
         return err
 
 
-"""
-Gets jointtarget and returns it as a string
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Jointtarget or error
-Examples:
-    None
-"""
-
-
 def get_jointtarget_tostring(response_dict):
+    """
+    Gets jointtarget and returns it as a string
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Jointtarget or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'jointtarget':
         try:
             # Formatting the jointtarget to check if it is valid.
@@ -115,36 +109,34 @@ def get_jointtarget_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not jointtarget.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
         return err
-
-
-"""
-Edits the specified property of the jointtarget and writes it to the controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'x')
-    String: property (properties: robax or extax)
-    String: new_value (new value, ex '[0,0,0,0,0,0]' for robax)
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                            'jtarget', 'robax', '[0,0,0,0,0,0]')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                            'jtarget', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
-"""
 
 
 def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module,
                                        variable_name, property, new_value):
+    """
+    Edits the specified property of the jointtarget and writes it to the controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'x')
+        String: property (properties: robax or extax)
+        String: new_value (new value, ex '[0,0,0,0,0,0]' for robax)
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                'jtarget', 'robax', '[0,0,0,0,0,0]')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                'jtarget', 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(property, basestring) and \
@@ -236,29 +228,27 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
         return err, cookies
 
 
-"""
-Edits and writes the jointtarget.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'x')
-    String: robax (ex '[0,0,0,0,0,0]')
-    String: extax (ex '[9E9,9E9,9E9,9E9,9E9,9E9]')
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                            'jtarget', '[0,0,0,0,0,0], '[9E9,9E9,9E9,9E9,9E9,9E9]')
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robax, extax):
+    """
+    Edits and writes the jointtarget.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'x')
+        String: robax (ex '[0,0,0,0,0,0]')
+        String: extax (ex '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                'jtarget', '[0,0,0,0,0,0], '[9E9,9E9,9E9,9E9,9E9,9E9]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(robax, basestring) and \
@@ -280,9 +270,9 @@ def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, 
             extax_list = extax.split(',')
             if len(robax_list) == 6 and len(extax_list) == 6:
                 jointtarget = '[[%G,%G,%G,%G,%G,%G],[%G,%G,%G,%G,%G,%G]]' % \
-                            (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]), float(robax_list[3]),
-                             float(robax_list[4]), float(robax_list[5]), float(extax_list[0]), float(extax_list[1]),
-                             float(extax_list[2]), float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                              (float(robax_list[0]), float(robax_list[1]), float(robax_list[2]), float(robax_list[3]),
+                               float(robax_list[4]), float(robax_list[5]), float(extax_list[0]), float(extax_list[1]),
+                               float(extax_list[2]), float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
                 payload = {'value': jointtarget}
                 response = requests.post(url, cookies=cookies, data=payload)
                 # If response includes a new cookie to use, set the new cookie.

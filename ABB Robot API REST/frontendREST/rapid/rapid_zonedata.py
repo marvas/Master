@@ -11,35 +11,33 @@ import requests.cookies
 
 # Base zonedata in format 'fine, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax'.
 # First three points are for tool center point movement and last three point for tool reorientation.
-base_zonedata_dict = {'z0':     'FALSE, 0.3, 0.3, 0.3, 0.03, 0.3, 0.03',
-                      'z1':     'FALSE, 1, 1, 1, 0.1, 1, 0.1',
-                      'z5':     'FALSE, 5, 8, 8, 0.8, 8, 0.8',
-                      'z10':    'FALSE, 10, 15, 15, 1.5, 15, 1.5',
-                      'z15':    'FALSE, 15, 23, 23, 2.3, 23, 2.3',
-                      'z20':    'FALSE, 20, 30, 30, 3.0, 30, 3.0',
-                      'z30':    'FALSE, 30, 45, 45, 4.5, 45, 4.5',
-                      'z40':    'FALSE, 40, 60, 60, 6.0, 60, 6.0',
-                      'z50':    'FALSE, 50, 75, 75, 7.5, 75, 7.5',
-                      'z60':    'FALSE, 60, 90, 90, 9.0, 90, 9.0',
-                      'z80':    'FALSE, 80, 120, 120, 12, 120, 12',
-                      'z100':   'FALSE, 100, 150, 150, 15, 150, 15',
-                      'z150':   'FALSE, 150, 225, 225, 23, 225, 23',
-                      'z200':   'FALSE, 200, 300, 300, 30, 300, 30'}
-
-
-"""
-Gets zonedata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: The result or error
-Examples:
-    None
-"""
+base_zonedata_dict = {'z0': 'FALSE, 0.3, 0.3, 0.3, 0.03, 0.3, 0.03',
+                      'z1': 'FALSE, 1, 1, 1, 0.1, 1, 0.1',
+                      'z5': 'FALSE, 5, 8, 8, 0.8, 8, 0.8',
+                      'z10': 'FALSE, 10, 15, 15, 1.5, 15, 1.5',
+                      'z15': 'FALSE, 15, 23, 23, 2.3, 23, 2.3',
+                      'z20': 'FALSE, 20, 30, 30, 3.0, 30, 3.0',
+                      'z30': 'FALSE, 30, 45, 45, 4.5, 45, 4.5',
+                      'z40': 'FALSE, 40, 60, 60, 6.0, 60, 6.0',
+                      'z50': 'FALSE, 50, 75, 75, 7.5, 75, 7.5',
+                      'z60': 'FALSE, 60, 90, 90, 9.0, 90, 9.0',
+                      'z80': 'FALSE, 80, 120, 120, 12, 120, 12',
+                      'z100': 'FALSE, 100, 150, 150, 15, 150, 15',
+                      'z150': 'FALSE, 150, 225, 225, 23, 225, 23',
+                      'z200': 'FALSE, 200, 300, 300, 30, 300, 30'}
 
 
 def get_zonedata_tostring(response_dict):
+    """
+    Gets zonedata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: The result or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'zonedata':
         try:
             # Get zonedata
@@ -59,37 +57,35 @@ def get_zonedata_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not zonedata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not zonedata.'
         return err
 
 
-"""
-Edits and writes the zonedata. Only supports base zonedata.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Base zonedata supported:
-0, 1, 5, 10, 15, 20, 30, 40, 50, 60, 80, 100, 150, 200
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'zone')
-    String: value (ex, 'z0')
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
-                                                        'MainModule', 'zone', 'z0')
-    message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
-                                                        'MainModule', 'zone', 'z20')
-"""
-
-
 def edit_and_write_rapid_data_base(ipaddress, cookies, digest_auth, program, module, variable_name, value):
+    """
+    Edits and writes the zonedata. Only supports base zonedata.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Base zonedata supported:
+    0, 1, 5, 10, 15, 20, 30, 40, 50, 60, 80, 100, 150, 200
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'zone')
+        String: value (ex, 'z0')
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
+                                                            'MainModule', 'zone', 'z0')
+        message, cookies = edit_and_write_rapid_data_base('local', cookies, digest_auth, 'T_ROB1',
+                                                            'MainModule', 'zone', 'z20')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(value, basestring) and \
@@ -142,35 +138,33 @@ def edit_and_write_rapid_data_base(ipaddress, cookies, digest_auth, program, mod
         return err, cookies
 
 
-"""
-Edits and writes the zonedata.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'zone')
-    Boolean: finep
-    Float|Int: pzone_tcp
-    Float|Int: pzone_ori
-    Float|Int: pzone_eax
-    Float|Int: zone_ori
-    Float|Int: zone_leax
-    Float|Int: zone_reax
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                            'zone', False, 1, 1, 1, 0.1, 1, 0.1)
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, finep,
                               pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
+    """
+    Edits and writes the zonedata.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'zone')
+        Boolean: finep
+        Float|Int: pzone_tcp
+        Float|Int: pzone_ori
+        Float|Int: pzone_eax
+        Float|Int: zone_ori
+        Float|Int: zone_leax
+        Float|Int: zone_reax
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'zone', False, 1, 1, 1, 0.1, 1, 0.1)
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and (finep == True or finep == False) and \

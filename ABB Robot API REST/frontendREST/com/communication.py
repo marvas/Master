@@ -8,25 +8,23 @@ import requests.cookies
 from requests.auth import HTTPDigestAuth
 
 
-"""
-Connects to a robot with the specified ip address, username and password.
-Local means the VC.
-
-Args:
-    String: IP address
-    String: username
-    String: password
-Returns:
-    Boolean: Indicates if connection to robot was successful.
-    String: Message with the outcome
-    Requests.auth.HTTPDigestAuth: digest_auth
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    None
-"""
-
-
 def connect_robot_with_ipaddr_and_user(ipaddress, username, password):
+    """
+    Connects to a robot with the specified ip address, username and password.
+    Local means the VC.
+
+    Input:
+        String: IP address
+        String: username
+        String: password
+    Output:
+        Boolean: Indicates if connection to robot was successful.
+        String: Message with the outcome
+        Requests.auth.HTTPDigestAuth: digest_auth
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        None
+    """
     if isinstance(ipaddress, basestring) and isinstance(username, basestring) and isinstance(password, basestring):
         # Inserts ip address into the url
         if ipaddress.lower() == 'local':
@@ -53,23 +51,21 @@ def connect_robot_with_ipaddr_and_user(ipaddress, username, password):
         return False, err, None, None
 
 
-"""
-Connects to a robot with the specified ip address and default user.
-Local means the VC.
-
-Args:
-    String: IP address
-Returns:
-    Boolean: Indicates if connection to robot was successful.
-    String: Message with the outcome
-    Requests.auth.HTTPDigestAuth: digest_auth
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    None
-"""
-
-
 def connect_robot_with_ipaddr_def_user(ipaddress):
+    """
+    Connects to a robot with the specified ip address and default user.
+    Local means the VC.
+
+    Input:
+        String: IP address
+    Output:
+        Boolean: Indicates if connection to robot was successful.
+        String: Message with the outcome
+        Requests.auth.HTTPDigestAuth: digest_auth
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        None
+    """
     if isinstance(ipaddress, basestring):
         # Inserts ip address into the url
         if ipaddress.lower() == 'local':
@@ -95,21 +91,19 @@ def connect_robot_with_ipaddr_def_user(ipaddress):
         return False, err, None, None
 
 
-"""
-Log off the robot controller and disposes of the cookies.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-Returns:
-    Boolean: Indicates if successful or not
-    String: Message with the outcome
-Examples:
-    None
-"""
-
-
 def logoff_robot_controller(ipaddress, cookies):
+    """
+    Log off the robot controller and disposes of the cookies.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+    Output:
+        Boolean: Indicates if successful or not
+        String: Message with the outcome
+    Examples:
+        None
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar):
         if ipaddress.lower() == 'local':
                 url = 'http://{0}/logout'.format('localhost:80')

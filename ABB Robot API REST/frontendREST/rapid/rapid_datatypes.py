@@ -7,30 +7,28 @@ import requests.auth
 import requests.cookies
 
 
-"""
-Gets the rapid data information from the controller and returns it as json.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: Program (name of the program, typically "T_ROB1")
-    String: Module (name of the module, ex "MainModule")
-    String: Name of the variable to get (ex "target_10")
-Returns:
-    Boolean: Indicates if able to get the information or not
-    Dictionary|String: Output depends on the result. Dict if successful and string if error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-     b, response_dict, cookies = rapid_datatypes.get_rapid_data('local', cookies, digest_auth, 'T_ROB1',
-                                                                'MainModule', 'p20')
-     b, response_dict, cookies = rapid_datatypes.get_rapid_data('10.0.0.10', cookies, digest_auth, 'T_ROB1',
-                                                                'MainModule', 'p20')
-"""
-
-
 def get_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name):
+    """
+    Gets the rapid data information from the controller and returns it as json.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: Program (name of the program, typically "T_ROB1")
+        String: Module (name of the module, ex "MainModule")
+        String: Name of the variable to get (ex "target_10")
+    Output:
+        Boolean: Indicates if able to get the information or not
+        Dictionary|String: Output depends on the result. Dict if successful and string if error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+         b, response_dict, cookies = rapid_datatypes.get_rapid_data('local', cookies, digest_auth, 'T_ROB1',
+                                                                    'MainModule', 'p20')
+         b, response_dict, cookies = rapid_datatypes.get_rapid_data('10.0.0.10', cookies, digest_auth, 'T_ROB1',
+                                                                    'MainModule', 'p20')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
             and isinstance(program, basestring) and isinstance(module, basestring) \
             and isinstance(variable_name, basestring) and isinstance(digest_auth, requests.auth.HTTPDigestAuth):

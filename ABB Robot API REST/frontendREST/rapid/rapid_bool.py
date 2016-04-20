@@ -9,19 +9,17 @@ import requests.cookies
 import requests.auth
 
 
-"""
-Gets the state of bool and returns it as a string
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: The state or error
-Examples:
-    None
-"""
-
-
 def get_state_tostring(response_dict):
+    """
+    Gets the state of bool and returns it as a string
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: The state or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'bool':
         try:
             res = 'State = %s' % response_dict['value']
@@ -29,23 +27,21 @@ def get_state_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not bool.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not bool.'
         return err
 
 
-"""
-Gets the state of bool and returns it
-
-Args:
-    Dictionary: response_dict
-Returns:
-    Boolean|String: Output depends on if it is successful or not
-Examples:
-    None
-"""
-
-
 def get_state(response_dict):
+    """
+    Gets the state of bool and returns it
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        Boolean|String: Output depends on if it is successful or not
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'bool':
         try:
             if response_dict['value'] == 'TRUE':
@@ -55,32 +51,32 @@ def get_state(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not bool.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not bool.'
         return err
 
 
-"""
-Edits and writes the boolean variable to the specified state.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of the program, ex 'T_ROB1')
-    String: module (name of the module, ex 'MainModule')
-    String: variable_name (name of the variable to update, ex 'x')
-    Boolean: new_value (ex True or False)
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Example:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'run', True)
-    message, cookies = edit_and_write_rapid_data('10.0.0.20', cookies, digest_auth, 'T_ROB1', 'MainModule', 'run',False)
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, new_value):
+    """
+    Edits and writes the boolean variable to the specified state.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of the program, ex 'T_ROB1')
+        String: module (name of the module, ex 'MainModule')
+        String: variable_name (name of the variable to update, ex 'x')
+        Boolean: new_value (ex True or False)
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Example:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1',
+                                                                        'MainModule', 'run', True)
+        message, cookies = edit_and_write_rapid_data('10.0.0.20', cookies, digest_auth, 'T_ROB1',
+                                                                        'MainModule', 'run', False)
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
             and isinstance(program, basestring) and isinstance(module, basestring) \
             and isinstance(variable_name, basestring) and isinstance(new_value, bool)\

@@ -10,19 +10,17 @@ import requests.auth
 import requests.cookies
 
 
-"""
-Gets Robhold from wobjdata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Robhold or error
-Examples:
-    None
-"""
-
-
 def get_robhold_tostring(response_dict):
+    """
+    Gets Robhold from wobjdata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Robhold or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
@@ -41,23 +39,21 @@ def get_robhold_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not wobjdata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Ufprog from wobjdata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Ufprog or error
-Examples:
-    None
-"""
-
-
 def get_ufprog_tostring(response_dict):
+    """
+    Gets Ufprog from wobjdata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Ufprog or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
@@ -76,23 +72,21 @@ def get_ufprog_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not wobjdata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Ufmec from wobjdata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Ufmec or error
-Examples:
-    None
-"""
-
-
 def get_ufmec_tostring(response_dict):
+    """
+    Gets Ufmec from wobjdata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Ufmec or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
@@ -111,23 +105,21 @@ def get_ufmec_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not wobjdata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Uframe from wobjdata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Uframe or error
-Examples:
-    None
-"""
-
-
 def get_uframe_tostring(response_dict):
+    """
+    Gets Uframe from wobjdata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Uframe or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
@@ -149,23 +141,21 @@ def get_uframe_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not wobjdata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
         return err
 
 
-"""
-Gets Oframe from wobjdata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Oframe or error
-Examples:
-    None
-"""
-
-
 def get_oframe_tostring(response_dict):
+    """
+    Gets Oframe from wobjdata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Oframe or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
@@ -187,23 +177,21 @@ def get_oframe_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not wobjdata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
         return err
 
 
-"""
-Gets wobjdata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Wobjdata or error
-Examples:
-    None
-"""
-
-
 def get_wobjdata_tostring(response_dict):
+    """
+    Gets wobjdata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Wobjdata or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'wobjdata':
         try:
             # Formatting the wobjdata to check if it is valid.
@@ -222,42 +210,40 @@ def get_wobjdata_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not wobjdata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
         return err
-
-
-"""
-Edits and writes specified property of wobjdata on controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'wobj')
-    String: property (accepted types: robhold, ufprog, ufmec, uframe, oframe)
-    String|Bool: new_value
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'wobj', 'robhold', True)
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'wobj', 'ufprog', False)
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'wobj', 'ufmec', '')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'wobj', 'uframe','[0,0,100],[1,0,0,0]')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'wobj', 'oframe','[0,0,100],[1,0,0,0]')
-"""
 
 
 def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name,
                                        property, new_value):
+    """
+    Edits and writes specified property of wobjdata on controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'wobj')
+        String: property (accepted types: robhold, ufprog, ufmec, uframe, oframe)
+        String|Bool: new_value
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                    'wobj', 'robhold', True)
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                    'wobj', 'ufprog', False)
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                    'wobj', 'ufmec', '')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'uframe','[0,0,100],[1,0,0,0]')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'wobj', 'oframe','[0,0,100],[1,0,0,0]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(property, basestring) and \
@@ -415,33 +401,31 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
         return err, cookies
 
 
-"""
-Edits and writes wobjdata on controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'wobj')
-    Boolean: robhold (ex. True or False)
-    Boolean: ufprog (ex. True or False)
-    String: ufmec (ex. '')
-    String: uframe (ex. '[100,100,100],[1,0,0,0]')
-    String: oframe (ex. '[0,0,0],[1,0,0,0]')
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'wobj', True,
-                                                            False, '', '[100,100,0],[1,0,0,0]', '[0,0,0],[1,0,0,0]')
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, ufprog,
                               ufmec, uframe, oframe):
+    """
+    Edits and writes wobjdata on controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'wobj')
+        Boolean: robhold (ex. True or False)
+        Boolean: ufprog (ex. True or False)
+        String: ufmec (ex. '')
+        String: uframe (ex. '[100,100,100],[1,0,0,0]')
+        String: oframe (ex. '[0,0,0],[1,0,0,0]')
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'wobj',
+                                                        True, False, '', '[100,100,0],[1,0,0,0]', '[0,0,0],[1,0,0,0]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(ufmec, basestring) and \

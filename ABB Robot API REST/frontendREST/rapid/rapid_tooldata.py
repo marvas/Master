@@ -11,19 +11,17 @@ import requests.auth
 import requests.cookies
 
 
-"""
-Gets Robhold from tooldata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Robhold or error
-Examples:
-    None
-"""
-
-
 def get_robhold_tostring(response_dict):
+    """
+    Gets Robhold from tooldata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Robhold or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting the tooldata to check if it is valid.
@@ -42,23 +40,21 @@ def get_robhold_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not tooldata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
         return err
 
 
-"""
-Gets Tframe from tooldata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Tframe or error
-Examples:
-    None
-"""
-
-
 def get_tframe_tostring(response_dict):
+    """
+    Gets Tframe from tooldata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Tframe or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting the tooldata to check if it is valid.
@@ -79,23 +75,21 @@ def get_tframe_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not tooldata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
         return err
 
 
-"""
-Gets Tload from tooldata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Tload or error
-Examples:
-    None
-"""
-
-
 def get_tload_tostring(response_dict):
+    """
+    Gets Tload from tooldata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Tload or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting the tooldata to check if it is valid.
@@ -116,23 +110,21 @@ def get_tload_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not tooldata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
         return err
 
 
-"""
-Gets tooldata and returns it as a string.
-
-Args:
-    Dictionary: response_dict
-Returns:
-    String: Tooldata or error
-Examples:
-    None
-"""
-
-
 def get_tooldata_tostring(response_dict):
+    """
+    Gets tooldata and returns it as a string.
+
+    Input:
+        Dictionary: response_dict
+    Output:
+        String: Tooldata or error
+    Examples:
+        None
+    """
     if response_dict['dattyp'] == 'tooldata':
         try:
             # Formatting tooldata to check if it is valid.
@@ -151,40 +143,38 @@ def get_tooldata_tostring(response_dict):
         except Exception, err:
             return err
     else:
-        err = 'DataType is '+response_dict['dattyp']+' and not tooldata.'
+        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
         return err
-
-
-"""
-Edits and writes the specified property of the tooldata to controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'tool')
-    String: property (properties: robhold, tframe, tload)
-    String|Bool: new_value
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                            'tool', 'robhold', True)
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                            'tool', 'robhold', False)
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                                'tool', 'tframe','[0,0,100],[1,0,0,0]')
-    message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
-                                                                        'tool', 'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
-"""
 
 
 def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program, module, variable_name,
                                        property, new_value):
+    """
+    Edits and writes the specified property of the tooldata to controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'tool')
+        String: property (properties: robhold, tframe, tload)
+        String|Bool: new_value
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                            'tool', 'robhold', True)
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                            'tool', 'robhold', False)
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                                'tool', 'tframe','[0,0,100],[1,0,0,0]')
+        message, cookies = edit_and_write_rapid_data_property('local', cookies, digest_auth, 'T_ROB1', 'MainModule',
+                                                                        'tool', 'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(property, basestring) and \
@@ -306,30 +296,28 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
         return err, cookies
 
 
-"""
-Edits and writes tooldata to controller.
-Remember to overwrite the old cookie with the new returned cookie from this function.
-
-Args:
-    String: IP address
-    Requests.cookies.RequestsCookieJar: cookies
-    Requests.auth.HTTPDigestAuth: digest_auth
-    String: program (name of program, ex 'T_ROB1')
-    String: module (name of module, ex 'MainModule')
-    String: variable_name (name of variable, ex 'tool')
-    Boolean: robhold (ex. True or False)
-    String: tframe (ex. '[0,0,100],[0,0,0,1]')
-    String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
-Returns:
-    String: result message or error
-    Requests.cookies.RequestsCookieJar: cookies
-Examples:
-    message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'tool',
-                                                        True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
-"""
-
-
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, robhold, tframe, tload):
+    """
+    Edits and writes tooldata to controller.
+    Remember to overwrite the old cookie with the new returned cookie from this function.
+
+    Input:
+        String: IP address
+        Requests.cookies.RequestsCookieJar: cookies
+        Requests.auth.HTTPDigestAuth: digest_auth
+        String: program (name of program, ex 'T_ROB1')
+        String: module (name of module, ex 'MainModule')
+        String: variable_name (name of variable, ex 'tool')
+        Boolean: robhold (ex. True or False)
+        String: tframe (ex. '[0,0,100],[0,0,0,1]')
+        String: tload (ex. '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    Output:
+        String: result message or error
+        Requests.cookies.RequestsCookieJar: cookies
+    Examples:
+        message, cookies = edit_and_write_rapid_data('local', cookies, digest_auth, 'T_ROB1', 'MainModule', 'tool',
+                                                            True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
+    """
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) and \
             isinstance(program, basestring) and isinstance(module, basestring) and \
             isinstance(variable_name, basestring) and isinstance(tframe, basestring) and \
