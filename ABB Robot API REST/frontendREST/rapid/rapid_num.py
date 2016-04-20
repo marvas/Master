@@ -4,6 +4,8 @@ as well as displaying the value of the num.
 """
 
 import requests
+import requests.auth
+import requests.cookies
 
 
 """
@@ -16,6 +18,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_value_tostring(response_dict):
     if response_dict['dattyp'] == 'num':
@@ -39,6 +42,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_value(response_dict):
     if response_dict['dattyp'] == 'num':
@@ -71,16 +75,21 @@ Examples:
     message, cookies = edit_and_write_rapid_data('10.0.0.1', cookies, digest_auth, 'T_ROB1', 'MainModule', 'x', 11)
 """
 
+
 def edit_and_write_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_name, new_value):
     if isinstance(ipaddress, basestring) and isinstance(cookies, requests.cookies.RequestsCookieJar) \
             and isinstance(program, basestring) and isinstance(module, basestring) \
-            and isinstance(variable_name, basestring) and isinstance(new_value, (float,int)) \
+            and isinstance(variable_name, basestring) and isinstance(new_value, (float, int)) \
             and isinstance(digest_auth, requests.auth.HTTPDigestAuth):
         # Constructs the url
         if ipaddress.lower() == 'local':
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80', program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format('localhost:80',
+                                                                                               program, module,
+                                                                                               variable_name)
         else:
-            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(), program, module, variable_name)
+            url = 'http://{0}/rw/rapid/symbol/data/RAPID/{1}/{2}/{3}?json=1&action=set'.format(ipaddress.lower(),
+                                                                                               program, module,
+                                                                                               variable_name)
         try:
             # Construct payload with the new value
             payload = {'value': str(new_value)}
