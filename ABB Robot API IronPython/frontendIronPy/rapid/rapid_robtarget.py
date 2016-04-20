@@ -4,7 +4,6 @@ robtarget, as well as displaying the different properties of the robtarget.
 """
 
 
-
 """
 Gets the trans data from robtarget and returns it as a string.
 
@@ -16,11 +15,12 @@ Examples:
     None
 """
 
+
 def get_trans_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
-            res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X,rapid_data.Value.Trans.Y,
-                                                   rapid_data.Value.Trans.Z )
+            res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X, rapid_data.Value.Trans.Y,
+                                                   rapid_data.Value.Trans.Z)
             return res
         except Exception, err:
             return err
@@ -40,11 +40,12 @@ Examples:
     None
 """
 
+
 def get_rot_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
-            res = 'Rot: [Q1,Q2,Q3,Q4] = [%G,%G,%G,%G]' % (rapid_data.Value.Rot.Q1,rapid_data.Value.Rot.Q2,
-                                                     rapid_data.Value.Rot.Q3,rapid_data.Value.Rot.Q4)
+            res = 'Rot: [Q1,Q2,Q3,Q4] = [%G,%G,%G,%G]' % (rapid_data.Value.Rot.Q1, rapid_data.Value.Rot.Q2,
+                                                          rapid_data.Value.Rot.Q3, rapid_data.Value.Rot.Q4)
             return res
         except Exception, err:
             return err
@@ -64,12 +65,13 @@ Examples:
     None
 """
 
+
 def get_robconf_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
             res = 'Robconf: [Cf1,Cf4,Cf6,Cfx] = [%d,%d,%d,%d]' % \
-                  (rapid_data.Value.Robconf.Cf1,rapid_data.Value.Robconf.Cf4,
-                    rapid_data.Value.Robconf.Cf6,rapid_data.Value.Robconf.Cfx)
+                  (rapid_data.Value.Robconf.Cf1, rapid_data.Value.Robconf.Cf4,
+                   rapid_data.Value.Robconf.Cf6, rapid_data.Value.Robconf.Cfx)
             return res
         except Exception, err:
             return err
@@ -89,13 +91,14 @@ Examples:
     None
 """
 
+
 def get_extax_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
         try:
             extax = rapid_data.Value.Extax.ToString()
             extax = extax.translate(None, "[]+")
             extax_list = extax.split(',')
-            #Loop to format extax.
+            # Loop to format extax.
             for i, eax in list(enumerate(extax_list)):
                 if "E" in eax:
                     eax = eax.split('E')
@@ -104,7 +107,7 @@ def get_extax_tostring(rapid_data):
                 else:
                     extax_list[i] = eax
             res = 'Extax: [Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f] = [%s,%s,%s,%s,%s,%s]' \
-                  % (extax_list[0],extax_list[1],extax_list[2],extax_list[3],extax_list[4],extax_list[5])
+                  % (extax_list[0], extax_list[1], extax_list[2], extax_list[3], extax_list[4], extax_list[5])
             return res
         except Exception, err:
             return err
@@ -123,6 +126,7 @@ Returns:
 Examples:
     None
 """
+
 
 def get_robtarget_tostring(rapid_data):
     if rapid_data.RapidType == 'robtarget':
@@ -153,6 +157,7 @@ Examples:
     message = edit_and_write_rapid_data_property(rapid_data,'extax','[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
+
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
     if rapid_data.RapidType == 'robtarget':
         try:
@@ -162,7 +167,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             robtarget_robconf = rapid_data.Value.Robconf.ToString()
             robtarget_extax = rapid_data.Value.Extax.ToString()
 
-            #Checks if new_value is string
+            # Checks if new_value is string
             if isinstance(new_value, basestring):
                 new_value = new_value.translate(None, "[]")
                 if property.lower() == 'trans':
@@ -185,8 +190,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     rot_list = new_value.split(',')
                     if len(rot_list) == 4:
                         rot = "[%s,[%G,%G,%G,%G],%s,%s]" % \
-                              (robtarget_trans, float(rot_list[0]),float(rot_list[1]),float(rot_list[2]),float(rot_list[3]),
-                               robtarget_robconf, robtarget_extax)
+                              (robtarget_trans, float(rot_list[0]), float(rot_list[1]),
+                               float(rot_list[2]), float(rot_list[3]), robtarget_robconf, robtarget_extax)
                         robtarget.FillFromString2(rot)
                         try:
                             rapid_data.Value = robtarget
@@ -219,9 +224,9 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     if len(extax_list) == 6:
                         extax = "[%s,%s,%s,[%G,%G,%G,%G,%G,%G]]" % \
                                 (robtarget_trans, robtarget_rot, robtarget_robconf,
-                                 float(extax_list[0]),float(extax_list[1]),
-                                 float(extax_list[2]),float(extax_list[3]),
-                                 float(extax_list[4]),float(extax_list[5]))
+                                 float(extax_list[0]), float(extax_list[1]),
+                                 float(extax_list[2]), float(extax_list[3]),
+                                 float(extax_list[4]), float(extax_list[5]))
                         robtarget.FillFromString2(extax)
                         try:
                             rapid_data.Value = robtarget
@@ -261,14 +266,15 @@ Examples:
    message = edit_and_write_rapid_data(rapid_data,'[100,100,0]','[1,0,0,0]','[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
 """
 
+
 def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
     if rapid_data.RapidType == 'robtarget':
         try:
             robtarget = rapid_data.Value
 
-            #Checks if the input is string
+            # Checks if the input is string
             if (isinstance(trans, basestring) and isinstance(rot, basestring) and
-                isinstance(robconf, basestring) and isinstance(extax, basestring)):
+                    isinstance(robconf, basestring) and isinstance(extax, basestring)):
                 trans = trans.translate(None, "[]")
                 rot = rot.translate(None, "[]")
                 robconf = robconf.translate(None, "[]")
@@ -278,13 +284,15 @@ def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
                 rot_list = rot.split(',')
                 robconf_list = robconf.split(',')
                 extax_list = extax.split(',')
-                if (len(trans_list) == 3) and (len(rot_list) == 4) and (len(robconf_list) == 4) and (len(extax_list) == 6):
+                if (len(trans_list) == 3) and (len(rot_list) == 4) and (len(robconf_list) == 4) \
+                        and (len(extax_list) == 6):
                     new_robtarget = "[[%G,%G,%G],[%G,%G,%G,%G],[%d,%d,%d,%d],[%G,%G,%G,%G,%G,%G]]" % \
                                     (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
                                      float(rot_list[0]), float(rot_list[1]), float(rot_list[2]), float(rot_list[3]),
                                      float(robconf_list[0]), float(robconf_list[1]), float(robconf_list[2]),
                                      float(robconf_list[3]), float(extax_list[0]), float(extax_list[1]),
-                                     float(extax_list[2]), float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
+                                     float(extax_list[2]), float(extax_list[3]), float(extax_list[4]),
+                                     float(extax_list[5]))
                     robtarget.FillFromString2(new_robtarget)
                     try:
                         rapid_data.Value = robtarget
