@@ -15,7 +15,7 @@ def get_rapid_data(controller, program, module, variable_name):
         String: variable_name, Name of the variable to get (ex "target_10")
     Output:
         Boolean: Indicates if able to get the data or not
-        ABB.Robotics.Controllers.RapidDomain.RapidData OR String: Rapid data object if successful and error string if not
+        ABB.Robotics.Controllers.RapidDomain.RapidData OR String: Rapid data object if successful or error string if not
     Examples:
         bool, rapid_data = rapid_datatypes.get_rapid_data(controller,'T_ROB1','MainModule','p20')
     """
