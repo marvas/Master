@@ -115,12 +115,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                  float(robax_list[3]), float(robax_list[4]), float(robax_list[5]),
                                  jointtarget_extax)
                         jointtarget.FillFromString2(robax)
-                        try:
-                            rapid_data.Value = jointtarget
-                            msg = 'Robax updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Incorrect format of input data.'
                         return msg
@@ -131,18 +125,18 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                 (jointtarget_robax, float(extax_list[0]), float(extax_list[1]), float(extax_list[2]),
                                  float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
                         jointtarget.FillFromString2(extax)
-                        try:
-                            rapid_data.Value = jointtarget
-                            msg = 'Extax updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Incorrect format of input.'
                         return msg
                 else:
                     msg = 'Incorrect format of input data.'
                     return msg
+                try:
+                    rapid_data.Value = jointtarget
+                    msg = '%s updated.' % property.title()
+                    return msg
+                except Exception, err:
+                    return err
             else:
                 msg = 'Input is not string.'
                 return msg
