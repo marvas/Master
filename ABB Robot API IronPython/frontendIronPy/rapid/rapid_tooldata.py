@@ -17,7 +17,7 @@ def get_robhold_tostring(rapid_data):
     """
     if rapid_data.RapidType == 'tooldata':
         try:
-            res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
+            res = 'Robhold = %s' % rapid_data.Value.Robhold
             return res
         except Exception, err:
             return err
@@ -116,7 +116,7 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
     if rapid_data.RapidType == 'tooldata':
         try:
             tooldata = rapid_data.Value
-            tooldata_robhold = rapid_data.Value.Robhold.ToString()
+            tooldata_robhold = rapid_data.Value.Robhold
             tooldata_tframe = rapid_data.Value.Tframe.ToString()
             tooldata_tload = rapid_data.Value.Tload.ToString()
             if property.lower() == 'robhold':
@@ -127,12 +127,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                         new_value = False
                     robhold = "[%s,%s,%s]" % (new_value, tooldata_tframe, tooldata_tload)
                     tooldata.FillFromString2(robhold)
-                    try:
-                        rapid_data.Value = tooldata
-                        msg = 'Robhold updated.'
-                        return msg
-                    except Exception, err:
-                        return err
                 else:
                     msg = 'Input is not boolean.'
                     return msg
@@ -147,12 +141,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                   float(tframe_list[3]), float(tframe_list[4]), float(tframe_list[5]),
                                   float(tframe_list[6]), tooldata_tload)
                         tooldata.FillFromString2(tframe)
-                        try:
-                            rapid_data.Value = tooldata
-                            msg = 'Tframe updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Input is not a valid Tframe.'
                         return msg
@@ -171,12 +159,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                  float(tload_list[6]), float(tload_list[7]), float(tload_list[8]), float(tload_list[9]),
                                  float(tload_list[10]))
                         tooldata.FillFromString2(tload)
-                        try:
-                            rapid_data.Value = tooldata
-                            msg = 'Tload updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Input is not a valid Tload.'
                         return msg
@@ -186,6 +168,12 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             else:
                 msg = 'Property not of type robhold, tframe, tload.'
                 return msg
+            try:
+                rapid_data.Value = tooldata
+                msg = '%s updated.' % property.title()
+                return msg
+            except Exception, err:
+                return err
         except Exception, err:
             return err
     else:
