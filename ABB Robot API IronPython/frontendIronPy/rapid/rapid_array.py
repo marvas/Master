@@ -127,14 +127,11 @@ def edit_and_write_rapid_data_num(rapid_data, values):
                     for _ in range(0, diff):
                         values.append(0)
                     new_array = str(values)
-                    num_array.FillFromString(new_array)
-                    msg = 'Array updated.'
-                    return msg
                 else:
                     new_array = str(values)
-                    num_array.FillFromString(new_array)
-                    msg = 'Array updated.'
-                    return msg
+                num_array.FillFromString(new_array)
+                msg = 'Array updated.'
+                return msg
             else:
                 msg = 'Values is not a list.'
                 return msg
