@@ -24,7 +24,7 @@ def get_robhold_tostring(rapid_data):
     """
     if rapid_data.RapidType == 'wobjdata':
         try:
-            res = 'Robhold = %s' % rapid_data.Value.Robhold.ToString()
+            res = 'Robhold = %s' % rapid_data.Value.Robhold
             return res
         except Exception, err:
             return err
@@ -46,7 +46,7 @@ def get_ufprog_tostring(rapid_data):
     """
     if rapid_data.RapidType == 'wobjdata':
         try:
-            res = 'Ufprog = %s' % rapid_data.Value.Ufprog.ToString()
+            res = 'Ufprog = %s' % rapid_data.Value.Ufprog
             return res
         except Exception, err:
             return err
@@ -167,8 +167,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         try:
             wobjdata = rapid_data.Value
 
-            wobjdata_robhold = rapid_data.Value.Robhold.ToString()
-            wobjdata_ufprog = rapid_data.Value.Ufprog.ToString()
+            wobjdata_robhold = rapid_data.Value.Robhold
+            wobjdata_ufprog = rapid_data.Value.Ufprog
             wobjdata_ufmec = rapid_data.Value.Ufmec.ToString()
             wobjdata_uframe = rapid_data.Value.Uframe.ToString()
             wobjdata_oframe = rapid_data.Value.Oframe.ToString()
@@ -182,12 +182,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                               (new_value, wobjdata_ufprog, ctrlrs.RapidDomain.String(wobjdata_ufmec),
                                wobjdata_uframe, wobjdata_oframe)
                     wobjdata.FillFromString2(robhold)
-                    try:
-                        rapid_data.Value = wobjdata
-                        msg = 'Robhold updated.'
-                        return msg
-                    except Exception, err:
-                        return err
                 else:
                     msg = 'Input is not boolean.'
                     return msg
@@ -201,12 +195,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                              (wobjdata_robhold, new_value, ctrlrs.RapidDomain.String(wobjdata_ufmec),
                               wobjdata_uframe, wobjdata_oframe)
                     wobjdata.FillFromString2(ufprog)
-                    try:
-                        rapid_data.Value = wobjdata
-                        msg = 'Ufprog updated.'
-                        return msg
-                    except Exception, err:
-                        return err
                 else:
                     msg = 'Input is not boolean.'
                     return msg
@@ -216,12 +204,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                             (wobjdata_robhold, wobjdata_ufprog, ctrlrs.RapidDomain.String(new_value),
                              wobjdata_uframe, wobjdata_oframe)
                     wobjdata.FillFromString2(ufmec)
-                    try:
-                        rapid_data.Value = wobjdata
-                        msg = 'Ufmec updated.'
-                        return msg
-                    except Exception, err:
-                        return err
                 else:
                     msg = 'Input is not string.'
                     return msg
@@ -236,12 +218,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                   float(uframe_list[3]), float(uframe_list[4]), float(uframe_list[5]),
                                   float(uframe_list[6]), wobjdata_oframe)
                         wobjdata.FillFromString2(uframe)
-                        try:
-                            rapid_data.Value = wobjdata
-                            msg = 'Uframe updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Input is not a valid Uframe.'
                         return msg
@@ -254,23 +230,26 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                     oframe_list = new_value.split(',')
                     if len(oframe_list) == 7:
                         oframe = "[%s,%s,%s,%s,[[%G,%G,%G],[%G,%G,%G,%G]]]" % \
-                                (wobjdata_robhold, wobjdata_ufprog, ctrlrs.RapidDomain.String(wobjdata_ufmec),
-                                 wobjdata_uframe, float(oframe_list[0]), float(oframe_list[1]),
-                                 float(oframe_list[2]), float(oframe_list[3]), float(oframe_list[4]),
-                                 float(oframe_list[5]), float(oframe_list[6]))
+                                 (wobjdata_robhold, wobjdata_ufprog, ctrlrs.RapidDomain.String(wobjdata_ufmec),
+                                  wobjdata_uframe, float(oframe_list[0]), float(oframe_list[1]),
+                                  float(oframe_list[2]), float(oframe_list[3]), float(oframe_list[4]),
+                                  float(oframe_list[5]), float(oframe_list[6]))
                         wobjdata.FillFromString2(oframe)
-                        try:
-                            rapid_data.Value = wobjdata
-                            msg = 'Oframe updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Input is not a valid Oframe.'
                         return msg
                 else:
                     msg = 'Input is not string.'
                     return msg
+            else:
+                msg = 'Property not of type robhold, ufprog, ufmec, uframe or oframe.'
+                return msg
+            try:
+                rapid_data.Value = wobjdata
+                msg = '%s updated.' % property.title()
+                return msg
+            except Exception, err:
+                return err
         except Exception, err:
             return err
     else:
