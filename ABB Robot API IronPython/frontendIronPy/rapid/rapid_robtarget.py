@@ -165,12 +165,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                 (float(trans_list[0]), float(trans_list[1]), float(trans_list[2]),
                                  robtarget_rot, robtarget_robconf, robtarget_extax)
                         robtarget.FillFromString2(trans)
-                        try:
-                            rapid_data.Value = robtarget
-                            msg = 'Trans updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Incorrect format of x,y,z: ex. \'10,50,0\'.'
                         return msg
@@ -181,12 +175,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                               (robtarget_trans, float(rot_list[0]), float(rot_list[1]),
                                float(rot_list[2]), float(rot_list[3]), robtarget_robconf, robtarget_extax)
                         robtarget.FillFromString2(rot)
-                        try:
-                            rapid_data.Value = robtarget
-                            msg = 'Rot updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Incorrect format of q1,q2,q3,q4: ex. \'0,0,1,0\'.'
                         return msg
@@ -198,12 +186,6 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                    int(conf_data_list[0]), int(conf_data_list[1]), int(conf_data_list[2]),
                                    int(conf_data_list[3]), robtarget_extax)
                         robtarget.FillFromString2(robconf)
-                        try:
-                            rapid_data.Value = robtarget
-                            msg = 'Robconf updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Incorrect format of Cf1,Cf4,Cf6,Cfx: ex. \'1,0,1,0\'.'
                         return msg
@@ -216,18 +198,18 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                  float(extax_list[2]), float(extax_list[3]),
                                  float(extax_list[4]), float(extax_list[5]))
                         robtarget.FillFromString2(extax)
-                        try:
-                            rapid_data.Value = robtarget
-                            msg = 'Extax updated.'
-                            return msg
-                        except Exception, err:
-                            return err
                     else:
                         msg = 'Incorrect format of Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f: ex \'9E9,9E9,9E9,9E9,9E9,9E9\'.'
                         return msg
                 else:
                     msg = 'Property not of type trans, rot, robconf or extax.'
                     return msg
+                try:
+                    rapid_data.Value = robtarget
+                    msg = '%s updated.' % property.title()
+                    return msg
+                except Exception, err:
+                    return err
             else:
                 msg = 'Input is not string.'
                 return msg
