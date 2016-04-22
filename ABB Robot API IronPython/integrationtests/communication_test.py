@@ -71,6 +71,9 @@ class RapidNumTest(unittest.TestCase):
         """ Tests disconnect_robot_controller with correct input data. """
         controllers = com.discover_controllers_on_network()
         self.controller, _, connected = com.connect_robot_with_ipaddr(controllers, '127.0.0.1')
+        if not connected:
+            print 'Couldn\'t connect to controller. Test will not be run'
+            sys.exit()
         is_disconnected, _ = com.disconnect_robot_controller(self.controller)
         self.assertTrue(is_disconnected)
 
@@ -85,6 +88,9 @@ class RapidNumTest(unittest.TestCase):
         """ Tests is_connected_to_controller with correct input data. """
         controllers = com.discover_controllers_on_network()
         self.controller, _, connected = com.connect_robot_with_ipaddr(controllers, '127.0.0.1')
+        if not connected:
+            print 'Couldn\'t connect to controller. Test will not be run'
+            sys.exit()
         res = com.is_connected_to_controller(self.controller)
         self.assertTrue(res)
 
