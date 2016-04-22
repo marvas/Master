@@ -76,5 +76,5 @@ def edit_and_write_rapid_data(rapid_data, new_value):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not num'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not num.'
         return msg
