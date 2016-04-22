@@ -12,7 +12,7 @@ import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
 import frontendIronPy.rapid.rapid_bool as rapid_bool
 
 
-class RapidNumTest(unittest.TestCase):
+class RapidBoolTest(unittest.TestCase):
 
     controller = None
     mastership = None

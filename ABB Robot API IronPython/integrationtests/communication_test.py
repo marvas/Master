@@ -8,7 +8,7 @@ import sys
 import frontendIronPy.com.communication as com
 
 
-class RapidNumTest(unittest.TestCase):
+class CommunicationTest(unittest.TestCase):
 
     controller = None
     # Change robot name if a different robot name is used.
