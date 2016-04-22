@@ -27,6 +27,8 @@ class RapidNumTest(unittest.TestCase):
             _, _ = com.disconnect_robot_controller(self.controller)
         elif test_desc == 'Tests connect_robot_with_ipaddr with correct input data.':
             _, _ = com.disconnect_robot_controller(self.controller)
+        elif test_desc == 'Tests is_connected_to_controller with correct input data.':
+            _, _ = com.disconnect_robot_controller(self.controller)
 
     # Tests connect_robot_with_name with correct input data.
     def test_connect_robot_with_name_correct(self):
