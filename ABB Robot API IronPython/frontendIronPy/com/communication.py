@@ -56,9 +56,8 @@ def connect_robot_with_name(controllers, robot_name):
                 return ctrl, msg, controller_found
         msg = 'Could not find controller with name: ' + robot_name
         return None, msg, controller_found
-    except Exception:
-        msg = 'Remember to discover the controllers first before trying to connect.'
-        return None, msg, controller_found
+    except Exception, err:
+        return None, err, controller_found
 
 
 def connect_robot_with_ipaddr(controllers, ipaddress):
@@ -86,9 +85,8 @@ def connect_robot_with_ipaddr(controllers, ipaddress):
                 return ctrl, msg, controller_found
         msg = 'Could not find controller with the specified IP address: ' + ipaddress
         return None, msg, controller_found
-    except Exception:
-        msg = 'Remember to discover the controllers first before trying to connect.'
-        return None, msg, controller_found
+    except Exception, err:
+        return None, err, controller_found
 
 
 def disconnect_robot_controller(controller):
