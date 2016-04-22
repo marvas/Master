@@ -79,5 +79,5 @@ def edit_and_write_rapid_data(rapid_data, new_value):
         except Exception, err:
             return err
     else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not bool'
+        msg = 'DataType is ' + rapid_data.RapidType + ' and not bool.'
         return msg
