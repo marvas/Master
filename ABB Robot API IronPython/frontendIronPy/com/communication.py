@@ -116,7 +116,7 @@ def is_connected_to_controller(controller):
     Input:
         ABB.Robotics.Controllers: controller
     Output:
-        Boolean: Indicates if connected or not
+        Boolean|String: Indicates if connected or error
     Examples:
         None
     """
@@ -125,5 +125,5 @@ def is_connected_to_controller(controller):
             return True
         else:
             return False
-    except Exception:
-        return False
+    except Exception, err:
+        return err
