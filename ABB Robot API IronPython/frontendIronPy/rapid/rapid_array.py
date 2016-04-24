@@ -17,7 +17,7 @@ def get_length(rapid_data):
     Input:
         ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     Output:
-        Int OR String: Output depends on if it is possible to get the length or not
+        Int|String: Output depends on if it is possible to get the length or not
     Examples:
         None
     """
@@ -38,7 +38,7 @@ def get_dimensions(rapid_data):
     Input:
         ABB.Robotics.Controllers.RapidDomain.RapidData: rapid_data
     Output:
-        Int OR String: Output depends on if it is possible to get the dimension or not
+        Int|String: Output depends on if it is possible to get the dimension or not
     Examples:
         None
     """
