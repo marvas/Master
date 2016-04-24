@@ -67,8 +67,8 @@ def edit_and_write_rapid_data_num_index(rapid_data, index, value):
     Examples:
         message = edit_and_write_rapid_data_num_index(rapid_data, 0, 100)
     """
-    if rapid_data.RapidType == 'num' and rapid_data.IsArray:
-        try:
+    try:
+        if rapid_data.RapidType == 'num' and rapid_data.IsArray:
             if index < rapid_data.Value.Length and index >= 0 and isinstance(index, int):
                 if isinstance(value, (int, float)):
                     rapid_data.WriteItem(ctrlrs.RapidDomain.Num(value), index)
@@ -80,11 +80,11 @@ def edit_and_write_rapid_data_num_index(rapid_data, index, value):
             else:
                 msg = 'Index is not valid.'
                 return msg
-        except Exception, err:
+        else:
+            msg = 'Datatype is not array of num.'
+            return msg
+    except Exception, err:
             return err
-    else:
-        msg = 'Datatype is not array of num.'
-        return msg
 
 
 def edit_and_write_rapid_data_num(rapid_data, values):
@@ -106,8 +106,8 @@ def edit_and_write_rapid_data_num(rapid_data, values):
         If RAPID array is of length 3 this is not possible:
         message = edit_and_write_rapid_data_num(rapid_data, [100,1,50,100])
     """
-    if rapid_data.RapidType == 'num' and rapid_data.IsArray:
-        try:
+    try:
+        if rapid_data.RapidType == 'num' and rapid_data.IsArray:
             num_array = rapid_data.Value
             # Checks if values are a list.
             if isinstance(values, list):
@@ -135,8 +135,9 @@ def edit_and_write_rapid_data_num(rapid_data, values):
             else:
                 msg = 'Values is not a list.'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'Datatype is not array of num.'
-        return msg
+
+        else:
+            msg = 'Datatype is not array of num.'
+            return msg
+    except Exception, err:
+        return err
