@@ -77,7 +77,10 @@ class RapidBoolTest(unittest.TestCase):
         if not got_var:
             print 'Could not get variable from controller. Test will not be run.'
             sys.exit()
+        # Checks if wrong rapid data is inserted.
         self.assertEqual(rapid_bool.get_state_tostring(const_number), 'DataType is num and not bool.')
+        # Checks if rapid data is not inserted.
+        self.assertIsInstance(rapid_bool.get_state_tostring(10), Exception)
 
     # Tests get_state with correct rapid data
     def test_get_state_correct(self):
@@ -95,7 +98,10 @@ class RapidBoolTest(unittest.TestCase):
         if not got_var:
             print 'Could not get variable from controller. Test will not be run.'
             sys.exit()
+        # Checks if wrong rapid data is inserted.
         self.assertEqual(rapid_bool.get_state(const_number), 'DataType is num and not bool.')
+        # Checks if rapid data is not inserted.
+        self.assertIsInstance(rapid_bool.get_state(10), Exception)
 
     # Tests edit_and_write_rapid_data with correct input data
     def test_edit_and_write_rapid_data_correct(self):
