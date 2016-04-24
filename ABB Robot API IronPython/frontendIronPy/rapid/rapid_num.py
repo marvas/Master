@@ -68,13 +68,13 @@ def edit_and_write_rapid_data(rapid_data, new_value):
         message = edit_and_write_rapid_data(rapid_data, 1)
         message = edit_and_write_rapid_data(rapid_data, 20)
     """
-    if rapid_data.RapidType == 'num':
-        try:
+    try:
+        if rapid_data.RapidType == 'num':
             rapid_data.Value = ctrlrs.RapidDomain.Num(new_value)
             msg = 'Changed the value'
             return msg
-        except Exception, err:
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not num.'
+            return msg
+    except Exception, err:
             return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not num.'
-        return msg
