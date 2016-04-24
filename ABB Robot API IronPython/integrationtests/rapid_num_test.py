@@ -130,3 +130,6 @@ class RapidNumTest(unittest.TestCase):
             sys.exit()
         res = rapid_num.edit_and_write_rapid_data(var_number, True)
         self.assertIsInstance(res, Exception)
+        # Tests with other than rapid data as input.
+        res = rapid_num.edit_and_write_rapid_data(10, 10)
+        self.assertIsInstance(res, Exception)
