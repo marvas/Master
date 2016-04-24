@@ -99,4 +99,3 @@ class CommunicationTest(unittest.TestCase):
         """ Tests is_connected_to_controller with incorrect input data. """
         res = com.is_connected_to_controller(10)
         self.assertIsInstance(res, Exception)
-
