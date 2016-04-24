@@ -130,3 +130,6 @@ class RapidBoolTest(unittest.TestCase):
             sys.exit()
         res = rapid_bool.edit_and_write_rapid_data(var_bool, 10)
         self.assertIsInstance(res, Exception)
+        # Tests if something else than rapid data is inserted but value is True.
+        res = rapid_bool.edit_and_write_rapid_data(10, True)
+        self.assertIsInstance(res, Exception)
