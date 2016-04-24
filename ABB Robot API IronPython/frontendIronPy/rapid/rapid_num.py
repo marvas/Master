@@ -22,15 +22,15 @@ def get_value_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'num':
-        try:
+    try:
+        if rapid_data.RapidType == 'num':
             res = 'Value = %s' % rapid_data.Value
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not num.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not num.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_value(rapid_data):
@@ -44,14 +44,14 @@ def get_value(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'num':
-        try:
+    try:
+        if rapid_data.RapidType == 'num':
             return float(rapid_data.Value)
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not num.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not num.'
-        return err
+    except Exception, err:
+            return err
 
 
 def edit_and_write_rapid_data(rapid_data, new_value):
