@@ -22,15 +22,15 @@ def get_state_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'bool':
-        try:
+    try:
+        if rapid_data.RapidType == 'bool':
             res = 'State = %s' % rapid_data.Value
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not bool.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not bool.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_state(rapid_data):
@@ -44,17 +44,17 @@ def get_state(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'bool':
-        try:
+    try:
+        if rapid_data.RapidType == 'bool':
             if rapid_data.Value.ToString().lower() == 'true':
                 return True
             elif rapid_data.Value.ToString().lower() == 'false':
                 return False
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not bool.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not bool.'
-        return err
+    except Exception, err:
+            return err
 
 
 def edit_and_write_rapid_data(rapid_data, new_value):
