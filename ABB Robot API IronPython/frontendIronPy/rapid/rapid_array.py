@@ -21,14 +21,14 @@ def get_length(rapid_data):
     Examples:
         None
     """
-    if rapid_data.IsArray:
-        try:
+    try:
+        if rapid_data.IsArray:
             return int(rapid_data.Value.Length)
-        except Exception, err:
+        else:
+            err = 'The input is not an array.'
             return err
-    else:
-        err = 'The input is not an array.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_dimensions(rapid_data):
@@ -42,14 +42,14 @@ def get_dimensions(rapid_data):
     Examples:
         None
     """
-    if rapid_data.IsArray:
-        try:
+    try:
+        if rapid_data.IsArray:
             return int(rapid_data.Value.Rank)
-        except Exception, err:
+        else:
+            err = 'The input is not an array.'
             return err
-    else:
-        err = 'The input is not an array.'
-        return err
+    except Exception, err:
+            return err
 
 
 def edit_and_write_rapid_data_num_index(rapid_data, index, value):
