@@ -171,7 +171,7 @@ class RapidArrayTest(unittest.TestCase):
         _ = rapid_array.edit_and_write_rapid_data_num(var_array, [1])
         self.assertEqual(var_array.Value.ToString(), '[1,0,0]')
         # Tests to write with full array.
-        _ = rapid_array.edit_and_write_rapid_data_num(var_array, [1,1,1])
+        _ = rapid_array.edit_and_write_rapid_data_num(var_array, [1, 1, 1])
         self.assertEqual(var_array.Value.ToString(), '[1,1,1]')
 
     # Tests edit_and_write_rapid_data_num with incorrect input data.
@@ -186,17 +186,17 @@ class RapidArrayTest(unittest.TestCase):
             print 'Couldn\'t get variable. Test will not run.'
             sys.exit()
         # Tests if wrong rapid data.
-        msg = rapid_array.edit_and_write_rapid_data_num(var_number, [1,1])
+        msg = rapid_array.edit_and_write_rapid_data_num(var_number, [1, 1])
         self.assertEqual(msg, 'Datatype is not array of num.')
         # Tests if list is too big compared to the one defined on controller.
-        msg = rapid_array.edit_and_write_rapid_data_num(var_array, [1,1,1,1])
+        msg = rapid_array.edit_and_write_rapid_data_num(var_array, [1, 1, 1, 1])
         self.assertEqual(msg, 'Input list is larger than RAPID list.')
         # Tests if list contains wrong values
-        msg = rapid_array.edit_and_write_rapid_data_num(var_array, [1,'2',True])
+        msg = rapid_array.edit_and_write_rapid_data_num(var_array, [1, '2', True])
         self.assertEqual(msg, 'Something wrong in list.')
         # Checks if input is no list
         msg = rapid_array.edit_and_write_rapid_data_num(var_array, 10)
         self.assertEqual(msg, 'Values is not a list.')
         # Checks if rapid data is not inserted.
-        msg = rapid_array.edit_and_write_rapid_data_num(10, [1,1,1])
+        msg = rapid_array.edit_and_write_rapid_data_num(10, [1, 1, 1])
         self.assertIsInstance(msg, Exception)
