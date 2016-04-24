@@ -9,6 +9,7 @@ import frontendIronPy.com.communication as com
 import frontendIronPy.user.user_authorization as user_auth
 import frontendIronPy.user.user_mastership as user_mastership
 
+
 class UserMastershipTest(unittest.TestCase):
 
     controller = None
@@ -58,7 +59,6 @@ class UserMastershipTest(unittest.TestCase):
             if not is_released:
                 print 'Couldn\'t release mastership. Test will not run.'
                 sys.exit()
-
 
         # Cleanup for all test cases.
         _, _ = user_auth.logoff_robot_controller(self.controller)
