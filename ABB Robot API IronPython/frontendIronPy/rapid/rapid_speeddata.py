@@ -17,8 +17,8 @@ def get_speeddata_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'speeddata':
-        try:
+    try:
+        if rapid_data.RapidType == 'speeddata':
             speeddata = rapid_data.Value.ToString()
             speeddata = speeddata.translate(None, "[]")
             speeddata_list = speeddata.split(',')
@@ -37,10 +37,10 @@ def get_speeddata_tostring(rapid_data):
             except ValueError:
                 res = 'Speeddata: %s' % rapid_data.Value.ToString()
                 return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not speeddata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not speeddata.'
+    except Exception, err:
         return err
 
 
@@ -61,8 +61,8 @@ def edit_and_write_rapid_data_base(rapid_data, value):
         message = edit_and_write_rapid_data_base(rapid_data,'v100')
         message = edit_and_write_rapid_data_base(rapid_data,'v200')
     """
-    if rapid_data.RapidType == 'speeddata':
-        try:
+    try:
+        if rapid_data.RapidType == 'speeddata':
             speeddata = rapid_data.Value
             # Checks if value is string
             if isinstance(value, basestring):
@@ -91,11 +91,11 @@ def edit_and_write_rapid_data_base(rapid_data, value):
             else:
                 msg = 'Input has to be string. (ex. \'v100\')'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not speeddata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not speeddata.'
+            return msg
+    except Exception, err:
+        return err
 
 
 def edit_and_write_rapid_data(rapid_data, vel_tcp, vel_orient, vel_lin_extax, vel_lin_rot_extax):
@@ -115,8 +115,8 @@ def edit_and_write_rapid_data(rapid_data, vel_tcp, vel_orient, vel_lin_extax, ve
         message = edit_and_write_rapid_data(rapid_data, 100, 500, 5000, 1000)
         message = edit_and_write_rapid_data(rapid_data, 100.5, 500, 5000.37, 1000)
     """
-    if rapid_data.RapidType == 'speeddata':
-        try:
+    try:
+        if rapid_data.RapidType == 'speeddata':
             speeddata = rapid_data.Value
             # Checks if all values are either integers or floats.
             if (isinstance(vel_tcp, (int, float)) and isinstance(vel_orient, (int, float)) and
@@ -133,8 +133,8 @@ def edit_and_write_rapid_data(rapid_data, vel_tcp, vel_orient, vel_lin_extax, ve
             else:
                 msg = 'Invalid input in one or more of the arguments'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not speeddata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not speeddata.'
+            return msg
+    except Exception, err:
+        return err
