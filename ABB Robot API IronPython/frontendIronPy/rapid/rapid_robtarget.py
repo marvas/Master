@@ -15,15 +15,16 @@ def get_trans_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             res = 'Trans: [X,Y,Z] = [%G,%G,%G]' % (rapid_data.Value.Trans.X, rapid_data.Value.Trans.Y,
                                                    rapid_data.Value.Trans.Z)
             return res
-        except Exception, err:
+
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -38,15 +39,15 @@ def get_rot_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             res = 'Rot: [Q1,Q2,Q3,Q4] = [%G,%G,%G,%G]' % (rapid_data.Value.Rot.Q1, rapid_data.Value.Rot.Q2,
                                                           rapid_data.Value.Rot.Q3, rapid_data.Value.Rot.Q4)
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -61,17 +62,17 @@ def get_robconf_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             res = 'Robconf: [Cf1,Cf4,Cf6,Cfx] = [%d,%d,%d,%d]' % \
                   (rapid_data.Value.Robconf.Cf1, rapid_data.Value.Robconf.Cf4,
                    rapid_data.Value.Robconf.Cf6, rapid_data.Value.Robconf.Cfx)
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_extax_tostring(rapid_data):
@@ -85,8 +86,8 @@ def get_extax_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             extax = rapid_data.Value.Extax.ToString()
             extax = extax.translate(None, "[]+")
             extax_list = extax.split(',')
@@ -101,10 +102,10 @@ def get_extax_tostring(rapid_data):
             res = 'Extax: [Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f] = [%s,%s,%s,%s,%s,%s]' \
                   % (extax_list[0], extax_list[1], extax_list[2], extax_list[3], extax_list[4], extax_list[5])
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -119,14 +120,14 @@ def get_robtarget_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             res = 'Robtarget: %s' % rapid_data.Value.ToString()
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -147,8 +148,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         message = edit_and_write_rapid_data_property(rapid_data,'robconf','[1,0,1,0]')
         message = edit_and_write_rapid_data_property(rapid_data,'extax','[9E9,9E9,9E9,9E9,9E9,9E9]')
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             robtarget = rapid_data.Value
             robtarget_trans = rapid_data.Value.Trans.ToString()
             robtarget_rot = rapid_data.Value.Rot.ToString()
@@ -213,11 +214,11 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             else:
                 msg = 'Input is not string.'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not robtarget'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
+            return msg
+    except Exception, err:
+        return err
 
 
 def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
@@ -236,8 +237,8 @@ def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
     Examples:
        message = edit_and_write_rapid_data(rapid_data,'[100,100,0]','[1,0,0,0]','[0,0,0,1]','[9E9,9E9,9E9,9E9,9E9,9E9]')
     """
-    if rapid_data.RapidType == 'robtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'robtarget':
             robtarget = rapid_data.Value
 
             # Checks if the input is string
@@ -274,8 +275,8 @@ def edit_and_write_rapid_data(rapid_data, trans, rot, robconf, extax):
             else:
                 msg = 'Input is not string.'
                 return msg
-        except Exception, err:
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not robtarget.'
+            return msg
+    except Exception, err:
             return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not robtarget'
-        return msg
