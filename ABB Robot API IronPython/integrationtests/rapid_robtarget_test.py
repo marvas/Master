@@ -300,4 +300,3 @@ class RapidJointtargetTest(unittest.TestCase):
         # Checks if wrong data is inserted into trans.
         msg = rapid_robtarget.edit_and_write_rapid_data(var_rtar, 10, '[0,0,0,0]', '[0,0,0,0]', '[0,0,0,0,0]')
         self.assertEqual(msg, 'Input is not string.')
-
