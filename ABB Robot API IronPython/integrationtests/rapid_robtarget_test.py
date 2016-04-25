@@ -12,7 +12,7 @@ import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
 import frontendIronPy.rapid.rapid_robtarget as rapid_robtarget
 
 
-class RapidJointtargetTest(unittest.TestCase):
+class RapidRobtargetTest(unittest.TestCase):
 
     controller = None
     mastership = None
