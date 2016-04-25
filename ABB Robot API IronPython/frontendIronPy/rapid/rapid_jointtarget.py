@@ -15,14 +15,14 @@ def get_robax_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'jointtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'jointtarget':
             res = 'RobAx: [Rax_1,Rax_2,Rax_3,Rax_4,Rax_5,Rax_6] = %s' % rapid_data.Value.RobAx.ToString()
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
+    except Exception, err:
         return err
 
 
@@ -37,8 +37,8 @@ def get_extax_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'jointtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'jointtarget':
             extax = rapid_data.Value.ExtAx.ToString()
             extax = extax.translate(None, "[]+")
             extax_list = extax.split(',')
@@ -53,11 +53,11 @@ def get_extax_tostring(rapid_data):
             res = 'Extax: [Eax_a,Eax_b,Eax_c,Eax_d,Eax_e,Eax_f] = [%s,%s,%s,%s,%s,%s]' \
                   % (extax_list[0], extax_list[1], extax_list[2], extax_list[3], extax_list[4], extax_list[5])
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_jointtarget_tostring(rapid_data):
@@ -71,15 +71,15 @@ def get_jointtarget_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'jointtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'jointtarget':
             res = 'Jointtarget: %s' % rapid_data.Value.ToString()
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
-        return err
+    except Exception, err:
+            return err
 
 
 def edit_and_write_rapid_data_property(rapid_data, property, new_value):
@@ -97,8 +97,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         message = edit_and_write_rapid_data_property(rapid_data, 'robax', '[0,0,0,0,0,0]')
         message = edit_and_write_rapid_data_property(rapid_data, 'extax', '[9E9,9E9,9E9,9E9,9E9,9E9]')
     """
-    if rapid_data.RapidType == 'jointtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'jointtarget':
             jointtarget = rapid_data.Value
 
             jointtarget_robax = rapid_data.Value.RobAx.ToString()
@@ -126,10 +126,10 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                                  float(extax_list[3]), float(extax_list[4]), float(extax_list[5]))
                         jointtarget.FillFromString2(extax)
                     else:
-                        msg = 'Incorrect format of input.'
+                        msg = 'Incorrect format of input data.'
                         return msg
                 else:
-                    msg = 'Incorrect format of input data.'
+                    msg = 'Incorrect property.'
                     return msg
                 try:
                     rapid_data.Value = jointtarget
@@ -140,11 +140,11 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
             else:
                 msg = 'Input is not string.'
                 return msg
-        except Exception, err:
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
+            return msg
+    except Exception, err:
             return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget'
-        return msg
 
 
 def edit_and_write_rapid_data(rapid_data, robax, extax):
@@ -161,8 +161,8 @@ def edit_and_write_rapid_data(rapid_data, robax, extax):
     Examples:
         message = edit_and_write_rapid_data(rapid_data, '[0,0,0,0,0,0]', '[9E9,9E9,9E9,9E9,9E9,9E9]')
     """
-    if rapid_data.RapidType == 'jointtarget':
-        try:
+    try:
+        if rapid_data.RapidType == 'jointtarget':
             jointtarget = rapid_data.Value
             # Checks if input is string
             if isinstance(robax, basestring) and isinstance(extax, basestring):
@@ -190,8 +190,8 @@ def edit_and_write_rapid_data(rapid_data, robax, extax):
             else:
                 msg = 'Input is not string.'
                 return msg
-        except Exception, err:
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget.'
+            return msg
+    except Exception, err:
             return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not jointtarget'
-        return msg
