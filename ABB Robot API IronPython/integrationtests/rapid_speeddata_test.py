@@ -1,5 +1,5 @@
 """
-Integration test to test rapid_robtarget functionality towards the virtual controller.
+Integration test to test rapid_speeddata functionality towards the virtual controller.
 """
 
 import unittest
