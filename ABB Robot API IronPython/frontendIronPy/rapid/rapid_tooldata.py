@@ -15,15 +15,15 @@ def get_robhold_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'tooldata':
-        try:
+    try:
+        if rapid_data.RapidType == 'tooldata':
             res = 'Robhold = %s' % rapid_data.Value.Robhold
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_tframe_tostring(rapid_data):
@@ -37,16 +37,16 @@ def get_tframe_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'tooldata':
-        try:
+    try:
+        if rapid_data.RapidType == 'tooldata':
             res = 'Tframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Tframe.Trans.ToString(),
                                                      rapid_data.Value.Tframe.Rot.ToString())
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
-        return err
+    except Exception, err:
+            return err
 
 
 def get_tload_tostring(rapid_data):
@@ -60,17 +60,17 @@ def get_tload_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'tooldata':
-        try:
+    try:
+        if rapid_data.RapidType == 'tooldata':
             res = 'Tload: [Mass,Cog,Aom,Ix,Iy,Iz] = [%G,%s,%s,%G,%G,%G]' % \
                   (rapid_data.Value.Tload.Mass, rapid_data.Value.Tload.Cog.ToString(),
                    rapid_data.Value.Tload.Aom.ToString(), rapid_data.Value.Tload.Ix,
                    rapid_data.Value.Tload.Iy, rapid_data.Value.Tload.Iz)
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
+    except Exception, err:
         return err
 
 
@@ -85,14 +85,14 @@ def get_tooldata_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'tooldata':
-        try:
+    try:
+        if rapid_data.RapidType == 'tooldata':
             res = 'Tooldata: %s' % rapid_data.Value.ToString()
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
+    except Exception, err:
         return err
 
 
@@ -113,8 +113,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         message = edit_and_write_rapid_data_property(rapid_data,'tframe','[0,0,100],[1,0,0,0]')
         message = edit_and_write_rapid_data_property(rapid_data,'tload', '[1,[0,0,1],[1,0,0,0],0,0,0]')
     """
-    if rapid_data.RapidType == 'tooldata':
-        try:
+    try:
+        if rapid_data.RapidType == 'tooldata':
             tooldata = rapid_data.Value
             tooldata_robhold = rapid_data.Value.Robhold
             tooldata_tframe = rapid_data.Value.Tframe.ToString()
@@ -174,11 +174,11 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 return msg
             except Exception, err:
                 return err
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
+            return msg
+    except Exception, err:
+        return err
 
 
 def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
@@ -196,8 +196,8 @@ def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
     Examples:
         message = edit_and_write_rapid_data(rapid_data, True, '[0,0,100],[1,0,0,0]', '[1,[0,0,1],[1,0,0,0],0,0,0]')
     """
-    if rapid_data.RapidType == 'tooldata':
-        try:
+    try:
+        if rapid_data.RapidType == 'tooldata':
             tooldata = rapid_data.Value
 
             # Checks if input is string
@@ -232,8 +232,8 @@ def edit_and_write_rapid_data(rapid_data, robhold, tframe, tload):
             else:
                 msg = 'Input is not string.'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not tooldata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not tooldata.'
+            return msg
+    except Exception, err:
+        return err
