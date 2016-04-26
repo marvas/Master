@@ -32,8 +32,8 @@ def get_zonedata_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'zonedata':
-        try:
+    try:
+        if rapid_data.RapidType == 'zonedata':
             zonedata = rapid_data.Value.ToString()
             zonedata = zonedata.translate(None, "[]")
             # Checks if the data is base zonedata values
@@ -45,10 +45,10 @@ def get_zonedata_tostring(rapid_data):
             # If base zonedata is not found.
             res = 'Zonedata: %s' % rapid_data.Value.ToString()
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not zonedata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not zonedata.'
+    except Exception, err:
         return err
 
 
@@ -69,8 +69,8 @@ def edit_and_write_rapid_data_base(rapid_data, value):
         message = edit_and_write_rapid_data_base(rapid_data,'z0')
         message = edit_and_write_rapid_data_base(rapid_data,'z20')
     """
-    if rapid_data.RapidType == 'zonedata':
-        try:
+    try:
+        if rapid_data.RapidType == 'zonedata':
             zonedata = rapid_data.Value
             if isinstance(value, basestring):
                 # Strips value for all leading and trailing whitespaces
@@ -98,11 +98,11 @@ def edit_and_write_rapid_data_base(rapid_data, value):
             else:
                 msg = 'Input has to be string. (ex. \'z1\')'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not zonedata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not zonedata.'
+            return msg
+    except Exception, err:
+        return err
 
 
 def edit_and_write_rapid_data(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax, zone_ori, zone_leax, zone_reax):
@@ -124,8 +124,8 @@ def edit_and_write_rapid_data(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax
     Examples:
         message = edit_and_write_rapid_data(rapid_data, False, 1, 1, 1, 0.1, 1, 0.1)
     """
-    if rapid_data.RapidType == 'zonedata':
-        try:
+    try:
+        if rapid_data.RapidType == 'zonedata':
             zonedata = rapid_data.Value
             # Checks if finep is a boolean, and checks if the rest is a number.
             if ((finep == True or finep == False) and isinstance(pzone_tcp, (int, float)) and
@@ -147,10 +147,10 @@ def edit_and_write_rapid_data(rapid_data, finep, pzone_tcp, pzone_ori, pzone_eax
                 except Exception, err:
                     return err
             else:
-                msg = 'Invalid input in one or more of the arguments'
+                msg = 'Invalid input in one or more of the arguments.'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not zonedata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not zonedata.'
+            return msg
+    except Exception, err:
+        return err
