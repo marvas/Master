@@ -22,14 +22,14 @@ def get_robhold_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             res = 'Robhold = %s' % rapid_data.Value.Robhold
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -44,14 +44,14 @@ def get_ufprog_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             res = 'Ufprog = %s' % rapid_data.Value.Ufprog
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -66,14 +66,14 @@ def get_ufmec_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             res = 'Ufmec = %s' % rapid_data.Value.Ufmec
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -88,15 +88,15 @@ def get_uframe_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             res = 'Uframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Uframe.Trans.ToString(),
                                                      rapid_data.Value.Uframe.Rot.ToString())
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -111,15 +111,15 @@ def get_oframe_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             res = 'Oframe: [Trans,Rot] = [%s,%s]' % (rapid_data.Value.Oframe.Trans.ToString(),
                                                      rapid_data.Value.Oframe.Rot.ToString())
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -134,14 +134,14 @@ def get_wobjdata_tostring(rapid_data):
     Examples:
         None
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             res = 'Wobjdata: %s' % rapid_data.Value.ToString()
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -163,8 +163,8 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
         message = edit_and_write_rapid_data_property(rapid_data,'uframe','[0,0,100],[1,0,0,0]')
         message = edit_and_write_rapid_data_property(rapid_data,'oframe','[0,0,100],[1,0,0,0]')
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             wobjdata = rapid_data.Value
 
             wobjdata_robhold = rapid_data.Value.Robhold
@@ -250,11 +250,11 @@ def edit_and_write_rapid_data_property(rapid_data, property, new_value):
                 return msg
             except Exception, err:
                 return err
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+            return msg
+    except Exception, err:
+        return err
 
 
 def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe):
@@ -274,8 +274,8 @@ def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe
     Examples:
         message = edit_and_write_rapid_data(rapid_data, True, False,'','[100,100,0],[1,0,0,0]','[0,0,0],[1,0,0,0]')
     """
-    if rapid_data.RapidType == 'wobjdata':
-        try:
+    try:
+        if rapid_data.RapidType == 'wobjdata':
             wobjdata = rapid_data.Value
 
             # Checks if uframe and oframe is of type string.
@@ -315,8 +315,8 @@ def edit_and_write_rapid_data(rapid_data, robhold, ufprog, ufmec, uframe, oframe
             else:
                 msg = 'Incorrect format of input data.'
                 return msg
-        except Exception, err:
-            return err
-    else:
-        msg = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata'
-        return msg
+        else:
+            msg = 'DataType is ' + rapid_data.RapidType + ' and not wobjdata.'
+            return msg
+    except Exception, err:
+        return err
