@@ -19,14 +19,14 @@ def get_value_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'num':
-        try:
+    try:
+        if response_dict['dattyp'] == 'num':
             res = 'Value = %s' % response_dict['value']
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not num.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not num.'
+    except Exception, err:
         return err
 
 
@@ -41,13 +41,13 @@ def get_value(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'num':
-        try:
+    try:
+        if response_dict['dattyp'] == 'num':
             return float(response_dict['value'])
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not num.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not num.'
+    except Exception, err:
         return err
 
 
