@@ -33,7 +33,7 @@ class RapidNumTest(unittest.TestCase):
         test_desc = self.shortDescription()
         if test_desc == 'Tests edit_and_write_rapid_data with correct input data':
             _, self.cookies = rapid_num.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                       'MainModule', 'var_number', 0)
+                                                                  'MainModule', 'var_number', 0)
 
         # Cleaning for all the test cases
         _, _ = com.logoff_robot_controller('local', self.cookies)
