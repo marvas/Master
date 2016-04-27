@@ -32,7 +32,7 @@ class RapidBoolTest(unittest.TestCase):
         test_desc = self.shortDescription()
         if test_desc == 'Tests edit_and_write_rapid_data with correct input data':
             _, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                       'MainModule', 'var_boolean', True)
+                                                                   'MainModule', 'var_boolean', True)
 
         _, _ = com.logoff_robot_controller('local', self.cookies)
 
@@ -94,41 +94,41 @@ class RapidBoolTest(unittest.TestCase):
         """ Tests edit_and_write_rapid_data with incorrect input data """
         # Checks if wrong ip address is specified.
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('10', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'var_boolean', False)
+                                                                 'MainModule', 'var_boolean', False)
         self.assertIsInstance(res, Exception)
         # Checks if wrong rapid data is edited.
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'var_number', False)
+                                                                 'MainModule', 'var_number', False)
         self.assertEqual(res, 'Error updating value: 400')
         # Checks if wrong data is inserted.
         res, self.cookies = rapid_bool.edit_and_write_rapid_data(10, self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'var_boolean', False)
+                                                                 'MainModule', 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', 10, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'var_boolean', False)
+                                                                 'MainModule', 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, 10, 'T_ROB1',
-                                                                'MainModule', 'var_boolean', False)
+                                                                 'MainModule', 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 10,
-                                                                'MainModule', 'var_boolean', False)
+                                                                 'MainModule', 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                10, 'var_boolean', False)
+                                                                 10, 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 10, False)
+                                                                 'MainModule', 10, False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'var_boolean', 10)
+                                                                 'MainModule', 'var_boolean', 10)
         self.assertEqual(res, 'Something wrong with arguments.')
         # Checks if wrong variable with wrong format is inserted.
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T',
-                                                                'MainModule', 'var_boolean', False)
+                                                                 'MainModule', 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'Mai', 'var_boolean', False)
+                                                                 'Mai', 'var_boolean', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_bool.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'va', False)
+                                                                 'MainModule', 'va', False)
         self.assertEqual(res, 'Something wrong with arguments.')
