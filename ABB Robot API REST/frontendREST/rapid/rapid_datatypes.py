@@ -62,14 +62,20 @@ def get_rapid_data(ipaddress, cookies, digest_auth, program, module, variable_na
             if response_prop.status_code == 401:
                 response_prop = requests.get(url_prop, auth=digest_auth, cookies=cookies)
                 if response_prop.status_code == 200:
-                    # requests.utils.add_dict_to_cookiejar(cookies,)
                     cookies = response_prop.cookies
             if response_value.status_code == 200 and response_prop.status_code == 200:
-                response_dict = {'value': response_value.json()['_embedded']['_state'][0]['value'],
-                                 'dattyp': response_prop.json()['_embedded']['_state'][0]['dattyp'],
-                                 'ndim': response_prop.json()['_embedded']['_state'][0]['ndim'],
-                                 'dim': response_prop.json()['_embedded']['_state'][0]['dim']
-                                 }
+                # Checks if rapid variable is a constant. Constants does not contain 'dim' property.
+                if response_prop.json()['_embedded']['_state'][0]['_type'] == 'rap-sympropconstant':
+                    response_dict = {'value': response_value.json()['_embedded']['_state'][0]['value'],
+                                     'dattyp': response_prop.json()['_embedded']['_state'][0]['dattyp'],
+                                     'ndim': response_prop.json()['_embedded']['_state'][0]['ndim'],
+                                     }
+                else:
+                    response_dict = {'value': response_value.json()['_embedded']['_state'][0]['value'],
+                                     'dattyp': response_prop.json()['_embedded']['_state'][0]['dattyp'],
+                                     'ndim': response_prop.json()['_embedded']['_state'][0]['ndim'],
+                                     'dim': response_prop.json()['_embedded']['_state'][0]['dim']
+                                     }
                 return True, response_dict, cookies
             else:
                 err = 'Error getting value and/or property: \nValue status code: %s \nProperty status code: %s' % \
