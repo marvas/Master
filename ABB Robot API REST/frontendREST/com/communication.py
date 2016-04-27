@@ -43,8 +43,7 @@ def connect_robot_with_ipaddr_and_user(ipaddress, username, password):
             else:
                 err = 'Something went wrong. Status code: ' + str(response.status_code)
                 return False, err, None, None
-        except Exception:
-            err = 'Can\'t connect to the specified robot. Something may be wrong with input arguments.'
+        except Exception, err:
             return False, err, None, None
     else:
         err = 'Something wrong with arguments. Needs to be string.'
@@ -87,7 +86,7 @@ def connect_robot_with_ipaddr_def_user(ipaddress):
         except Exception, err:
             return False, err, None, None
     else:
-        err = 'Something wrong with arguments. Needs to be string.'
+        err = 'Something wrong with argument. Needs to be string.'
         return False, err, None, None
 
 
@@ -122,5 +121,5 @@ def logoff_robot_controller(ipaddress, cookies):
         except Exception, err:
             return False, err
     else:
-        err = 'Something wrong with arguments'
+        err = 'Something wrong with arguments.'
         return False, err
