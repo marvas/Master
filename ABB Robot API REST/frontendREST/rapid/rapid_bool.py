@@ -20,14 +20,14 @@ def get_state_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'bool':
-        try:
+    try:
+        if response_dict['dattyp'] == 'bool':
             res = 'State = %s' % response_dict['value']
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not bool.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not bool.'
+    except Exception, err:
         return err
 
 
@@ -42,16 +42,16 @@ def get_state(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'bool':
-        try:
+    try:
+        if response_dict['dattyp'] == 'bool':
             if response_dict['value'] == 'TRUE':
                 return True
             elif response_dict['value'] == 'FALSE':
                 return False
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not bool.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not bool.'
+    except Exception, err:
         return err
 
 
