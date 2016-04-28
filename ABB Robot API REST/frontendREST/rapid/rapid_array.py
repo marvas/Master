@@ -21,18 +21,18 @@ def get_length(response_dict):
     Examples:
         None
     """
-    if int(response_dict['ndim']) >= 1:
-        try:
+    try:
+        if int(response_dict['ndim']) >= 1:
             # Formatting the length.
             length = response_dict['dim']
             # Converts from unicode to normalized string
             length = unicodedata.normalize('NFKD', length).encode('ascii', 'ignore')
             length_list = length.split(' ')
             return int(length_list[0])
-        except Exception, err:
+        else:
+            err = 'The input is not an array.'
             return err
-    else:
-        err = 'The input is not an array.'
+    except Exception, err:
         return err
 
 
@@ -47,13 +47,13 @@ def get_dimensions(response_dict):
     Examples:
         None
     """
-    if int(response_dict['ndim']) >= 1:
-        try:
+    try:
+        if int(response_dict['ndim']) >= 1:
             return int(response_dict['ndim'])
-        except Exception, err:
+        else:
+            err = 'The input is not an array.'
             return err
-    else:
-        err = 'The input is not an array.'
+    except Exception, err:
         return err
 
 
@@ -229,7 +229,7 @@ def edit_and_write_rapid_data_num(ipaddress, cookies, digest_auth, program, modu
                 # Checks if the array is one dimensional.
                 try:
                     array_length = int(response.json()['_embedded']['_state'][0]['dim'])
-                except ValueError:
+                except Exception:
                     err = 'Rapid array is not one dimensional.'
                     return err, cookies
                 # Check if input list is larger than the rapid list.
