@@ -23,8 +23,8 @@ def get_speeddata_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'speeddata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'speeddata':
             # Formatting the speeddata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -51,10 +51,10 @@ def get_speeddata_tostring(response_dict):
             else:
                 err = 'Something wrong with the speeddata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not speeddata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not speeddata.'
+    except Exception, err:
         return err
 
 
