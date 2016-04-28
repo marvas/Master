@@ -22,8 +22,8 @@ def get_robax_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'jointtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'jointtarget':
             # Formatting the jointtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -38,10 +38,10 @@ def get_robax_tostring(response_dict):
             else:
                 err = 'Something wrong with the jointtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
+    except Exception, err:
         return err
 
 
@@ -56,8 +56,8 @@ def get_extax_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'jointtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'jointtarget':
             # Formatting the jointtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -73,10 +73,10 @@ def get_extax_tostring(response_dict):
             else:
                 err = 'Something wrong with the jointtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
+    except Exception, err:
         return err
 
 
@@ -91,8 +91,8 @@ def get_jointtarget_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'jointtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'jointtarget':
             # Formatting the jointtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -106,10 +106,10 @@ def get_jointtarget_tostring(response_dict):
             else:
                 err = 'Something wrong with the jointtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not jointtarget.'
+    except Exception, err:
         return err
 
 
