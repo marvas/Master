@@ -56,7 +56,6 @@ class RapidRobtargetTest(unittest.TestCase):
         # Cleanup for all test cases.
         _, _ = com.logoff_robot_controller('local', self.cookies)
 
-
     # Tests get_trans_tostring with correct input data.
     def test_get_trans_tostring_correct(self):
         """ Tests get_trans_tostring with correct input data. """
@@ -191,28 +190,24 @@ class RapidRobtargetTest(unittest.TestCase):
     def test_edit_and_write_rapid_data_property_correct(self):
         """ Tests edit_and_write_rapid_data_property with correct input data. """
         # Checks if updating trans works.
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies,
-                                                                                 self.digest_auth, 'T_ROB1',
-                                                                                 'MainModule', 'var_rtarget', 'trans',
-                                                                                 '[0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
+                                                                               'T_ROB1', 'MainModule', 'var_rtarget',
+                                                                               'trans', '[0,0,0]')
         self.assertEqual(res, 'Robtarget trans updated.')
         # Checks if updating rot works.
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies,
-                                                                                 self.digest_auth, 'T_ROB1',
-                                                                                 'MainModule', 'var_rtarget', 'rot',
-                                                                                 '[1,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
+                                                                               'T_ROB1', 'MainModule', 'var_rtarget',
+                                                                               'rot', '[1,0,0,0]')
         self.assertEqual(res, 'Robtarget rot updated.')
         # Checks if updating robconf works.
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies,
-                                                                                 self.digest_auth, 'T_ROB1',
-                                                                                 'MainModule', 'var_rtarget', 'robconf',
-                                                                                 '[0,1,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
+                                                                               'T_ROB1', 'MainModule', 'var_rtarget',
+                                                                               'robconf', '[0,1,0,0]')
         self.assertEqual(res, 'Robtarget robconf updated.')
         # Checks if updating extax works.
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies,
-                                                                                 self.digest_auth, 'T_ROB1',
-                                                                                 'MainModule', 'var_rtarget', 'extax',
-                                                                                 '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
+                                                                               'T_ROB1', 'MainModule', 'var_rtarget',
+                                                                               'extax', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Robtarget extax updated.')
 
         # Tests edit_and_write_rapid_data_property with incorrect input data.
@@ -294,90 +289,81 @@ class RapidRobtargetTest(unittest.TestCase):
         """ Tests edit_and_write_rapid_data with incorrect input data. """
         # Checks if wrong ip address is specified.
         res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('10', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                        'MainModule', 'var_rtarget', '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertIsInstance(res, Exception)
         # Checks if wrong rapid data is edited.
         res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_boolean',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+                                                                      'T_ROB1', 'MainModule', 'var_boolean', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Error updating robtarget: 400')
         # Checks if wrong data is inserted.
         res, self.cookies = rapid_robtarget.edit_and_write_rapid_data(10, self.cookies, self.digest_auth, 'T_ROB1',
-                                                                        'MainModule', 'var_rtarget', '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, 10, 'T_ROB1',
-                                                                        'MainModule', 'var_rtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, 10, 'T_ROB1', 'MainModule',
+                                                                      'var_rtarget', '[0,0,0]', '[0,0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 10,
-                                                                        'MainModule', 'var_rtarget', '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 10, 'var_rtarget', '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      10, 'var_rtarget', '[0,0,0]', '[0,0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 10, '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 10, '[0,0,0]', '[0,0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_rtarget', 10,
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_rtarget', 10, '[0,0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_rtarget',
-                                                                        '[0,0,0]',
-                                                                        10, '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]', 10,
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_rtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', 10, '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', 10, '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_rtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', 10)
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', 10)
         self.assertEqual(res, 'Something wrong with arguments.')
         # Checks if wrong variable with wrong format is inserted.
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T', 'MainModule', 'var_rtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T',
+                                                                      'MainModule', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Error updating robtarget: 400')
         res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'Mai', 'var_rtarget', '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+                                                                      'T_ROB1', 'Mai', 'var_rtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Error updating robtarget: 400')
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'va', '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'va', '[0,0,0]', '[0,0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Error updating robtarget: 400')
         # Checks if trans is specified wrong.
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_rtarget', '[0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_rtarget', '[0,0]', '[0,0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Incorrect format of input data.')
         # Checks if wrong format of rot
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_jtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0]', '[1,0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_jtarget', '[0,0,0]', '[0,0,0]',
+                                                                      '[1,0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Incorrect format of input data.')
         # Checks if wrong format of robconf
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_jtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', '[0,0,0]', '[0,0,0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_jtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[0,0,0]', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Incorrect format of input data.')
         # Checks if wrong format of extax
-        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                        'T_ROB1', 'MainModule', 'var_jtarget',
-                                                                        '[0,0,0]',
-                                                                        '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0]')
+        res, self.cookies = rapid_robtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
+                                                                      'MainModule', 'var_jtarget', '[0,0,0]',
+                                                                      '[0,0,0,0]', '[1,0,0,0]', '[0,0,0,0]')
         self.assertEqual(res, 'Incorrect format of input data.')
