@@ -286,9 +286,8 @@ class RapidJointtargetTest(unittest.TestCase):
                                                                         'T_ROB1', 'MainModule', 'var_jtarget', '[0,0]',
                                                                         '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Incorrect format of input data.')
-        # Checks if wrong format of new value
+        # Checks if wrong format of extax
         res, self.cookies = rapid_jointtarget.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
                                                                         'T_ROB1', 'MainModule', 'var_jtarget',
                                                                         '[0,0,0,0,0,0]', '[0,0,0,0]')
         self.assertEqual(res, 'Incorrect format of input data.')
-    
