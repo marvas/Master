@@ -21,8 +21,8 @@ def get_trans_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'robtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'robtarget':
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -36,10 +36,10 @@ def get_trans_tostring(response_dict):
             else:
                 err = 'Something wrong with the robtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -54,8 +54,8 @@ def get_rot_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'robtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'robtarget':
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -70,10 +70,10 @@ def get_rot_tostring(response_dict):
             else:
                 err = 'Something wrong with the robtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -88,8 +88,8 @@ def get_robconf_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'robtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'robtarget':
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -104,10 +104,10 @@ def get_robconf_tostring(response_dict):
             else:
                 err = 'Something wrong with the robtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -122,8 +122,8 @@ def get_extax_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'robtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'robtarget':
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -139,10 +139,10 @@ def get_extax_tostring(response_dict):
             else:
                 err = 'Something wrong with the robtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
@@ -157,8 +157,8 @@ def get_robtarget_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'robtarget':
-        try:
+    try:
+        if response_dict['dattyp'] == 'robtarget':
             # Formatting the robtarget to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -172,10 +172,10 @@ def get_robtarget_tostring(response_dict):
             else:
                 err = 'Something wrong with the robtarget: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not robtarget.'
+    except Exception, err:
         return err
 
 
