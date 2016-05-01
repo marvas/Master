@@ -106,9 +106,6 @@ class RapidNumTest(unittest.TestCase):
         res, self.cookies = rapid_num.edit_and_write_rapid_data(10, self.cookies, self.digest_auth, 'T_ROB1',
                                                                 'MainModule', 'var_number', 10)
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_num.edit_and_write_rapid_data('local', 10, self.digest_auth, 'T_ROB1',
-                                                                'MainModule', 'var_number', 10)
-        self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_num.edit_and_write_rapid_data('local', self.cookies, 10, 'T_ROB1',
                                                                 'MainModule', 'var_number', 10)
         self.assertEqual(res, 'Something wrong with arguments.')
@@ -127,10 +124,10 @@ class RapidNumTest(unittest.TestCase):
         # Checks if wrong variable with wrong format is inserted.
         res, self.cookies = rapid_num.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T',
                                                                 'MainModule', 'var_number', 10)
-        self.assertEqual(res, 'Something wrong with arguments.')
+        self.assertEqual(res, 'Error updating value: 400')
         res, self.cookies = rapid_num.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
                                                                 'Mai', 'var_number', 10)
-        self.assertEqual(res, 'Something wrong with arguments.')
+        self.assertEqual(res, 'Error updating value: 400')
         res, self.cookies = rapid_num.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
                                                                 'MainModule', 'va', 10)
-        self.assertEqual(res, 'Something wrong with arguments.')
+        self.assertEqual(res, 'Error updating value: 400')
