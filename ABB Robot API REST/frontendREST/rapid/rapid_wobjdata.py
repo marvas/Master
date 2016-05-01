@@ -21,8 +21,8 @@ def get_robhold_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'wobjdata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'wobjdata':
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -31,15 +31,15 @@ def get_robhold_tostring(response_dict):
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
             if len(value_list) == 17:
-                res = 'Robhold: = %s' % (value_list[0])
+                res = 'Robhold = %s' % (value_list[0])
                 return res
             else:
                 err = 'Something wrong with wobjdata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -54,8 +54,8 @@ def get_ufprog_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'wobjdata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'wobjdata':
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -64,15 +64,15 @@ def get_ufprog_tostring(response_dict):
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
             if len(value_list) == 17:
-                res = 'Ufprog: = %s' % (value_list[1])
+                res = 'Ufprog = %s' % (value_list[1])
                 return res
             else:
                 err = 'Something wrong with wobjdata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -87,8 +87,8 @@ def get_ufmec_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'wobjdata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'wobjdata':
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -97,15 +97,15 @@ def get_ufmec_tostring(response_dict):
             value_list = value.split(',')
             # Wobjdata should consist of 17 numbers.
             if len(value_list) == 17:
-                res = 'Ufmec: = %s' % (value_list[2])
+                res = 'Ufmec = %s' % (value_list[2])
                 return res
             else:
                 err = 'Something wrong with wobjdata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -120,8 +120,8 @@ def get_uframe_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'wobjdata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'wobjdata':
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -138,10 +138,10 @@ def get_uframe_tostring(response_dict):
             else:
                 err = 'Something wrong with wobjdata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -156,8 +156,8 @@ def get_oframe_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'wobjdata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'wobjdata':
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -174,10 +174,10 @@ def get_oframe_tostring(response_dict):
             else:
                 err = 'Something wrong with wobjdata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -192,8 +192,8 @@ def get_wobjdata_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'wobjdata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'wobjdata':
             # Formatting the wobjdata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -207,10 +207,10 @@ def get_wobjdata_tostring(response_dict):
             else:
                 err = 'Something wrong with wobjdata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not wobjdata.'
+    except Exception, err:
         return err
 
 
@@ -386,7 +386,7 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                     if response.status_code == 204:
                         cookies = response.cookies
                 if response.status_code == 204:
-                    msg = 'Wobjdata %s updated.' % property
+                    msg = 'Wobjdata %s updated.' % property.lower()
                     return msg, cookies
                 else:
                     err = 'Error updating wobjdata: ' + str(response.status_code)
