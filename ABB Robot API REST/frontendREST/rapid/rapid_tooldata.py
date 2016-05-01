@@ -22,8 +22,8 @@ def get_robhold_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'tooldata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'tooldata':
             # Formatting the tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -32,15 +32,15 @@ def get_robhold_tostring(response_dict):
             value_list = value.split(',')
             # Tooldata should consist of 19 numbers.
             if len(value_list) == 19:
-                res = 'Robhold: = %s' % (value_list[0])
+                res = 'Robhold = %s' % (value_list[0])
                 return res
             else:
                 err = 'Something wrong with tooldata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
+    except Exception, err:
         return err
 
 
@@ -55,8 +55,8 @@ def get_tframe_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'tooldata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'tooldata':
             # Formatting the tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -72,10 +72,10 @@ def get_tframe_tostring(response_dict):
             else:
                 err = 'Something wrong with tooldata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
+    except Exception, err:
         return err
 
 
@@ -90,8 +90,8 @@ def get_tload_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'tooldata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'tooldata':
             # Formatting the tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -107,10 +107,10 @@ def get_tload_tostring(response_dict):
             else:
                 err = 'Something wrong with tooldata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
+    except Exception, err:
         return err
 
 
@@ -125,8 +125,8 @@ def get_tooldata_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'tooldata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'tooldata':
             # Formatting tooldata to check if it is valid.
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -140,10 +140,10 @@ def get_tooldata_tostring(response_dict):
             else:
                 err = 'Something wrong with tooldata: ' + response_dict['value']
                 return err
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not tooldata.'
+    except Exception, err:
         return err
 
 
@@ -281,7 +281,7 @@ def edit_and_write_rapid_data_property(ipaddress, cookies, digest_auth, program,
                     if response.status_code == 204:
                         cookies = response.cookies
                 if response.status_code == 204:
-                    msg = 'Tooldata %s updated.' % property
+                    msg = 'Tooldata %s updated.' % property.lower()
                     return msg, cookies
                 else:
                     err = 'Error updating tooldata: ' + str(response.status_code)
