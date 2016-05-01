@@ -32,18 +32,19 @@ class RapidTooldataTest(unittest.TestCase):
         test_desc = self.shortDescription()
         if test_desc == 'Tests edit_and_write_rapid_data_property with correct input data.':
             _, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'robhold', True)
+                                                                                'T_ROB1', 'MainModule', 'var_tool',
+                                                                                'robhold', True)
             _, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'tframe', '[10,10,10],[0,0,1,0]')
+                                                                                'T_ROB1', 'MainModule', 'var_tool',
+                                                                                'tframe', '[10,10,10],[0,0,1,0]')
             _, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'tload', '1,[0,0,1],[1,0,0,0],0,0,0')
+                                                                                'T_ROB1', 'MainModule', 'var_tool',
+                                                                                'tload', '1,[0,0,1],[1,0,0,0],0,0,0')
         elif test_desc == 'Tests edit_and_write_rapid_data with correct input data.':
-            _, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', True,
-                                                                      '[10,10,10],[0,0,1,0]', '1,[0,0,1],[1,0,0,0],0,0,0')
+            _, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
+                                                                       'T_ROB1', 'MainModule', 'var_tool', True,
+                                                                       '[10,10,10],[0,0,1,0]',
+                                                                       '1,[0,0,1],[1,0,0,0],0,0,0')
 
         # Cleanup for all test cases.
         _, _ = com.logoff_robot_controller('local', self.cookies)
@@ -157,18 +158,18 @@ class RapidTooldataTest(unittest.TestCase):
         """ Tests edit_and_write_rapid_data_property with correct input data. """
         # Checks if updating robhold works.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'robhold', False)
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'robhold', False)
         self.assertEqual(res, 'Tooldata robhold updated.')
         # Checks if updating tframe works.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'tframe', '[0,0,0],[1,0,0,0]')
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'tframe', '[0,0,0],[1,0,0,0]')
         self.assertEqual(res, 'Tooldata tframe updated.')
         # Checks if updating tload works.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'tload', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'tload', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Tooldata tload updated.')
 
 # Tests edit_and_write_rapid_data_property with incorrect input data.
@@ -176,74 +177,74 @@ class RapidTooldataTest(unittest.TestCase):
         """ Tests edit_and_write_rapid_data_property with incorrect input data. """
         # Checks if wrong ip address is specified.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('10', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'robhold', False)
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'robhold', False)
         self.assertIsInstance(res, Exception)
         # Checks if wrong rapid data is edited.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_boolean',
-                                                                               'robhold', False)
+                                                                              'T_ROB1', 'MainModule', 'var_boolean',
+                                                                              'robhold', False)
         self.assertIsInstance(res, Exception)
         # Checks if wrong data is inserted.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property(10, self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'robhold', False)
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'robhold', False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, 10, 'T_ROB1',
-                                                                               'MainModule', 'var_tool', 'robhold',
-                                                                               False)
+                                                                              'MainModule', 'var_tool', 'robhold',
+                                                                              False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               10, 'MainModule', 'var_tool', 'robhold',
-                                                                               False)
+                                                                              10, 'MainModule', 'var_tool', 'robhold',
+                                                                              False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 10, 'var_tool', 'robhold',
-                                                                               False)
+                                                                              'T_ROB1', 10, 'var_tool', 'robhold',
+                                                                              False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 10, 'robhold',
-                                                                               False)
+                                                                              'T_ROB1', 'MainModule', 10, 'robhold',
+                                                                              False)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               10, False)
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              10, False)
         self.assertEqual(res, 'Something wrong with arguments.')
 
         # Checks if wrong variable with wrong format is inserted.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T', 'MainModule', 'var_tool',
-                                                                               'robhold', False)
+                                                                              'T', 'MainModule', 'var_tool',
+                                                                              'robhold', False)
         self.assertEqual(res, 'Error getting tooldata from controller: 400')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'Mai', 'var_tool', 'robhold',
-                                                                               False)
+                                                                              'T_ROB1', 'Mai', 'var_tool', 'robhold',
+                                                                              False)
         self.assertEqual(res, 'Error getting tooldata from controller: 400')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'va', 'robhold',
-                                                                               False)
+                                                                              'T_ROB1', 'MainModule', 'va', 'robhold',
+                                                                              False)
         self.assertEqual(res, 'Error getting tooldata from controller: 400')
         # Checks if wrong property is specified
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'r', False)
+                                                                              'T_ROB1', 'MainModule', 'var_tool', 'r',
+                                                                              False)
         self.assertEqual(res, 'Property not of type robhold, tframe, tload.')
         # Checks if wrong format of new value
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'tframe', '[0,0,0,0]')
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'tframe', '[0,0,0,0]')
         self.assertEqual(res, 'Input is not a valid Tframe.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data_property('local', self.cookies, self.digest_auth,
-                                                                               'T_ROB1', 'MainModule', 'var_tool',
-                                                                               'robhold', 10)
+                                                                              'T_ROB1', 'MainModule', 'var_tool',
+                                                                              'robhold', 10)
         self.assertEqual(res, 'Input is not boolean.')
 
     # Tests edit_and_write_rapid_data with correct input data.
     def test_edit_and_write_rapid_data_correct(self):
         """ Tests edit_and_write_rapid_data with correct input data. """
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Tooldata updated.')
 
     # Tests edit_and_write_rapid_data with incorrect input data.
@@ -251,67 +252,67 @@ class RapidTooldataTest(unittest.TestCase):
         """ Tests edit_and_write_rapid_data with incorrect input data. """
         # Checks if wrong ip address is specified.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('10', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertIsInstance(res, Exception)
         # Checks if wrong rapid data is edited.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                      'T_ROB1', 'MainModule', 'var_boolean', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'T_ROB1', 'MainModule', 'var_boolean', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Error updating tooldata: 400')
         # Checks if wrong data is inserted.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data(10, self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, 10, 'T_ROB1', 'MainModule',
-                                                                      'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 10,
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      10, 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     10, 'var_tool', False, '[0,0,0],[1,0,0,0]',
+                                                                     '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 10, False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 10, False, '[0,0,0],[1,0,0,0]',
+                                                                     '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Something wrong with arguments.')
         # Checks if wrong data is inserted into properties.
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', 10,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', 10,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Incorrect format of input data.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      10, '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False, 10,
+                                                                     '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', 10)
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', 10)
         self.assertEqual(res, 'Something wrong with arguments.')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Error updating tooldata: 400')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth,
-                                                                      'T_ROB1', 'Mai', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'T_ROB1', 'Mai', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Error updating tooldata: 400')
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'va', False,
-                                                                      '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'va', False,
+                                                                     '[0,0,0],[1,0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Error updating tooldata: 400')
         # Checks if wrong format of tframe
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0]', '0,[0,0,0],[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Incorrect format of input data.')
         # Checks if wrong format of tload
         res, self.cookies = rapid_tooldata.edit_and_write_rapid_data('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_tool', False,
-                                                                      '[0,0,0],[1,0,0,0]', '[0,1,0,0],1,1,1')
+                                                                     'MainModule', 'var_tool', False,
+                                                                     '[0,0,0],[1,0,0,0]', '[0,1,0,0],1,1,1')
         self.assertEqual(res, 'Incorrect format of input data.')
