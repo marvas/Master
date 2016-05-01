@@ -210,7 +210,7 @@ class RapidRobtargetTest(unittest.TestCase):
                                                                                'extax', '[0,0,0,0,0,0]')
         self.assertEqual(res, 'Robtarget extax updated.')
 
-        # Tests edit_and_write_rapid_data_property with incorrect input data.
+    # Tests edit_and_write_rapid_data_property with incorrect input data.
     def test_edit_and_write_rapid_data_property_incorrect(self):
         """ Tests edit_and_write_rapid_data_property with incorrect input data. """
         # Checks if wrong ip address is specified.
