@@ -80,11 +80,6 @@ class RapidSpeeddataTest(unittest.TestCase):
     # Tests edit_and_write_rapid_data_base with correct input data.
     def test_edit_and_write_rapid_data_base_correct(self):
         """ Tests edit_and_write_rapid_data_base with correct input data. """
-        got_var, const_bspeed, self.cookies = rapid_datatypes.get_rapid_data('local', self.cookies, self.digest_auth,
-                                                                             'T_ROB1', 'MainModule', 'const_basespeed')
-        if not got_var:
-            print 'Couldn\'t get variable. Test will not run.'
-            sys.exit()
         res, self.cookies = rapid_speeddata.edit_and_write_rapid_data_base('local', self.cookies, self.digest_auth,
                                                                            'T_ROB1', 'MainModule', 'var_basespeed',
                                                                            'v100')
