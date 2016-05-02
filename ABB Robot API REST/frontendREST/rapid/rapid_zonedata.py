@@ -38,8 +38,8 @@ def get_zonedata_tostring(response_dict):
     Examples:
         None
     """
-    if response_dict['dattyp'] == 'zonedata':
-        try:
+    try:
+        if response_dict['dattyp'] == 'zonedata':
             # Get zonedata
             value = response_dict['value']
             # Converts from unicode to normalized string
@@ -54,10 +54,10 @@ def get_zonedata_tostring(response_dict):
             # If base zonedata is not found.
             res = 'Zonedata: %s' % response_dict['value']
             return res
-        except Exception, err:
+        else:
+            err = 'DataType is ' + response_dict['dattyp'] + ' and not zonedata.'
             return err
-    else:
-        err = 'DataType is ' + response_dict['dattyp'] + ' and not zonedata.'
+    except Exception, err:
         return err
 
 
