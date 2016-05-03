@@ -5,6 +5,10 @@ Integration test to test rapid_array functionality towards the virtual controlle
 import unittest
 import sys
 
+##### Used when testing statement and branch coverage. ########
+# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
+###############################################################
+
 import frontendREST.com.communication as com
 import frontendREST.rapid.rapid_datatypes as rapid_datatypes
 import frontendREST.rapid.rapid_array as rapid_array
@@ -35,7 +39,7 @@ class RapidArrayTest(unittest.TestCase):
                                                                               'T_ROB1', 'MainModule', 'var_array', 0, 0)
         elif test_desc == 'Tests edit_and_write_rapid_data_num with correct input data.':
             _, self.cookies = rapid_array.edit_and_write_rapid_data_num('local', self.cookies, self.digest_auth,
-                                                                              'T_ROB1', 'MainModule', 'var_array', [])
+                                                                        'T_ROB1', 'MainModule', 'var_array', [])
 
         # Cleanup for all test cases
         _, _ = com.logoff_robot_controller('local', self.cookies)
@@ -126,11 +130,11 @@ class RapidArrayTest(unittest.TestCase):
         res, self.cookies = rapid_array.edit_and_write_rapid_data_num_index('local', self.cookies, self.digest_auth,
                                                                             'T_ROB1', 'MainModule', 10, 0, 1)
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_array.edit_and_write_rapid_data_num_index('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                            'MainModule', 'var_array', 'h', 1)
+        res, self.cookies = rapid_array.edit_and_write_rapid_data_num_index('local', self.cookies, self.digest_auth,
+                                                                            'T_ROB1', 'MainModule', 'var_array', 'h', 1)
         self.assertEqual(res, 'Something wrong with arguments.')
-        res, self.cookies = rapid_array.edit_and_write_rapid_data_num_index('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                            'MainModule', 'var_array', 0, 'h')
+        res, self.cookies = rapid_array.edit_and_write_rapid_data_num_index('local', self.cookies, self.digest_auth,
+                                                                            'T_ROB1', 'MainModule', 'var_array', 0, 'h')
         self.assertEqual(res, 'Something wrong with arguments.')
         # Checks if wrong variable with wrong format is inserted.
         res, self.cookies = rapid_array.edit_and_write_rapid_data_num_index('local', self.cookies, self.digest_auth,
@@ -201,10 +205,9 @@ class RapidArrayTest(unittest.TestCase):
         self.assertEqual(res, 'Error getting array from controller: 400')
         # Checks if input list is larger than rapid list.
         res, self.cookies = rapid_array.edit_and_write_rapid_data_num('local', self.cookies, self.digest_auth, 'T_ROB1',
-                                                                      'MainModule', 'var_array', [1,1,1,1])
+                                                                      'MainModule', 'var_array', [1, 1, 1, 1])
         self.assertEqual(res, 'Input list is larger than RAPID list.')
         # Checks if the list contains something else than numbers.
         res, self.cookies = rapid_array.edit_and_write_rapid_data_num('local', self.cookies, self.digest_auth, 'T_ROB1',
                                                                       'MainModule', 'var_array', ['h'])
         self.assertEqual(res, 'Something wrong in list.')
-

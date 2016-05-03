@@ -5,6 +5,10 @@ Integration test to test communication functionality towards the virtual control
 import unittest
 import sys
 
+##### Used when testing statement and branch coverage. ########
+# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
+###############################################################
+
 import frontendREST.com.communication as com
 
 
@@ -28,7 +32,7 @@ class CommunicationTest(unittest.TestCase):
 
     # Tests connect_robot_with_ipaddr_and_user with correct input data.
     def test_connect_robot_with_ipaddr_and_user_correct(self):
-        """ Tests connect_robot_with_ipaddr_and_user with correct input data """
+        """ Tests connect_robot_with_ipaddr_and_user with correct input data. """
         connected, _, _, self.cookies = com.connect_robot_with_ipaddr_and_user('local', 'Default User', 'robotics')
         self.assertTrue(connected)
 
