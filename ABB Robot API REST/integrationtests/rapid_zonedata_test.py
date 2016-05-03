@@ -5,13 +5,13 @@ Integration test to test rapid_zonedata functionality towards the virtual contro
 import unittest
 import sys
 
-##### Used when testing statement and branch coverage. ########
-# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
-###############################################################
-
 import frontendREST.com.communication as com
 import frontendREST.rapid.rapid_datatypes as rapid_datatypes
 import frontendREST.rapid.rapid_zonedata as rapid_zonedata
+
+##### Used when testing statement and branch coverage. ########
+# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
+###############################################################
 
 
 class RapidZonedataTest(unittest.TestCase):

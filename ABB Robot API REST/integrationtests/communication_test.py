@@ -5,11 +5,11 @@ Integration test to test communication functionality towards the virtual control
 import unittest
 import sys
 
+import frontendREST.com.communication as com
+
 ##### Used when testing statement and branch coverage. ########
 # sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
 ###############################################################
-
-import frontendREST.com.communication as com
 
 
 class CommunicationTest(unittest.TestCase):
