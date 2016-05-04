@@ -5,13 +5,14 @@ Integration test to test rapid_array functionality towards the virtual controlle
 import unittest
 import sys
 
+##### Used when testing statement and branch coverage. ########
+# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
+###############################################################
+
 import frontendREST.com.communication as com
 import frontendREST.rapid.rapid_datatypes as rapid_datatypes
 import frontendREST.rapid.rapid_array as rapid_array
 
-##### Used when testing statement and branch coverage. ########
-# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
-###############################################################
 
 
 class RapidArrayTest(unittest.TestCase):

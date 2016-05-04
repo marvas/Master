@@ -5,12 +5,13 @@ Integration test to test rapid_datatypes functionality towards the virtual contr
 import unittest
 import sys
 
-import frontendREST.com.communication as com
-import frontendREST.rapid.rapid_datatypes as rapid_datatypes
-
 ##### Used when testing statement and branch coverage. ########
 # sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
 ###############################################################
+
+import frontendREST.com.communication as com
+import frontendREST.rapid.rapid_datatypes as rapid_datatypes
+
 
 
 class RapidDatatypesTest(unittest.TestCase):
