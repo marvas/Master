@@ -98,6 +98,6 @@ stop_time = time.clock()
 elap_time = stop_time-start_time
 
 # Writes the time to the specified text file
-with open('output/flower_time_rest.txt', 'a+') as f:
+with open('output/flower_time_rws.txt', 'a+') as f:
     f.write('%g\n' % elap_time)
 f.close()

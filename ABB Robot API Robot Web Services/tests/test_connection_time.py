@@ -29,6 +29,6 @@ for i in range(100):
         print 'Error logging off'
         break
     # Writes the time to the specified text file
-    with open('output/connection_time_rest.txt', 'a+') as f:
+    with open('output/connection_time_rws.txt', 'a+') as f:
         f.write('%d %g\n' % (i, elap_time))
     f.close()

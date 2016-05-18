@@ -31,7 +31,7 @@ for i in range(100):
     # Calculates the time taken
     elap_time = stop_time - start_time
     # Writes the time to the specified text file
-    with open('output/response_time_array_4elem_rest.txt', 'a+') as f:
+    with open('output/response_time_array_4elem_rws.txt', 'a+') as f:
         f.write('%d %g\n' % (i, elap_time))
     f.close()
 _, msg = communication.logoff_robot_controller(ipaddr, cookies)
