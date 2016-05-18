@@ -5,11 +5,11 @@ of time. In this script it is set to 15 minutes of inactivity.
 
 import time
 
-import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
-import frontendIronPy.user.user_mastership as user_mastership
-import frontendIronPy.com.communication as communication
-import frontendIronPy.rapid.rapid_num as rapid_num
-import frontendIronPy.user.user_authorization as user_authorization
+import frontendPCSDK.rapid.rapid_datatypes as rapid_datatypes
+import frontendPCSDK.user.user_mastership as user_mastership
+import frontendPCSDK.com.communication as communication
+import frontendPCSDK.rapid.rapid_num as rapid_num
+import frontendPCSDK.user.user_authorization as user_authorization
 
 # Gets all the controllers on the network
 controllers = communication.discover_controllers_on_network()

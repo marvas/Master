@@ -5,9 +5,9 @@ Integration test to test user_mastership functionality towards the virtual contr
 import unittest
 import sys
 
-import frontendIronPy.com.communication as com
-import frontendIronPy.user.user_authorization as user_auth
-import frontendIronPy.user.user_mastership as user_mastership
+import frontendPCSDK.com.communication as com
+import frontendPCSDK.user.user_authorization as user_auth
+import frontendPCSDK.user.user_mastership as user_mastership
 
 
 class UserMastershipTest(unittest.TestCase):

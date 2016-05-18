@@ -7,12 +7,12 @@ import math
 import sys
 import time
 
-import frontendREST.com.communication as communication
-import frontendREST.rapid.rapid_bool as rapid_bool
-import frontendREST.rapid.rapid_num as rapid_num
-import frontendREST.rapid.rapid_datatypes as rapid_datatypes
-import frontendREST.rapid.rapid_speeddata as rapid_speeddata
-import frontendREST.rapid.rapid_zonedata as rapid_zonedata
+import frontendRWS.com.communication as communication
+import frontendRWS.rapid.rapid_bool as rapid_bool
+import frontendRWS.rapid.rapid_num as rapid_num
+import frontendRWS.rapid.rapid_datatypes as rapid_datatypes
+import frontendRWS.rapid.rapid_speeddata as rapid_speeddata
+import frontendRWS.rapid.rapid_zonedata as rapid_zonedata
 
 
 start_time = time.clock()

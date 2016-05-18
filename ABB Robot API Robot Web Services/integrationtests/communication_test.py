@@ -9,7 +9,7 @@ import sys
 # sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
 ###############################################################
 
-import frontendREST.com.communication as com
+import frontendRWS.com.communication as com
 
 
 

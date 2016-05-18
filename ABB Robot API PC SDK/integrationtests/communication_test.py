@@ -5,7 +5,7 @@ Integration test to test communication functionality towards the virtual control
 import unittest
 import sys
 
-import frontendIronPy.com.communication as com
+import frontendPCSDK.com.communication as com
 
 
 class CommunicationTest(unittest.TestCase):

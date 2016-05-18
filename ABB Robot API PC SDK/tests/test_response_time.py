@@ -6,11 +6,11 @@ Tests the response time of frontend REST
 import sys
 import time
 
-import frontendIronPy.com.communication as communication
-import frontendIronPy.user.user_authorization as user_authorization
-import frontendIronPy.user.user_mastership as user_mastership
-import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
-import frontendIronPy.rapid.rapid_num as rapid_num
+import frontendPCSDK.com.communication as communication
+import frontendPCSDK.user.user_authorization as user_authorization
+import frontendPCSDK.user.user_mastership as user_mastership
+import frontendPCSDK.rapid.rapid_datatypes as rapid_datatypes
+import frontendPCSDK.rapid.rapid_num as rapid_num
 
 
 # Gets all the controllers on the network

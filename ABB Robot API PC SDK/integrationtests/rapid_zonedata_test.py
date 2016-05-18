@@ -5,11 +5,11 @@ Integration test to test rapid_zonedata functionality towards the virtual contro
 import unittest
 import sys
 
-import frontendIronPy.com.communication as com
-import frontendIronPy.user.user_authorization as user_auth
-import frontendIronPy.user.user_mastership as user_mastership
-import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
-import frontendIronPy.rapid.rapid_zonedata as rapid_zonedata
+import frontendPCSDK.com.communication as com
+import frontendPCSDK.user.user_authorization as user_auth
+import frontendPCSDK.user.user_mastership as user_mastership
+import frontendPCSDK.rapid.rapid_datatypes as rapid_datatypes
+import frontendPCSDK.rapid.rapid_zonedata as rapid_zonedata
 
 
 class RapidZonedataTest(unittest.TestCase):

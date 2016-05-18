@@ -5,8 +5,8 @@ Integration test to test user_authorization functionality towards the virtual co
 import unittest
 import sys
 
-import frontendIronPy.com.communication as com
-import frontendIronPy.user.user_authorization as user_auth
+import frontendPCSDK.com.communication as com
+import frontendPCSDK.user.user_authorization as user_auth
 
 
 class UserAuthorizationTest(unittest.TestCase):

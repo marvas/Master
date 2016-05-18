@@ -9,8 +9,8 @@ import sys
 # sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
 ###############################################################
 
-import frontendREST.com.communication as com
-import frontendREST.rapid.rapid_datatypes as rapid_datatypes
+import frontendRWS.com.communication as com
+import frontendRWS.rapid.rapid_datatypes as rapid_datatypes
 
 
 

@@ -6,7 +6,7 @@ The result is written to file.
 
 import time
 
-import frontendREST.com.communication as communication
+import frontendRWS.com.communication as communication
 
 
 ipaddr = '152.94.0.39'

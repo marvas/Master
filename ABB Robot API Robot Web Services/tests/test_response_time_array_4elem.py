@@ -5,8 +5,8 @@ Tests the response time of frontend REST
 import sys
 import time
 
-import frontendREST.com.communication as communication
-import frontendREST.rapid.rapid_array as rapid_array
+import frontendRWS.com.communication as communication
+import frontendRWS.rapid.rapid_array as rapid_array
 
 
 ipaddr = '152.94.0.39'

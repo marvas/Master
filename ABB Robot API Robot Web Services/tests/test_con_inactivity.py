@@ -6,9 +6,9 @@ of time. In this script it is set to 15 minutes of inactivity.
 
 import time
 
-import frontendREST.com.communication as communication
-import frontendREST.rapid.rapid_num as rapid_num
-import frontendREST.rapid.rapid_datatypes as rapid_datatypes
+import frontendRWS.com.communication as communication
+import frontendRWS.rapid.rapid_num as rapid_num
+import frontendRWS.rapid.rapid_datatypes as rapid_datatypes
 
 
 ipaddr = '152.94.0.39'

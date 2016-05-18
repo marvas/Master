@@ -6,8 +6,8 @@ The result is written to file.
 
 import time
 
-import frontendIronPy.com.communication as communication
-import frontendIronPy.user.user_authorization as user_authorization
+import frontendPCSDK.com.communication as communication
+import frontendPCSDK.user.user_authorization as user_authorization
 
 
 # Connects and logs onto the controller a set amount of times and writes the result to a file.

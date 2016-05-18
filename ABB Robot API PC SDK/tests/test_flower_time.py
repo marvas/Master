@@ -7,14 +7,14 @@ import math
 import sys
 import time
 
-import frontendIronPy.com.communication as communication
-import frontendIronPy.user.user_authorization as user_authorization
-import frontendIronPy.user.user_mastership as user_mastership
-import frontendIronPy.rapid.rapid_datatypes as rapid_datatypes
-import frontendIronPy.rapid.rapid_num as rapid_num
-import frontendIronPy.rapid.rapid_bool as rapid_bool
-import frontendIronPy.rapid.rapid_speeddata as rapid_speeddata
-import frontendIronPy.rapid.rapid_zonedata as rapid_zonedata
+import frontendPCSDK.com.communication as communication
+import frontendPCSDK.user.user_authorization as user_authorization
+import frontendPCSDK.user.user_mastership as user_mastership
+import frontendPCSDK.rapid.rapid_datatypes as rapid_datatypes
+import frontendPCSDK.rapid.rapid_num as rapid_num
+import frontendPCSDK.rapid.rapid_bool as rapid_bool
+import frontendPCSDK.rapid.rapid_speeddata as rapid_speeddata
+import frontendPCSDK.rapid.rapid_zonedata as rapid_zonedata
 
 
 start_time = time.clock()
