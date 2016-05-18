@@ -42,7 +42,7 @@ for i in range(100):
         break
     elap_time = stop_time - start_time
     # Writes the time to the specified text file
-    with open('output/response_time_array_4elem_irpy.txt', 'a+') as f:
+    with open('output/response_time_array_4elem_pcsdk.txt', 'a+') as f:
         f.write('%d %g\n' % (i, elap_time))
     f.close()
 # Release mastership on controller
