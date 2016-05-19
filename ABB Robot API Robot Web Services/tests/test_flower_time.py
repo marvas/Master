@@ -26,7 +26,7 @@ print sys_info
 # Checks if rapid simulation has started.
 _, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies, digest_auth,
                                                       'T_ROB1', 'MainModule', 'sim_started')
-if rapid_bool.get_state(response) == False:
+if not rapid_bool.get_state(response):
     print 'Start rapid simulation first.'
     _, msg = communication.logoff_robot_controller(ipaddr, cookies)
     print msg
@@ -70,7 +70,7 @@ while num_flowers < 3:
         got_value, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies,
                                                                       digest_auth, 'T_ROB1', 'MainModule', 'drawing')
         if got_value:
-            if rapid_bool.get_state(response) == False:
+            if not rapid_bool.get_state(response):
                 x = amplitude * math.cos(math.radians(k * theta)) * math.cos(math.radians(theta))
                 y = amplitude * math.cos(math.radians(k * theta)) * math.sin(math.radians(theta))
                 theta += del_theta
@@ -95,7 +95,7 @@ _, msg = communication.logoff_robot_controller(ipaddr, cookies)
 print msg
 
 stop_time = time.clock()
-elap_time = stop_time-start_time
+elap_time = stop_time - start_time
 
 # Writes the time to the specified text file
 with open('output/flower_time_rws.txt', 'a+') as f:

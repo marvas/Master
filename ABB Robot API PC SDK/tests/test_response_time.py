@@ -1,5 +1,5 @@
 """
-Tests the response time of frontend REST
+Tests the response time of frontendPCSDK
 """
 
 

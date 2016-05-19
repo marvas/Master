@@ -1,5 +1,5 @@
 """
-Tests the response time of frontend REST
+Tests the response time of frontendPCSDK
 """
 
 
@@ -17,19 +17,19 @@ import frontendPCSDK.rapid.rapid_array as rapid_array
 controllers = communication.discover_controllers_on_network()
 # Connects to the specified robot controller
 ctrl, _, connected = communication.connect_robot_with_name(controllers, 'RudolfEGM')
-if connected == False:
+if not connected:
     print 'Error connecting to controller'
     sys.exit()
 # Logs onto the controller with default user
 logon, _ = user_authorization.logon_robot_controller_default(ctrl)
-if logon == False:
+if not logon:
     print 'Error logging on to controller'
     sys.exit()
 # Gets the rapid data from controller
 _, rapid_array4elem = rapid_datatypes.get_rapid_data(ctrl, 'T_ROB1', 'MainModule', 'arr4elem')
 # Get mastership on controller
 master, _, mastership = user_mastership.get_master_access_to_controller_rapid(ctrl)
-if master == False:
+if not master:
     print 'Error getting mastership'
     sys.exit()
 for i in range(100):
@@ -47,7 +47,7 @@ for i in range(100):
     f.close()
 # Release mastership on controller
 released, _ = user_mastership.release_and_dispose_master_access(mastership)
-if released == False:
+if not released:
     print 'Error releasing mastership'
     sys.exit()
 # Logs off the controller

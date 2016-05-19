@@ -40,7 +40,7 @@ _, rapid_zone = rapid_datatypes.get_rapid_data(rudolf, 'T_ROB1', 'MainModule', '
 
 
 # Checks if rapid simulation has started first.
-if rapid_bool.get_state(rapid_sim_started) == False:
+if not rapid_bool.get_state(rapid_sim_started):
     print 'Start rapid simulation first.'
     # Logs of the controller and disposes.
     print user_authorization.logoff_robot_controller(rudolf)
@@ -87,13 +87,13 @@ else:
 # Draws a specified amount of flowers
 while num_flowers < 3:
     while theta < max_degrees:
-        if rapid_bool.get_state(rapid_drawing) == False:
-            x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
-            y = amplitude*math.cos(math.radians(k*theta))*math.sin(math.radians(theta))
+        if not rapid_bool.get_state(rapid_drawing):
+            x = amplitude * math.cos(math.radians(k * theta)) * math.cos(math.radians(theta))
+            y = amplitude * math.cos(math.radians(k * theta)) * math.sin(math.radians(theta))
             theta += del_theta
             status, msg, mastership = user_mastership.get_master_access_to_controller_rapid(rudolf)
             print status, msg
-            if status == False:
+            if not status:
                 print 'Could not get mastership'
                 break
             msg = rapid_num.edit_and_write_rapid_data(rapid_x, x)
@@ -104,7 +104,7 @@ while num_flowers < 3:
             print msg
             status, msg = user_mastership.release_and_dispose_master_access(mastership)
             print status, msg
-            if status == False:
+            if not status:
                 print 'Could not release mastership'
                 break
     theta = 0

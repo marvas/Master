@@ -15,7 +15,8 @@ import frontendRWS.rapid.rapid_speeddata as rapid_speeddata
 import frontendRWS.rapid.rapid_zonedata as rapid_zonedata
 
 
-ipaddr = '152.94.0.39'
+ipaddr = 'local'
+# 152.94.0.39
 
 # Connects to the specified controller and logs on with default user.
 _, sys_info, digest_auth, cookies = communication.connect_robot_with_ipaddr_def_user(ipaddr)
@@ -23,7 +24,7 @@ print sys_info
 
 # Checks if rapid simulation has started.
 _, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies, digest_auth, 'T_ROB1', 'MainModule', 'sim_started')
-if rapid_bool.get_state(response) == False:
+if not rapid_bool.get_state(response):
     print 'Start rapid simulation first.'
     _, msg = communication.logoff_robot_controller(ipaddr, cookies)
     print msg
@@ -67,9 +68,9 @@ while num_flowers < 1:
         got_value, response, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies,
                                                                       digest_auth, 'T_ROB1', 'MainModule', 'drawing')
         if got_value:
-            if rapid_bool.get_state(response) == False:
-                x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
-                y = amplitude*math.cos(math.radians(k*theta))*math.sin(math.radians(theta))
+            if not rapid_bool.get_state(response):
+                x = amplitude * math.cos(math.radians(k * theta)) * math.cos(math.radians(theta))
+                y = amplitude * math.cos(math.radians(k * theta)) * math.sin(math.radians(theta))
                 theta += del_theta
                 msg, cookies = rapid_num.edit_and_write_rapid_data(ipaddr, cookies, digest_auth,
                                                                    'T_ROB1', 'MainModule', 'x', x)

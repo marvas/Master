@@ -17,7 +17,7 @@ ipaddr = '152.94.0.39'
 _, msg, digest_auth, cookies = communication.connect_robot_with_ipaddr_def_user(ipaddr)
 print msg
 # Pauses the execution for 15 minutes and then proceeds.
-time.sleep(60*15)
+time.sleep(60 * 15)
 # Gets information of specified rapid variable
 _, response_dict, cookies = rapid_datatypes.get_rapid_data(ipaddr, cookies, digest_auth,
                                                            'T_ROB1', 'MainModule', 'number')

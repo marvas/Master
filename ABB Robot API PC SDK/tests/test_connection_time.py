@@ -1,5 +1,5 @@
 """
-Module for testing the time it takes to connect and logon to a controller with IronPython API.
+Module for testing the time it takes to connect and logon to a controller with frontendPCSDK.
 The result is written to file.
 """
 
