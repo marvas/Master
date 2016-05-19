@@ -1,5 +1,5 @@
 """
-Module for testing the time it takes to connect and logon to a controller with REST API.
+Module for testing the time it takes to connect and logon to a controller with RWS API.
 The result is written to file.
 """
 

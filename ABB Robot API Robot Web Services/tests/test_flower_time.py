@@ -71,8 +71,8 @@ while num_flowers < 3:
                                                                       digest_auth, 'T_ROB1', 'MainModule', 'drawing')
         if got_value:
             if rapid_bool.get_state(response) == False:
-                x = amplitude*math.cos(math.radians(k*theta))*math.cos(math.radians(theta))
-                y = amplitude*math.cos(math.radians(k*theta))*math.sin(math.radians(theta))
+                x = amplitude * math.cos(math.radians(k * theta)) * math.cos(math.radians(theta))
+                y = amplitude * math.cos(math.radians(k * theta)) * math.sin(math.radians(theta))
                 theta += del_theta
                 msg, cookies = rapid_num.edit_and_write_rapid_data(ipaddr, cookies, digest_auth,
                                                                    'T_ROB1', 'MainModule', 'x', x)
