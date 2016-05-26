@@ -1,12 +1,13 @@
 """
 Integration test to test rapid_wobjdata functionality towards the virtual controller.
+RobotStudio must run with the RAPID test program made for the integration tests
 """
 
 import unittest
 import sys
 
 ##### Used when testing statement and branch coverage. ########
-# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API REST')
+# sys.path.insert(1, 'C:\Users\Marius Vasshus\Dropbox\Programmering\Python\Master\ABB Robot API Robot Web Services')
 ###############################################################
 
 import frontendRWS.com.communication as com
