@@ -1,5 +1,6 @@
 """
 Integration test to test rapid_bool functionality towards the virtual controller.
+RobotStudio must run with the RAPID test program made for the integration tests
 """
 
 import unittest
