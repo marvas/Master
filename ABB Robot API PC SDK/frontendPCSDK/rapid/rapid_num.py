@@ -4,11 +4,17 @@ as well as displaying the value of the num.
 """
 
 
+import os
+
+# Path to the folder with DLL
+file_path = os.path.realpath(__file__)
+temp = file_path.split('frontendPCSDK')
+dll_path = temp[0] + 'ABB_PCSDK_DLL\ABB.Robotics.Controllers.PC.dll'
+
 import clr
-clr.AddReferenceToFileAndPath(
-        'C:\\Program Files (x86)\\ABB Industrial IT\\Robotics IT\\SDK\PCSDK 6.02\\ABB.Robotics.Controllers.PC.dll')
+clr.AddReferenceToFileAndPath(dll_path)
+
 import ABB.Robotics.Controllers as ctrlrs
-# clr.AddReferenceToFileAndPath('ABB.Robotics.Controllers.PC.dll')
 
 
 def get_value_tostring(rapid_data):
