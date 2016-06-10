@@ -18,7 +18,7 @@ import ABB.Robotics.Controllers as ctrlrs
 
 def logon_robot_controller_default(controller):
     """
-    Log on to a controller after connecting to it with default user.
+    Log onto a controller with a default user after connecting to it.
 
     Input:
         ABB.Robotics.Controllers.Controller: Controller
@@ -39,7 +39,7 @@ def logon_robot_controller_default(controller):
 
 def logon_robot_controller_with_username(controller, username, password):
     """
-    Log on to a controller after connecting to it with a username and password.
+    Log onto a controller, after connecting to it, with a username and password.
 
     Input:
         ABB.Robotics.Controllers.Controller: Controller
